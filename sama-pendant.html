@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Nava</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="nava-styles.css">
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a href="#" style="display:flex;align-items:center;">
+    <img src="logo.png" alt="Nava" style="height:48px;width:auto;">
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="#">Collections</a>
+    <a class="nav-link" href="#">Order</a>
+  </div>
+</nav>
+
+<div class="hero" id="hero">
+  <div class="hero-track" id="heroTrack"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-tag" id="heroTag"></div>
+  <div class="hero-counter" id="heroCounter"></div>
+  <div class="hero-arrows">
+    <div class="hero-arrow" id="prevBtn">
+      <svg viewBox="0 0 11 11" fill="none"><path d="M7.5 1.5L3 5.5L7.5 9.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="hero-arrow" id="nextBtn">
+      <svg viewBox="0 0 11 11" fill="none"><path d="M3.5 1.5L8 5.5L3.5 9.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+  <div class="hero-dots" id="heroDots"></div>
+</div>
+
+<div class="piece-header">
+  <div class="collection-tag" id="collectionTag"></div>
+  <div class="piece-name" id="pieceName"></div>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tab-row" id="tabRow">
+    <button class="tab-btn on" data-t="design">The thinking</button>
+    <button class="tab-btn" data-t="prov">Provenance</button>
+  </div>
+  <div class="tab-panel">
+    <div id="panel-design" class="story"></div>
+    <div id="panel-prov" class="prov-rows" style="display:none;"></div>
+  </div>
+</div>
+
+<div class="expanders">
+  <div class="exp-row">
+    <div class="exp-head" id="skinHead">
+      <span class="exp-label">How it sits on you</span>
+      <div class="exp-icon" id="skinIcon">
+        <svg viewBox="0 0 10 10" fill="none"><path d="M5 1V9M1 5H9" stroke="#797842" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </div>
+    </div>
+    <div class="exp-body" id="skinBody">
+      <div class="exp-inner">
+        <div class="skin-row" id="skinRow">
+          <div class="stile t1 sel" data-i="0">
+            <svg class="sring-svg" viewBox="0 0 60 24" fill="none"><ellipse cx="30" cy="12" rx="27" ry="10" stroke="#9a9a58" stroke-width="3.5" fill="none"/></svg>
+            <span class="slabel">Light</span>
+          </div>
+          <div class="stile t2" data-i="1">
+            <svg class="sring-svg" viewBox="0 0 60 24" fill="none"><ellipse cx="30" cy="12" rx="27" ry="10" stroke="#b0b068" stroke-width="3.5" fill="none"/></svg>
+            <span class="slabel">Medium</span>
+          </div>
+          <div class="stile t3" data-i="2">
+            <svg class="sring-svg" viewBox="0 0 60 24" fill="none"><ellipse cx="30" cy="12" rx="27" ry="10" stroke="#c8c878" stroke-width="3.5" fill="none"/></svg>
+            <span class="slabel">Deep warm</span>
+          </div>
+          <div class="stile t4" data-i="3">
+            <svg class="sring-svg" viewBox="0 0 60 24" fill="none"><ellipse cx="30" cy="12" rx="27" ry="10" stroke="#d8d890" stroke-width="3.5" fill="none"/></svg>
+            <span class="slabel">Deep</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-row">
+    <div class="exp-head" id="sizeHead">
+      <span class="exp-label">Size</span>
+      <div class="exp-icon" id="sizeIcon">
+        <svg viewBox="0 0 10 10" fill="none"><path d="M5 1V9M1 5H9" stroke="#797842" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </div>
+    </div>
+    <div class="exp-body" id="sizeBody">
+      <div class="exp-inner">
+        <div class="size-row" id="sizeRow"></div>
+        <div class="sz-note">Not sure of your size? We will help — just ask when you order.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="price-block">
+  <div class="price" id="priceDisplay"></div>
+  <div class="price-note">Made to order · Free delivery</div>
+</div>
+
+<div class="cta-block">
+  <button class="cta-btn">Begin an order</button>
+</div>
+
+<div class="next-block" id="nextPiece"></div>
+
+<script>
+const piece = {
+  name: "Sama Pendant",
+  collection: "Origami · Pendant",
+  imageFolder: "Sama_Pendant",
+  images: ["Sama_Pendant_1.webp", "Sama_Pendant_2.webp", "Sama_Pendant_3.jpg", "Sama_Pendant_4.webp"],
+  price: "₹ 54,299",
+  story: "Speaking of fluidity, our hero piece, the Sama Pendant is a paradox. It looks like a bunch of cubes but is designed to represent a waterfall in motion, imagined cubistically",
+  provenance: {
+    "Made in": "Jaipur",
+    "Craft": "Hand-fabricated",
+    "Material": "9 kt gold",
+    "Weight": "11.4 grams",
+    "Ready in": "18 – 22 days"
+  },
+  sizes: ["2.2″", "2.4″", "2.6″", "2.8″", "Custom"],
+  nextPiece: null,
+  prevPiece: { name: "Abha Ring", file: "abha-ring.html" }
+}
+
+/* ── RENDER FROM PIECE ── */
+document.title = `Nava — ${piece.name}`;
+
+// Hero slides
+const track = document.getElementById('heroTrack');
+const totalSlides = piece.images.length;
+track.style.width = `${totalSlides * 100}%`;
+piece.images.forEach(src => {
+  const slide = document.createElement('div');
+  slide.className = 'hero-slide';
+  slide.style.width = `${100 / totalSlides}%`;
+  const img = document.createElement('img');
+  img.src = `${piece.imageFolder}/${src}`;
+  img.alt = piece.name;
+  slide.appendChild(img);
+  track.appendChild(slide);
+});
+
+document.getElementById('heroTag').textContent = piece.collection;
+
+// Hero dots
+const dotsEl = document.getElementById('heroDots');
+piece.images.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = i === 0 ? 'hdot on' : 'hdot';
+  dotsEl.appendChild(dot);
+});
+
+// Piece header
+document.getElementById('collectionTag').textContent = piece.collection;
+document.getElementById('pieceName').textContent = piece.name;
+
+// Story
+document.getElementById('panel-design').textContent = piece.story;
+
+// Provenance
+const provEl = document.getElementById('panel-prov');
+Object.entries(piece.provenance).forEach(([k, v]) => {
+  const row = document.createElement('div');
+  row.className = 'prow';
+  row.innerHTML = `<span class="pk">${k}</span><span class="pv">${v}</span>`;
+  provEl.appendChild(row);
+});
+
+// Price
+document.getElementById('priceDisplay').textContent = piece.price;
+
+// Sizes (select second by default)
+const sizeRowEl = document.getElementById('sizeRow');
+piece.sizes.forEach((s, i) => {
+  const btn = document.createElement('button');
+  btn.className = i === 1 ? 'szchip sel' : 'szchip';
+  btn.dataset.s = s;
+  btn.textContent = s;
+  sizeRowEl.appendChild(btn);
+});
+
+// Bottom nav bar
+function renderBottomNav() {
+  const bar = document.getElementById('nextPiece');
+  let html = '';
+
+  if (piece.prevPiece) {
+    html += `
+      <div class="nav-prev" onclick="window.location='${piece.prevPiece.file}'">
+        <div class="nav-prev-thumb">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path d="M7 1L3 5L7 9" stroke="#F0EDE4" stroke-width="1.2"
+            stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="nav-piece-eyebrow">Previous</div>
+          <div class="nav-piece-name">${piece.prevPiece.name}</div>
+        </div>
+      </div>`;
+  } else {
+    html += '<div></div>';
+  }
+
+  if (piece.nextPiece) {
+    html += `
+      <div class="nav-next" onclick="window.location='${piece.nextPiece.file}'">
+        <div>
+          <div class="nav-piece-eyebrow">Next piece</div>
+          <div class="nav-piece-name">${piece.nextPiece.name}</div>
+        </div>
+        <div class="nav-next-thumb">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path d="M3 1L7 5L3 9" stroke="#F0EDE4" stroke-width="1.2"
+            stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>`;
+  } else {
+    html += '<div></div>';
+  }
+
+  bar.innerHTML = html;
+}
+renderBottomNav();
+
+/* ── NAV SCROLL ── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+const nextBlock = document.getElementById('nextPiece');
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY + window.innerHeight;
+  const total = document.documentElement.scrollHeight;
+  const atBottom = scrolled >= total - 60;
+  nextBlock.style.background = atBottom
+    ? 'rgba(54, 25, 43, 1)'
+    : 'rgba(54, 25, 43, 0.15)';
+}, { passive: true });
+
+/* ── IMAGE SLIDER ── */
+const counter = document.getElementById('heroCounter');
+let current    = 0;
+let startX     = 0;
+let dragDx     = 0;
+let isDragging = false;
+
+counter.textContent = `1 / ${totalSlides}`;
+
+function setSlide(idx, animate) {
+  if (animate === false) track.classList.add('no-transition');
+  current = (idx + totalSlides) % totalSlides;
+  track.style.transform = `translateX(-${current * (100 / totalSlides)}%)`;
+  if (animate === false) requestAnimationFrame(() => track.classList.remove('no-transition'));
+  document.querySelectorAll('.hdot').forEach((d, i) => d.classList.toggle('on', i === current));
+  counter.textContent = `${current + 1} / ${totalSlides}`;
+}
+
+document.getElementById('nextBtn').addEventListener('click', () => setSlide(current + 1));
+document.getElementById('prevBtn').addEventListener('click', () => setSlide(current - 1));
+
+const heroEl = document.getElementById('hero');
+function dragStart(x) { startX = x; dragDx = 0; isDragging = true; }
+function dragMove(x)  { if (isDragging) dragDx = x - startX; }
+function dragEnd()    {
+  if (!isDragging) return; isDragging = false;
+  if      (dragDx < -44) setSlide(current + 1);
+  else if (dragDx >  44) setSlide(current - 1);
+}
+heroEl.addEventListener('touchstart', e => dragStart(e.touches[0].clientX),    { passive: true });
+heroEl.addEventListener('touchmove',  e => dragMove(e.touches[0].clientX),     { passive: true });
+heroEl.addEventListener('touchend',   dragEnd,                                  { passive: true });
+heroEl.addEventListener('mousedown',  e => dragStart(e.clientX));
+heroEl.addEventListener('mousemove',  e => dragMove(e.clientX));
+heroEl.addEventListener('mouseup',    dragEnd);
+heroEl.addEventListener('mouseleave', dragEnd);
+
+/* ── TABS ── */
+document.getElementById('tabRow').querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('on'));
+    this.classList.add('on');
+    const t = this.dataset.t;
+    document.getElementById('panel-design').style.display = t === 'design' ? 'block' : 'none';
+    document.getElementById('panel-prov').style.display   = t === 'prov'   ? 'block' : 'none';
+  });
+});
+
+/* ── EXPANDERS ── */
+function makeExp(headId, iconId, bodyId) {
+  let open = false;
+  document.getElementById(headId).addEventListener('click', () => {
+    open = !open;
+    document.getElementById(bodyId).classList.toggle('open', open);
+    document.getElementById(iconId).classList.toggle('open', open);
+  });
+}
+makeExp('skinHead', 'skinIcon', 'skinBody');
+makeExp('sizeHead', 'sizeIcon', 'sizeBody');
+
+/* ── SKIN TILES ── */
+document.getElementById('skinRow').querySelectorAll('.stile').forEach(t => {
+  t.addEventListener('click', function () {
+    document.querySelectorAll('.stile').forEach(x => x.classList.remove('sel'));
+    this.classList.add('sel');
+  });
+});
+
+/* ── SIZE CHIPS ── */
+document.getElementById('sizeRow').querySelectorAll('.szchip').forEach(c => {
+  c.addEventListener('click', function () {
+    document.querySelectorAll('.szchip').forEach(x => x.classList.remove('sel'));
+    this.classList.add('sel');
+  });
+});
+</script>
+</body>
+</html>
