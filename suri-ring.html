@@ -23,7 +23,6 @@
 <div class="hero" id="hero">
   <div class="hero-track" id="heroTrack"></div>
   <div class="hero-overlay"></div>
-  <div class="hero-tag" id="heroTag"></div>
   <div class="hero-counter" id="heroCounter"></div>
   <div class="hero-arrows">
     <div class="hero-arrow" id="prevBtn">
@@ -33,12 +32,13 @@
       <svg viewBox="0 0 11 11" fill="none"><path d="M3.5 1.5L8 5.5L3.5 9.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
   </div>
-  <div class="hero-dots" id="heroDots"></div>
-</div>
-
-<div class="piece-header">
-  <div class="collection-tag" id="collectionTag"></div>
-  <div class="piece-name" id="pieceName"></div>
+  <div class="hero-identity">
+    <div class="hero-identity-top">
+      <div class="hero-tag" id="heroTag"></div>
+      <div class="hero-dots" id="heroDots"></div>
+    </div>
+    <div class="piece-name" id="pieceName"></div>
+  </div>
 </div>
 
 <div class="tabs-wrap">
@@ -160,7 +160,6 @@ piece.images.forEach((_, i) => {
 });
 
 // Piece header
-document.getElementById('collectionTag').textContent = piece.collection;
 document.getElementById('pieceName').textContent = piece.name;
 
 // Story

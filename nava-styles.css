@@ -528,3 +528,37 @@ body {
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--aubergine-mid); }
+
+/* ── HERO IDENTITY OVERLAY ── */
+.hero-identity {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 48px 18px 18px;
+  background: linear-gradient(to top, rgba(54,25,43,1) 0%, rgba(54,25,43,0.7) 55%, transparent 100%);
+  pointer-events: none;
+}
+.hero-identity-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.hero-identity .hero-tag {
+  position: static;
+  bottom: auto;
+  left: auto;
+  background: none;
+  padding: 0;
+}
+.hero-identity .hero-dots {
+  position: static;
+  bottom: auto;
+  left: auto;
+  transform: none;
+}
+.hero-identity .piece-name {
+  margin: 0;
+  padding: 0;
+}
