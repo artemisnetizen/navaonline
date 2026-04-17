@@ -12,11 +12,10 @@
 
 <nav class="nav" id="nav">
   <a href="#" style="display:flex;align-items:center;">
-    <img src="logo.png" alt="Nava" style="height:48px;width:auto;">
+    <img src="logo.png" alt="Nava" style="height:36px;width:auto;">
   </a>
   <div class="nav-links">
-    <a class="nav-link" href="#">Collections</a>
-    <a class="nav-link" href="#">Order</a>
+<a class="nav-link" id="orderNavLink" href="#" target="_blank">Order</a>
   </div>
 </nav>
 
@@ -106,7 +105,7 @@
 </div>
 
 <div class="cta-block">
-  <button class="cta-btn">Begin an order</button>
+  <a class="cta-btn" id="ctaBtn" href="#" target="_blank">Begin an order</a>
 </div>
 
 <div class="next-block" id="nextPiece"></div>
@@ -130,6 +129,11 @@ const piece = {
   nextPiece: { name: "Abha Ring", file: "abha-ring.html" },
   prevPiece: { name: "Vara Nosepin", file: "vara-nosepin.html" }
 }
+
+document.getElementById('ctaBtn').href =
+  `https://wa.me/917356774555?text=${encodeURIComponent(`Hi. I am interested in exploring a purchase for ${piece.name} by Nava.`)}`;
+document.getElementById('orderNavLink').href =
+  `https://wa.me/917356774555?text=${encodeURIComponent(`Hi. I am interested in exploring a purchase for ${piece.name} by Nava.`)}`;
 
 /* ── RENDER FROM PIECE ── */
 document.title = `Nava — ${piece.name}`;
