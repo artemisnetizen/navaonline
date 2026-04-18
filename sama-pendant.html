@@ -22,13 +22,9 @@
 <div class="hero" id="hero">
   <div class="hero-track" id="heroTrack"></div>
   <div class="hero-overlay"></div>
-  <div class="hero-counter" id="heroCounter"></div>
   <div class="hero-thumbs" id="heroThumbs"></div>
   <div class="hero-identity">
-    <div class="hero-identity-top">
-      <div class="hero-tag" id="heroTag"></div>
-      <div class="hero-dots" id="heroDots"></div>
-    </div>
+    <div class="hero-tag" id="heroTag"></div>
     <div class="piece-name" id="pieceName"></div>
   </div>
 </div>
@@ -149,14 +145,6 @@ piece.images.forEach(src => {
 
 document.getElementById('heroTag').textContent = piece.collection;
 
-// Hero dots
-const dotsEl = document.getElementById('heroDots');
-piece.images.forEach((_, i) => {
-  const dot = document.createElement('div');
-  dot.className = i === 0 ? 'hdot on' : 'hdot';
-  dotsEl.appendChild(dot);
-});
-
 // Hero thumbnails
 const thumbsEl = document.getElementById('heroThumbs');
 piece.images.forEach((src, i) => {
@@ -205,22 +193,17 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 /* ── IMAGE SLIDER ── */
-const counter = document.getElementById('heroCounter');
 let current    = 0;
 let startX     = 0;
 let dragDx     = 0;
 let isDragging = false;
-
-counter.textContent = `1 / ${totalSlides}`;
 
 function setSlide(idx, animate) {
   if (animate === false) track.classList.add('no-transition');
   current = (idx + totalSlides) % totalSlides;
   track.style.transform = `translateX(-${current * (100 / totalSlides)}%)`;
   if (animate === false) requestAnimationFrame(() => track.classList.remove('no-transition'));
-  document.querySelectorAll('.hdot').forEach((d, i) => d.classList.toggle('on', i === current));
   document.querySelectorAll('.hthumb').forEach((t, i) => t.classList.toggle('on', i === current));
-  counter.textContent = `${current + 1} / ${totalSlides}`;
 }
 
 const heroEl = document.getElementById('hero');
