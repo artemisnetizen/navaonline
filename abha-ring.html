@@ -23,14 +23,7 @@
   <div class="hero-track" id="heroTrack"></div>
   <div class="hero-overlay"></div>
   <div class="hero-counter" id="heroCounter"></div>
-  <div class="hero-arrows">
-    <div class="hero-arrow" id="prevBtn">
-      <svg viewBox="0 0 11 11" fill="none"><path d="M7.5 1.5L3 5.5L7.5 9.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-    <div class="hero-arrow" id="nextBtn">
-      <svg viewBox="0 0 11 11" fill="none"><path d="M3.5 1.5L8 5.5L3.5 9.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-  </div>
+  <div class="hero-thumbs" id="heroThumbs"></div>
   <div class="hero-identity">
     <div class="hero-identity-top">
       <div class="hero-tag" id="heroTag"></div>
@@ -39,6 +32,8 @@
     <div class="piece-name" id="pieceName"></div>
   </div>
 </div>
+
+<div class="flower-strip" id="flowerStrip"></div>
 
 <div class="tabs-wrap">
   <div class="tab-row" id="tabRow">
@@ -108,8 +103,6 @@
   <a class="cta-btn" id="ctaBtn" href="#" target="_blank">Begin an order</a>
 </div>
 
-<div class="next-block" id="nextPiece"></div>
-
 <script>
 const piece = {
   name: "Abha Ring",
@@ -134,6 +127,7 @@ document.getElementById('ctaBtn').href =
   `https://wa.me/917356774555?text=${encodeURIComponent(`Hi. I am interested in exploring a purchase for ${piece.name} by Nava.`)}`;
 document.getElementById('orderNavLink').href =
   `https://wa.me/917356774555?text=${encodeURIComponent(`Hi. I am interested in exploring a purchase for ${piece.name} by Nava.`)}`;
+const PIECE_INDEX = 9;
 
 /* ── RENDER FROM PIECE ── */
 document.title = `Nava — ${piece.name}`;
@@ -161,6 +155,19 @@ piece.images.forEach((_, i) => {
   const dot = document.createElement('div');
   dot.className = i === 0 ? 'hdot on' : 'hdot';
   dotsEl.appendChild(dot);
+});
+
+// Hero thumbnails
+const thumbsEl = document.getElementById('heroThumbs');
+piece.images.forEach((src, i) => {
+  const th = document.createElement('div');
+  th.className = i === 0 ? 'hthumb on' : 'hthumb';
+  const tImg = document.createElement('img');
+  tImg.src = `${piece.imageFolder}/${src}`;
+  tImg.alt = '';
+  th.appendChild(tImg);
+  th.addEventListener('click', () => setSlide(i));
+  thumbsEl.appendChild(th);
 });
 
 // Piece header
@@ -191,65 +198,10 @@ piece.sizes.forEach((s, i) => {
   sizeRowEl.appendChild(btn);
 });
 
-// Bottom nav bar
-function renderBottomNav() {
-  const bar = document.getElementById('nextPiece');
-  let html = '';
-
-  if (piece.prevPiece) {
-    html += `
-      <div class="nav-prev" onclick="window.location='${piece.prevPiece.file}'">
-        <div class="nav-prev-thumb">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-            <path d="M7 1L3 5L7 9" stroke="#F0EDE4" stroke-width="1.2"
-            stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div>
-          <div class="nav-piece-eyebrow">Previous</div>
-          <div class="nav-piece-name">${piece.prevPiece.name}</div>
-        </div>
-      </div>`;
-  } else {
-    html += '<div></div>';
-  }
-
-  if (piece.nextPiece) {
-    html += `
-      <div class="nav-next" onclick="window.location='${piece.nextPiece.file}'">
-        <div>
-          <div class="nav-piece-eyebrow">Next piece</div>
-          <div class="nav-piece-name">${piece.nextPiece.name}</div>
-        </div>
-        <div class="nav-next-thumb">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-            <path d="M3 1L7 5L3 9" stroke="#F0EDE4" stroke-width="1.2"
-            stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </div>`;
-  } else {
-    html += '<div></div>';
-  }
-
-  bar.innerHTML = html;
-}
-renderBottomNav();
-
 /* ── NAV SCROLL ── */
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 10);
-}, { passive: true });
-
-const nextBlock = document.getElementById('nextPiece');
-window.addEventListener('scroll', () => {
-  const scrolled = window.scrollY + window.innerHeight;
-  const total = document.documentElement.scrollHeight;
-  const atBottom = scrolled >= total - 60;
-  nextBlock.style.background = atBottom
-    ? 'rgba(54, 25, 43, 1)'
-    : 'rgba(54, 25, 43, 0.15)';
 }, { passive: true });
 
 /* ── IMAGE SLIDER ── */
@@ -267,11 +219,9 @@ function setSlide(idx, animate) {
   track.style.transform = `translateX(-${current * (100 / totalSlides)}%)`;
   if (animate === false) requestAnimationFrame(() => track.classList.remove('no-transition'));
   document.querySelectorAll('.hdot').forEach((d, i) => d.classList.toggle('on', i === current));
+  document.querySelectorAll('.hthumb').forEach((t, i) => t.classList.toggle('on', i === current));
   counter.textContent = `${current + 1} / ${totalSlides}`;
 }
-
-document.getElementById('nextBtn').addEventListener('click', () => setSlide(current + 1));
-document.getElementById('prevBtn').addEventListener('click', () => setSlide(current - 1));
 
 const heroEl = document.getElementById('hero');
 function dragStart(x) { startX = x; dragDx = 0; isDragging = true; }
@@ -288,6 +238,93 @@ heroEl.addEventListener('mousedown',  e => dragStart(e.clientX));
 heroEl.addEventListener('mousemove',  e => dragMove(e.clientX));
 heroEl.addEventListener('mouseup',    dragEnd);
 heroEl.addEventListener('mouseleave', dragEnd);
+
+/* ── FLOWER STRIP ── */
+const PIECES = [
+  { file: 'suri-hanging-earrings.html' },
+  { file: 'suri-ring.html' },
+  { file: 'niva-earrings.html' },
+  { file: 'vara-bangle.html' },
+  { file: 'vara-pendant.html' },
+  { file: 'vara-hoops.html' },
+  { file: 'vara-nosepin.html' },
+  { file: 'rani-nosepin.html' },
+  { file: 'abha-ring.html' },
+  { file: 'sama-pendant.html' }
+];
+
+function buildFlower(active) {
+  const petals = [
+    { pts: '170,170 148,128 170,88 192,128',  tip:[170,88],  crease:[[148,128],[192,128]] },
+    { pts: '170,170 198,142 227,113 214,156',  tip:[227,113], crease:[[198,142],[214,156]] },
+    { pts: '170,170 212,148 252,170 212,192',  tip:[252,170], crease:[[212,148],[212,192]] },
+    { pts: '170,170 214,184 227,227 198,198',  tip:[227,227], crease:[[214,184],[198,198]] },
+    { pts: '170,170 148,212 170,252 192,212',  tip:[170,252], crease:[[148,212],[192,212]] },
+    { pts: '170,170 126,184 113,227 142,198',  tip:[113,227], crease:[[126,184],[142,198]] },
+    { pts: '170,170 128,148 88,170 128,192',   tip:[88,170],  crease:[[128,148],[128,192]] },
+    { pts: '170,170 126,156 113,113 142,142',  tip:[113,113], crease:[[126,156],[142,142]] },
+  ];
+  const fills  = active ? ['#6a6a38','#7a7a45','#5a5a30'] : ['#4a2438','#5a2d47','#3a1a2c'];
+  const sOp    = active ? [0.65,0.55,0.65]               : [0.45,0.4,0.45];
+  const cFill  = active ? '#4a4a22' : '#2e1525';
+  const spine  = active ? 'rgba(240,237,228,0.4)'  : 'rgba(240,237,228,0.3)';
+  const crease = active ? 'rgba(240,237,228,0.22)' : 'rgba(240,237,228,0.15)';
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('viewBox', '70 70 200 200');
+  svg.setAttribute('fill', 'none');
+  svg.style.width = '100%'; svg.style.height = '100%'; svg.style.overflow = 'visible';
+  petals.forEach((p, idx) => {
+    const poly = document.createElementNS(ns, 'polygon');
+    poly.setAttribute('points', p.pts);
+    poly.setAttribute('fill', fills[idx % 3]);
+    poly.setAttribute('stroke', `rgba(240,237,228,${sOp[idx % 3]})`);
+    poly.setAttribute('stroke-width', '0.8');
+    svg.appendChild(poly);
+    const sp = document.createElementNS(ns, 'line');
+    sp.setAttribute('x1','170'); sp.setAttribute('y1','170');
+    sp.setAttribute('x2', String(p.tip[0])); sp.setAttribute('y2', String(p.tip[1]));
+    sp.setAttribute('stroke', spine); sp.setAttribute('stroke-width','0.6');
+    svg.appendChild(sp);
+    p.crease.forEach(([cx,cy]) => {
+      const cl = document.createElementNS(ns,'line');
+      cl.setAttribute('x1','170'); cl.setAttribute('y1','170');
+      cl.setAttribute('x2',String(cx)); cl.setAttribute('y2',String(cy));
+      cl.setAttribute('stroke', crease); cl.setAttribute('stroke-width','0.5');
+      cl.setAttribute('stroke-dasharray','2,2');
+      svg.appendChild(cl);
+    });
+  });
+  const ctr = document.createElementNS(ns,'polygon');
+  ctr.setAttribute('points','170,152 186,156 192,170 186,184 170,188 154,184 148,170 154,156');
+  ctr.setAttribute('fill', cFill);
+  ctr.setAttribute('stroke', `rgba(240,237,228,${active ? 0.5 : 0.3})`);
+  ctr.setAttribute('stroke-width','0.8');
+  svg.appendChild(ctr);
+  return svg;
+}
+
+(function buildFlowerStrip() {
+  const strip = document.getElementById('flowerStrip');
+  const prevChev = document.createElement('div');
+  prevChev.className = PIECE_INDEX <= 1 ? 'fstrip-chevron fstrip-chevron-disabled' : 'fstrip-chevron';
+  prevChev.innerHTML = `<svg viewBox="0 0 10 10" fill="none" width="10" height="10"><path d="M7 2L3 5L7 8" stroke="rgba(240,237,228,0.7)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  if (PIECE_INDEX > 1) prevChev.addEventListener('click', () => window.location = PIECES[PIECE_INDEX - 2].file);
+  strip.appendChild(prevChev);
+  PIECES.forEach((p, i) => {
+    const idx1 = i + 1;
+    const wrap = document.createElement('div');
+    wrap.className = idx1 === PIECE_INDEX ? 'fstrip-flower-active' : 'fstrip-flower';
+    if (idx1 !== PIECE_INDEX) wrap.addEventListener('click', () => window.location = p.file);
+    wrap.appendChild(buildFlower(idx1 === PIECE_INDEX));
+    strip.appendChild(wrap);
+  });
+  const nextChev = document.createElement('div');
+  nextChev.className = PIECE_INDEX >= PIECES.length ? 'fstrip-chevron fstrip-chevron-disabled' : 'fstrip-chevron';
+  nextChev.innerHTML = `<svg viewBox="0 0 10 10" fill="none" width="10" height="10"><path d="M3 2L7 5L3 8" stroke="rgba(240,237,228,0.7)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  if (PIECE_INDEX < PIECES.length) nextChev.addEventListener('click', () => window.location = PIECES[PIECE_INDEX].file);
+  strip.appendChild(nextChev);
+})();
 
 /* ── TABS ── */
 document.getElementById('tabRow').querySelectorAll('.tab-btn').forEach(btn => {
