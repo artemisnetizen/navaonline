@@ -505,7 +505,11 @@ body {
 .fstrip-chevron-disabled { opacity: 0.2; pointer-events: none; }
 .fstrip-flower { width: 24px; height: 24px; cursor: pointer; flex-shrink: 0; }
 .fstrip-flower-active {
-  width: 30px; height: 30px; cursor: default;
+  width: 30px;
+  height: 30px;
+  cursor: default;
+  flex-shrink: 0;
+  transform-origin: center center;
   animation: flowerPulse 2.6s ease-in-out infinite;
 }
 @keyframes flowerPulse {
