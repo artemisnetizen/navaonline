@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Privacy Policy — Nava</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,400;1,500&family=Josefin+Sans:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --aubergine: #36192B;
+      --olive: #797842;
+      --jet: #020202;
+      --marshmallow: #F0EDE4;
+      --marshmallow-dim: rgba(240, 237, 228, 0.5);
+      --marshmallow-faint: rgba(240, 237, 228, 0.12);
+      --olive-faint: rgba(121, 120, 66, 0.2);
+    }
+
+    html, body {
+      background: var(--aubergine);
+      color: var(--marshmallow);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      height: 60px;
+      background: var(--aubergine);
+      border-bottom: 1px solid var(--marshmallow-faint);
+    }
+
+    nav .logo img { height: 48px; display: block; }
+
+    nav .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    nav .nav-links a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--marshmallow);
+      text-decoration: none;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav .nav-links a:hover { opacity: 1; }
+
+    .page {
+      max-width: 430px;
+      margin: 0 auto;
+      padding: 100px 24px 100px;
+    }
+
+    .page-title {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 12px;
+    }
+
+    .page-heading {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 36px;
+      color: var(--marshmallow);
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .page-date {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--marshmallow-dim);
+      letter-spacing: 0.06em;
+      margin-bottom: 48px;
+    }
+
+    .section {
+      margin-bottom: 36px;
+    }
+
+    .section-number {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 10px;
+    }
+
+    .section h2 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--marshmallow);
+      margin-bottom: 10px;
+      letter-spacing: 0.01em;
+    }
+
+    .section p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--marshmallow-dim);
+      line-height: 1.8;
+      margin-bottom: 8px;
+    }
+
+    .section p:last-child { margin-bottom: 0; }
+
+    .section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .section ul li {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--marshmallow-dim);
+      line-height: 1.8;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .section ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--olive);
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--marshmallow-faint);
+      margin-bottom: 36px;
+    }
+
+    .contact-line {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--marshmallow-dim);
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--marshmallow-faint);
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      padding: 14px 24px;
+      background: rgba(54, 25, 43, 0.92);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--marshmallow-faint);
+    }
+
+    footer a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--marshmallow-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: var(--marshmallow); }
+    footer a.active { color: var(--marshmallow); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="index.html"><img src="logo.png" alt="Nava" /></a>
+    <div class="nav-links">
+      <a href="faq.html">FAQ</a>
+      <a href="about.html">About us</a>
+    </div>
+  </nav>
+
+  <div class="page">
+    <p class="page-title">Nava · Legal</p>
+    <h1 class="page-heading">Privacy<br>Policy.</h1>
+    <p class="page-date">Last updated: April 2026</p>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <p class="section-number">01</p>
+      <h2>Information We Collect</h2>
+      <p>When you visit the site, Google Analytics 4 collects anonymised data including pages visited, time spent, device type, and approximate location. No personally identifiable information is collected automatically.</p>
+      <p>If you submit the contact form or initiate a WhatsApp conversation, you are sharing your name, phone number, and any other information you choose to provide.</p>
+    </div>
+
+    <div class="section">
+      <p class="section-number">02</p>
+      <h2>How We Use Your Information</h2>
+      <ul>
+        <li>To respond to inquiries and process orders</li>
+        <li>To understand how visitors use the site (via GA4 analytics)</li>
+        <li>To communicate order updates and delivery information</li>
+      </ul>
+      <p style="margin-top: 12px;">We do not use your information for unsolicited marketing. We do not sell or share your data with third parties except as required to fulfil your order — for example, with logistics partners.</p>
+    </div>
+
+    <div class="section">
+      <p class="section-number">03</p>
+      <h2>WhatsApp</h2>
+      <p>Order conversations happen over WhatsApp. WhatsApp's own privacy policy governs data within that platform. Nava does not store WhatsApp conversation data independently.</p>
+    </div>
+
+    <div class="section">
+      <p class="section-number">04</p>
+      <h2>Google Analytics</h2>
+      <p>This site uses Google Analytics 4. GA4 collects anonymised usage data to help us understand site performance. You can opt out via Google's opt-out tools or a browser extension.</p>
+    </div>
+
+    <div class="section">
+      <p class="section-number">05</p>
+      <h2>Cookies</h2>
+      <p>GA4 uses cookies to distinguish visitors. By using this site, you consent to this. No other cookies are set by this site.</p>
+    </div>
+
+    <div class="section">
+      <p class="section-number">06</p>
+      <h2>Data Retention</h2>
+      <p>Contact form submissions are retained in Google Sheets for as long as necessary to respond to your inquiry. Analytics data is retained per GA4's default settings.</p>
+    </div>
+
+    <div class="section">
+      <p class="section-number">07</p>
+      <h2>Your Rights</h2>
+      <p>You may request access to, correction of, or deletion of any personal data you have shared with us. Write to us via the <a href="contact.html" style="color: var(--marshmallow); text-decoration: underline; text-underline-offset: 3px;">Contact page</a> or on WhatsApp.</p>
+    </div>
+
+    <div class="section">
+      <p class="section-number">08</p>
+      <h2>Children</h2>
+      <p>This site is not directed at children under 13. We do not knowingly collect data from children.</p>
+    </div>
+
+    <div class="section">
+      <p class="section-number">09</p>
+      <h2>Changes to This Policy</h2>
+      <p>This policy may be updated periodically. The date at the top of this page reflects the most recent revision.</p>
+    </div>
+
+    <p class="contact-line">Questions? Contact us at +91 73567 74555 or via the <a href="contact.html" style="color: var(--marshmallow); text-decoration: underline; text-underline-offset: 3px;">Contact page</a>.</p>
+  </div>
+
+  <footer>
+    <a href="privacy.html" class="active">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="contact.html">Contact</a>
+  </footer>
+
+</body>
+</html>
