@@ -57,7 +57,7 @@ gtag('config', 'G-KVB4V9TTL4');
   <div class="nav-links">
     <a class="nav-link" href="faq.html">FAQ</a>
     <a class="nav-link" href="about.html">About us</a>
-    <a class="nav-link" id="orderNavLink" href="#" target="_blank">Order</a>
+    <a class="nav-link" id="orderNavLink" href="#">Order</a>
   </div>
 </nav>
 
@@ -138,7 +138,7 @@ gtag('config', 'G-KVB4V9TTL4');
 </div>
 
 <div class="cta-block">
-  <a class="cta-btn" id="ctaBtn" href="#" target="_blank">Begin an order</a>
+  <a class="cta-btn" id="ctaBtn" href="#">Begin an order</a>
 </div>
 
 <script>
@@ -148,6 +148,7 @@ const piece = {
   imageFolder: "Suri_Hanging_Earrings",
   images: ["suri_hanging_earrings_1.webp", "suri_hanging_earrings_2.webp", "suri_hanging_earrings_3.webp", "suri_hanging_earrings_4.webp"],
   price: "₹ 35,399",
+  shopifyVariantId: 9149040918770,
   story: "I learnt how to make a rose first in origami and always wondered how the petals would translate to a piece of jewelry. It needed to be dainty, yet striking in the way only a rose can be",
   provenance: {
     "Made in": "Jaipur",
@@ -162,9 +163,9 @@ const piece = {
 }
 
 document.getElementById('ctaBtn').href =
-  `https://wa.me/917356774555?text=${encodeURIComponent(`Hi. I am interested in exploring a purchase for ${piece.name} by Nava.`)}`;
+  `https://nava-online-2-2.myshopify.com/cart/${piece.shopifyVariantId}:1`;
 document.getElementById('orderNavLink').href =
-  `https://wa.me/917356774555?text=${encodeURIComponent(`Hi. I am interested in exploring a purchase for ${piece.name} by Nava.`)}`;
+  `https://nava-online-2-2.myshopify.com/cart/${piece.shopifyVariantId}:1`;
 const PIECE_INDEX = 1;
 
 /* ── RENDER FROM PIECE ── */

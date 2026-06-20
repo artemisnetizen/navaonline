@@ -57,7 +57,7 @@ gtag('config', 'G-KVB4V9TTL4');
   <div class="nav-links">
     <a class="nav-link" href="faq.html">FAQ</a>
     <a class="nav-link" href="about.html">About us</a>
-    <a class="nav-link" id="orderNavLink" href="#" target="_blank">Order</a>
+    <a class="nav-link" id="orderNavLink" href="#">Order</a>
   </div>
 </nav>
 
@@ -138,7 +138,7 @@ gtag('config', 'G-KVB4V9TTL4');
 </div>
 
 <div class="cta-block">
-  <a class="cta-btn" id="ctaBtn" href="#" target="_blank">Begin an order</a>
+  <a class="cta-btn" id="ctaBtn" href="#">Begin an order</a>
 </div>
 
 <script>
@@ -148,6 +148,7 @@ const piece = {
   imageFolder: "Vara",
   images: ["Vara_2.webp", "Vara_1.webp", "Vara_3.jpg", "Vara_4.webp"],
   price: "₹ 1,69,999",
+  shopifyVariantId: 9149045342450,
   story: "Taking inspiration from our mothers for everyday jewelry but with a slight twist, the Vara series took shape in our heirloom piece first, the Vara Bangle. The multi-faceted cuts give it modernity and the metal gives it its durability",
   provenance: {
     "Made in": "Jaipur",
@@ -162,9 +163,9 @@ const piece = {
 }
 
 document.getElementById('ctaBtn').href =
-  `https://wa.me/917356774555?text=${encodeURIComponent(`Hi. I am interested in exploring a purchase for ${piece.name} by Nava.`)}`;
+  `https://nava-online-2-2.myshopify.com/cart/${piece.shopifyVariantId}:1`;
 document.getElementById('orderNavLink').href =
-  `https://wa.me/917356774555?text=${encodeURIComponent(`Hi. I am interested in exploring a purchase for ${piece.name} by Nava.`)}`;
+  `https://nava-online-2-2.myshopify.com/cart/${piece.shopifyVariantId}:1`;
 const PIECE_INDEX = 4;
 
 /* ── RENDER FROM PIECE ── */
