@@ -87,6 +87,12 @@ body {
   transition: color 0.2s;
 }
 .nav-link:hover { color: var(--marshmallow); }
+.cart-icon-link {
+  display: flex;
+  align-items: center;
+  position: relative;
+  color: #F0EDE4;
+}
 
 /* ── HERO IMAGE ── */
 .hero {
@@ -371,11 +377,9 @@ body {
 
 /* ── CTA ── */
 .cta-block {
-  padding: 20px 24px 0;
   opacity: 0;
   transform: translateY(12px);
   animation: fadeUp 0.6s 0.45s ease forwards;
-  margin-bottom: 32px;
 }
 .cta-btn {
   display: block;
@@ -491,4 +495,64 @@ body {
 @keyframes flowerPulse {
   0%, 100% { transform: scale(1); opacity: 1; }
   50%       { transform: scale(0.92); opacity: 0.68; }
+}
+
+/* ── QTY + CTA ROW ── */
+.qty-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 24px 24px;
+}
+
+.qty-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.qty-label {
+  display: none;
+}
+
+.qty-stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(240, 237, 228, 0.3);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.qty-btn {
+  background: none;
+  border: none;
+  color: #F0EDE4;
+  font-family: 'DM Sans', 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.qty-btn:hover {
+  background: rgba(240, 237, 228, 0.08);
+}
+
+.qty-value {
+  min-width: 28px;
+  text-align: center;
+  color: #F0EDE4;
+  font-family: 'DM Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+}
+
+.cta-block {
+  flex: 1;
+  padding: 0;
+}
+
+.cta-btn {
+  width: 100%;
+  display: block;
 }

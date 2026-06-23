@@ -39,6 +39,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="nava-styles.css">
+<script src="nava-cart.js"></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-KVB4V9TTL4"></script>
 <script>
@@ -57,7 +58,13 @@ gtag('config', 'G-KVB4V9TTL4');
   <div class="nav-links">
     <a class="nav-link" href="faq.html">FAQ</a>
     <a class="nav-link" href="about.html">About us</a>
-    <a class="nav-link" id="orderNavLink" href="#">Order</a>
+    <a class="nav-link cart-icon-link" id="cartIconLink" href="cart.html">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 7h12l-1 13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 7Z"/>
+        <path d="M9 7V5a3 3 0 0 1 6 0v2"/>
+      </svg>
+      <span class="cart-badge" id="cartBadge"></span>
+    </a>
   </div>
 </nav>
 
@@ -137,8 +144,18 @@ gtag('config', 'G-KVB4V9TTL4');
   <div class="price-note">Made to order · Free delivery</div>
 </div>
 
-<div class="cta-block">
-  <a class="cta-btn" id="ctaBtn" href="#">Begin an order</a>
+<div class="qty-cta-row">
+  <div class="qty-block">
+    <div class="qty-stepper">
+      <button class="qty-btn" id="qtyMinus" type="button">−</button>
+      <span class="qty-value" id="qtyValue">1</span>
+      <button class="qty-btn" id="qtyPlus" type="button">+</button>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <button class="cta-btn" id="ctaBtn" type="button">Add to cart</button>
+  </div>
 </div>
 
 <script>
@@ -161,11 +178,8 @@ const piece = {
   nextPiece: { name: "Sama Pendant", file: "sama-pendant.html" },
   prevPiece: { name: "Rani Nosepin", file: "rani-nosepin.html" }
 }
+localStorage.setItem('nava_last_piece', window.location.pathname.split('/').pop());
 
-document.getElementById('ctaBtn').href =
-  `https://nava-online-2-2.myshopify.com/cart/${piece.shopifyVariantId}:1`;
-document.getElementById('orderNavLink').href =
-  `https://nava-online-2-2.myshopify.com/cart/${piece.shopifyVariantId}:1`;
 const PIECE_INDEX = 9;
 
 /* ── RENDER FROM PIECE ── */
@@ -389,6 +403,34 @@ document.getElementById('sizeRow').querySelectorAll('.szchip').forEach(c => {
     document.querySelectorAll('.szchip').forEach(x => x.classList.remove('sel'));
     this.classList.add('sel');
   });
+});
+
+let currentQty = 1;
+const qtyValueEl = document.getElementById('qtyValue');
+document.getElementById('qtyMinus').addEventListener('click', () => {
+  if (currentQty > 1) { currentQty--; qtyValueEl.textContent = currentQty; }
+});
+document.getElementById('qtyPlus').addEventListener('click', () => {
+  currentQty++; qtyValueEl.textContent = currentQty;
+});
+
+document.getElementById('ctaBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('ctaBtn');
+  btn.disabled = true;
+  btn.textContent = 'Adding...';
+  try {
+    await addToCart(piece.shopifyVariantId, currentQty);
+    await updateCartBadge();
+    showToast(`${piece.name} added to cart`);
+    currentQty = 1;
+    qtyValueEl.textContent = currentQty;
+  } catch (err) {
+    showToast('Could not add to cart — please try again');
+    console.error(err);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Add to cart';
+  }
 });
 </script>
 <script src="nava-analytics.js"></script>

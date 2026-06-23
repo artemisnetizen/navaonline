@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Nava — Cart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="nava-styles.css">
+<script src="nava-cart.js"></script>
+<style>
+  .cart-wrap {
+    padding: 100px 24px 140px;
+    min-height: 100vh;
+  }
+  .cart-title {
+    font-family: 'Josefin Sans', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 22px;
+    color: #F0EDE4;
+    margin-bottom: 24px;
+  }
+  .cart-empty {
+    font-family: 'DM Sans', 'Helvetica Neue', sans-serif;
+    color: rgba(240,237,228,0.6);
+    font-size: 14px;
+    text-align: center;
+    margin-top: 60px;
+  }
+  .cart-empty a {
+    color: #F0EDE4;
+    text-decoration: underline;
+  }
+  .cart-line {
+    display: flex;
+    gap: 14px;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(240,237,228,0.12);
+  }
+  .cart-line-img {
+    width: 76px;
+    height: 96px;
+    object-fit: cover;
+    border-radius: 4px;
+    background: rgba(240,237,228,0.06);
+    flex-shrink: 0;
+  }
+  .cart-line-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .cart-line-name {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: #F0EDE4;
+  }
+  .cart-line-price {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 13px;
+    color: rgba(240,237,228,0.75);
+    margin-top: 4px;
+  }
+  .cart-line-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  .cart-qty-stepper {
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(240,237,228,0.3);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .cart-qty-btn {
+    background: none;
+    border: none;
+    color: #F0EDE4;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .cart-qty-btn:hover { background: rgba(240,237,228,0.08); }
+  .cart-qty-value {
+    min-width: 24px;
+    text-align: center;
+    color: #F0EDE4;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+  }
+  .cart-remove-btn {
+    background: none;
+    border: none;
+    color: rgba(240,237,228,0.5);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+  }
+  .cart-summary {
+    margin-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 16px;
+    border-top: 1px solid rgba(240,237,228,0.2);
+  }
+  .cart-summary-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(240,237,228,0.6);
+  }
+  .cart-summary-total {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 22px;
+    color: #F0EDE4;
+  }
+  .cart-checkout-btn {
+    width: 100%;
+    margin-top: 24px;
+    padding: 16px;
+    background: transparent;
+    border: 1px solid #F0EDE4;
+    color: #F0EDE4;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  .cart-checkout-btn:hover { background: rgba(240,237,228,0.08); }
+  .cart-checkout-btn:disabled { opacity: 0.5; cursor: default; }
+  .cart-continue-link {
+    display: block;
+    width: 100%;
+    margin-top: 14px;
+    padding: 16px;
+    background: transparent;
+    border: 1px solid rgba(240,237,228,0.5);
+    color: #F0EDE4;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 2px;
+    box-sizing: border-box;
+  }
+  .cart-continue-link:hover { background: rgba(240,237,228,0.08); }
+  .cart-loading {
+    text-align: center;
+    color: rgba(240,237,228,0.5);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    margin-top: 60px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a href="index.html" style="display:flex;align-items:center;">
+    <img src="logo.png" alt="Nava" style="height:24px;width:auto;">
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="faq.html">FAQ</a>
+    <a class="nav-link" href="about.html">About us</a>
+    <a class="nav-link cart-icon-link" id="cartIconLink" href="cart.html">
+      🛍️
+      <span class="cart-badge" id="cartBadge"></span>
+    </a>
+  </div>
+</nav>
+
+<div class="cart-wrap">
+  <div class="cart-title">Your cart</div>
+  <div id="cartContent">
+    <div class="cart-loading">Loading your cart...</div>
+  </div>
+</div>
+
+<footer style="display:flex;justify-content:center;gap:28px;padding:14px 24px;background:rgba(54,25,43,0.92);backdrop-filter:blur(10px);border-top:1px solid rgba(240,237,228,0.12);position:fixed;bottom:0;left:0;right:0;z-index:50;">
+  <a href="privacy.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Privacy Policy</a>
+  <a href="terms.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Terms of Service</a>
+  <a href="contact.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Contact</a>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+function formatPrice(amount, currencyCode) {
+  const num = parseFloat(amount);
+  if (currencyCode === 'INR') {
+    return `₹ ${num.toLocaleString('en-IN', { maximumFractionDigits: 0 })}`;
+  }
+  return `${currencyCode} ${num.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+}
+
+async function renderCart() {
+  const contentEl = document.getElementById('cartContent');
+  const titleEl = document.querySelector('.cart-title');
+  const cart = await getCart();
+
+  if (!cart || cart.lines.edges.length === 0) {
+    if (titleEl) titleEl.style.display = 'none';
+    contentEl.innerHTML = `
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px 20px;">
+        <img src="nava-origami-flower.png" alt="Origami collection" style="width:300px;height:auto;margin-bottom:2px;">
+        <div style="text-align:center;margin-bottom:16px;">
+          <div style="color:rgba(240,237,228,0.45);font-size:9px;letter-spacing:3px;margin-bottom:12px;font-family:'Josefin Sans', sans-serif;">CART</div>
+          <div style="font-family:'EB Garamond', Georgia, serif;font-style:italic;color:#F0EDE4;font-size:36px;line-height:1;letter-spacing:-0.5px;">Origami</div>
+        </div>
+        <p style="color:rgba(240,237,228,0.6);font-size:13px;line-height:1.8;text-align:center;max-width:280px;margin:0 0 44px;">
+          Your cart is empty. Tap "begin" to explore.
+        </p>
+        <a href="suri-hanging-earrings.html" style="display:block;width:100%;max-width:280px;border:1px solid rgba(240,237,228,0.5);border-radius:2px;padding:16px;text-align:center;text-decoration:none;">
+          <span style="color:#F0EDE4;font-size:9px;letter-spacing:3px;font-family:'Josefin Sans', sans-serif;">BEGIN</span>
+        </a>
+      </div>
+    `;
+    return;
+  }
+
+  if (titleEl) titleEl.style.display = 'block';
+  let html = '';
+  cart.lines.edges.forEach(({ node: line }) => {
+    const variant = line.merchandise;
+    const imgUrl = variant.image ? variant.image.url : '';
+    const lineTotal = (parseFloat(variant.price.amount) * line.quantity).toFixed(2);
+    html += `
+      <div class="cart-line" data-line-id="${line.id}">
+        ${imgUrl ? `<img class="cart-line-img" src="${imgUrl}" alt="${variant.product.title}">` : '<div class="cart-line-img"></div>'}
+        <div class="cart-line-info">
+          <div>
+            <div class="cart-line-name">${variant.product.title}</div>
+            <div class="cart-line-price">${formatPrice(lineTotal, variant.price.currencyCode)}</div>
+          </div>
+          <div class="cart-line-controls">
+            <div class="cart-qty-stepper">
+              <button class="cart-qty-btn" data-action="minus" data-line-id="${line.id}" data-qty="${line.quantity}" type="button">−</button>
+              <span class="cart-qty-value">${line.quantity}</span>
+              <button class="cart-qty-btn" data-action="plus" data-line-id="${line.id}" data-qty="${line.quantity}" type="button">+</button>
+            </div>
+            <button class="cart-remove-btn" data-line-id="${line.id}" type="button">Remove</button>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  html += `
+    <div class="cart-summary">
+      <span class="cart-summary-label">Total</span>
+      <span class="cart-summary-total">${formatPrice(cart.cost.totalAmount.amount, cart.cost.totalAmount.currencyCode)}</span>
+    </div>
+    <button class="cart-checkout-btn" id="checkoutBtn" type="button">Checkout</button>
+    <a class="cart-continue-link" id="continueLink" href="${localStorage.getItem('nava_last_piece') || 'suri-hanging-earrings.html'}">Continue browsing</a>
+  `;
+
+  contentEl.innerHTML = html;
+
+  contentEl.querySelectorAll('.cart-qty-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const lineId = btn.dataset.lineId;
+      let qty = parseInt(btn.dataset.qty, 10);
+      qty = btn.dataset.action === 'plus' ? qty + 1 : qty - 1;
+      if (qty < 1) {
+        await removeLine(lineId);
+      } else {
+        await updateLineQty(lineId, qty);
+      }
+      await updateCartBadge();
+      await renderCart();
+    });
+  });
+
+  contentEl.querySelectorAll('.cart-remove-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      await removeLine(btn.dataset.lineId);
+      await updateCartBadge();
+      await renderCart();
+    });
+  });
+
+  document.getElementById('checkoutBtn').addEventListener('click', async () => {
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    checkoutBtn.disabled = true;
+    checkoutBtn.textContent = 'Redirecting...';
+    const url = await getCheckoutUrl();
+    if (url) {
+      window.location.href = url;
+    } else {
+      checkoutBtn.disabled = false;
+      checkoutBtn.textContent = 'Checkout';
+      showToast('Could not start checkout — please try again');
+    }
+  });
+}
+
+renderCart();
+updateCartBadge();
+</script>
+
+</body>
+</html>
