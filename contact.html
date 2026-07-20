@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Contact — Nava</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,400;1,500&family=Josefin+Sans:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --aubergine: #36192B;
+      --olive: #797842;
+      --jet: #020202;
+      --marshmallow: #F0EDE4;
+      --marshmallow-dim: rgba(240, 237, 228, 0.5);
+      --marshmallow-faint: rgba(240, 237, 228, 0.12);
+      --olive-faint: rgba(121, 120, 66, 0.2);
+    }
+
+    html, body {
+      background: var(--aubergine);
+      color: var(--marshmallow);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      height: 60px;
+      background: var(--aubergine);
+      border-bottom: 1px solid var(--marshmallow-faint);
+    }
+
+    nav .logo img { height: 48px; display: block; }
+
+    nav .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    nav .nav-links a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--marshmallow);
+      text-decoration: none;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav .nav-links a:hover { opacity: 1; }
+
+    .page {
+      max-width: 430px;
+      margin: 0 auto;
+      padding: 100px 24px 100px;
+    }
+
+    .page-title {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 12px;
+    }
+
+    .page-heading {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 36px;
+      color: var(--marshmallow);
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .page-subtext {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--marshmallow-dim);
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    /* FORM */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .form-field {
+      margin-bottom: 12px;
+    }
+
+    .form-field input,
+    .form-field textarea {
+      width: 100%;
+      background: var(--marshmallow-faint);
+      border: 1px solid var(--marshmallow-faint);
+      border-radius: 2px;
+      padding: 14px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--marshmallow);
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
+    }
+
+    .form-field input::placeholder,
+    .form-field textarea::placeholder {
+      color: var(--marshmallow-dim);
+    }
+
+    .form-field input:focus,
+    .form-field textarea:focus {
+      border-color: rgba(240, 237, 228, 0.35);
+      background: rgba(240, 237, 228, 0.08);
+    }
+
+    .form-field textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      display: block;
+      width: 100%;
+      margin-top: 24px;
+      padding: 16px;
+      background: transparent;
+      border: 1px solid var(--marshmallow);
+      border-radius: 2px;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--marshmallow);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .submit-btn:hover {
+      background: var(--marshmallow);
+      color: var(--aubergine);
+    }
+
+    /* SUCCESS STATE */
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 40px 0;
+    }
+
+    .success-message.visible { display: block; }
+
+    .success-message p {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 22px;
+      color: var(--marshmallow);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .success-message span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--marshmallow-dim);
+    }
+
+    /* WHATSAPP ALTERNATIVE */
+    .alt-contact {
+      margin-top: 40px;
+      padding-top: 28px;
+      border-top: 1px solid var(--marshmallow-faint);
+    }
+
+    .alt-contact p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--marshmallow-dim);
+      line-height: 1.7;
+    }
+
+    .alt-contact a {
+      color: var(--marshmallow);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* HIDDEN GOOGLE FORM IFRAME */
+    #gform-iframe {
+      display: none;
+      width: 0;
+      height: 0;
+      border: none;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      padding: 14px 24px;
+      background: rgba(54, 25, 43, 0.92);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--marshmallow-faint);
+    }
+
+    footer a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--marshmallow-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: var(--marshmallow); }
+    footer a.active { color: var(--marshmallow); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="index.html"><img src="logo.png" alt="Nava" /></a>
+    <div class="nav-links">
+      <a href="faq.html">FAQ</a>
+      <a href="about.html">About us</a>
+    </div>
+  </nav>
+
+  <div class="page">
+    <p class="page-title">Nava · Origami</p>
+    <h1 class="page-heading">Get in<br>touch.</h1>
+    <p class="page-subtext">For order enquiries, sizing help, or anything else — write to us below or reach us directly on WhatsApp.</p>
+
+    <!-- FORM — styled inputs submit to hidden Google Form iframe -->
+    <!-- ============================================================
+         GOOGLE FORM INTEGRATION — PLACEHOLDER
+         Once you have the Google Form link, share it and the
+         entry IDs will be wired in here. The visible fields below
+         will submit silently to the Google Form via a hidden iframe.
+         ============================================================ -->
+
+    <div id="contact-form">
+      <div class="form-row">
+        <div class="form-field">
+          <input type="text" id="field-name" placeholder="Name" autocomplete="name" />
+        </div>
+        <div class="form-field">
+          <input type="email" id="field-email" placeholder="Email *" required autocomplete="email" />
+        </div>
+      </div>
+      <div class="form-field">
+        <input type="tel" id="field-phone" placeholder="Phone number" autocomplete="tel" />
+      </div>
+      <div class="form-field">
+        <textarea id="field-message" placeholder="Message"></textarea>
+      </div>
+      <button class="submit-btn" id="submit-btn" type="button">Send</button>
+    </div>
+
+    <div class="success-message" id="success-msg">
+      <p>Thank you.<br>We'll be in touch shortly.</p>
+      <span>Usually within one working day.</span>
+    </div>
+
+    <!-- Hidden iframe for Google Form submission -->
+    <iframe id="gform-iframe" name="gform-iframe" title="Form submission"></iframe>
+
+    <div class="alt-contact">
+      <p>Prefer WhatsApp? Reach us directly at <a href="https://wa.me/917356774555" target="_blank">+91 73567 74555</a>.</p>
+    </div>
+  </div>
+
+  <footer>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="contact.html" class="active">Contact</a>
+  </footer>
+
+  <script>
+    // ============================================================
+    // GOOGLE FORM INTEGRATION — WIRE IN ENTRY IDs HERE
+    // Replace FORM_ID and entry IDs once you share the Google Form link.
+    // ============================================================
+    const GFORM_ACTION = 'https://docs.google.com/forms/d/e/REPLACE_WITH_FORM_ID/formResponse';
+    const ENTRY = {
+      name:    'entry.REPLACE_NAME_ID',
+      email:   'entry.REPLACE_EMAIL_ID',
+      phone:   'entry.REPLACE_PHONE_ID',
+      message: 'entry.REPLACE_MESSAGE_ID'
+    };
+
+    document.getElementById('submit-btn').addEventListener('click', () => {
+      const email = document.getElementById('field-email').value.trim();
+      if (!email) {
+        document.getElementById('field-email').focus();
+        return;
+      }
+
+      const name    = document.getElementById('field-name').value.trim();
+      const phone   = document.getElementById('field-phone').value.trim();
+      const message = document.getElementById('field-message').value.trim();
+
+      // Build a hidden form and submit to Google Forms via iframe
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = GFORM_ACTION;
+      form.target = 'gform-iframe';
+
+      const fields = { [ENTRY.name]: name, [ENTRY.email]: email, [ENTRY.phone]: phone, [ENTRY.message]: message };
+      Object.entries(fields).forEach(([key, val]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = val;
+        form.appendChild(input);
+      });
+
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
+
+      // Show success state
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('success-msg').classList.add('visible');
+    });
+  </script>
+
+</body>
+</html>

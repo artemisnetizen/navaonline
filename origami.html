@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Nava — Origami</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="nava-styles.css">
+<script src="nava-cart.js"></script>
+<style>
+/* ── ORIGAMI MOSAIC ── scoped to this page ── */
+.mosaic-tile {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  text-decoration: none;
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+}
+.mosaic-tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(2,2,2,0.6) 0%, transparent 55%);
+}
+.mosaic-name {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  z-index: 1;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  color: #F0EDE4;
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a href="index.html" style="display:flex;align-items:center;">
+    <img src="logo.png" alt="Nava" style="height:36px;width:auto;">
+  </a>
+  <div class="nav-links">
+    <div class="nav-collections" tabindex="0">
+      <span class="nav-collections-trigger">Visit
+        <svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 1L4 4.5L7 1" stroke="rgba(240,237,228,0.6)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <div class="nav-collections-dd">
+        <div class="nav-collections-dd-inner">
+          <a href="index.html">Home</a>
+          <a href="suri.html">Origami</a>
+          <a href="imai.html">Aadhi</a>
+        </div>
+      </div>
+    </div>
+    <a class="nav-link" href="faq.html">FAQ</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-link cart-icon-link" id="cartIconLink" href="cart.html">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 7h12l-1 13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 7Z"/>
+        <path d="M9 7V5a3 3 0 0 1 6 0v2"/>
+      </svg>
+      <span class="cart-badge" id="cartBadge"></span>
+    </a>
+  </div>
+</nav>
+
+<script>
+updateCartBadge();
+</script>
+
+<div style="display:flex;flex-direction:column;gap:2px;margin:0;">
+  <div style="display:flex;gap:2px;height:220px;">
+    <a class="mosaic-tile" href="sama.html" style="flex:0 0 calc(62.5% - 1px);background-color:#5a4a52;background-image:url('Sama_Pendant/Sama_Pendant_3.jpg');">
+      <span class="mosaic-name" style="font-size:19px;">Sama</span>
+    </a>
+    <a class="mosaic-tile" href="vara.html" style="flex:0 0 calc(37.5% - 1px);background-color:#665560;background-image:url('Vara/Vara_2.webp');">
+      <span class="mosaic-name" style="font-size:15px;">Vara</span>
+    </a>
+  </div>
+  <div style="display:flex;gap:2px;height:160px;">
+    <a class="mosaic-tile" href="abha.html" style="flex:0 0 calc(38% - 1px);background-color:#5a4a52;background-image:url('Abha_Ring/abha_ring_1.webp');">
+      <span class="mosaic-name" style="font-size:13px;">Abha</span>
+    </a>
+    <a class="mosaic-tile" href="suri.html" style="flex:0 0 calc(62% - 1px);background-color:#665560;background-image:url('Suri_Ring/suri_ring_1.jpg');">
+      <span class="mosaic-name" style="font-size:13px;">Suri</span>
+    </a>
+  </div>
+  <div style="display:flex;gap:2px;height:130px;">
+    <a class="mosaic-tile" href="rani.html" style="flex:0 0 calc(55% - 1px);background-color:#5a4a52;background-image:url('Rani_Nosepin/rani_nosepin_1.webp');">
+      <span class="mosaic-name" style="font-size:11px;">Rani</span>
+    </a>
+    <a class="mosaic-tile" href="niva.html" style="flex:0 0 calc(45% - 1px);background-color:#665560;background-image:url('Niva_Earrings/niva_earrings_3.jpg');">
+      <span class="mosaic-name" style="font-size:11px;">Niva</span>
+    </a>
+  </div>
+</div>
+
+<footer style="display:flex;justify-content:center;gap:28px;padding:14px 24px;background:rgba(54,25,43,0.92);backdrop-filter:blur(10px);border-top:1px solid rgba(240,237,228,0.12);">
+  <a href="privacy.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Privacy Policy</a>
+  <a href="terms.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Terms of Service</a>
+  <a href="contact.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Contact</a>
+</footer>
+</body>
+</html>

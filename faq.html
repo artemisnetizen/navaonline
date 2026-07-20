@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>FAQ — Nava</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,400;1,500&family=Josefin+Sans:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --aubergine: #36192B;
+      --olive: #797842;
+      --jet: #020202;
+      --marshmallow: #F0EDE4;
+      --marshmallow-dim: rgba(240, 237, 228, 0.5);
+      --marshmallow-faint: rgba(240, 237, 228, 0.12);
+      --olive-faint: rgba(121, 120, 66, 0.2);
+    }
+
+    html, body {
+      background: var(--aubergine);
+      color: var(--marshmallow);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      height: 60px;
+      background: var(--aubergine);
+      border-bottom: 1px solid var(--marshmallow-faint);
+    }
+
+    nav .logo img {
+      height: 48px;
+      display: block;
+    }
+
+    nav .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    nav .nav-links a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--marshmallow);
+      text-decoration: none;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav .nav-links a:hover { opacity: 1; }
+
+    /* PAGE */
+    .page {
+      max-width: 430px;
+      margin: 0 auto;
+      padding: 100px 24px 100px;
+    }
+
+    .page-title {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 12px;
+    }
+
+    .page-heading {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 36px;
+      color: var(--marshmallow);
+      line-height: 1.15;
+      margin-bottom: 48px;
+    }
+
+    /* FAQ SECTIONS */
+    .faq-section {
+      margin-bottom: 40px;
+    }
+
+    .faq-section-label {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--olive-faint);
+    }
+
+    /* ACCORDION ITEMS */
+    .faq-item {
+      border-bottom: 1px solid var(--marshmallow-faint);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 18px 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .faq-question span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--marshmallow);
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .faq-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      position: relative;
+      margin-top: 2px;
+    }
+
+    .faq-icon::before,
+    .faq-icon::after {
+      content: '';
+      position: absolute;
+      background: var(--marshmallow-dim);
+      border-radius: 1px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .faq-icon::before {
+      width: 12px; height: 1px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .faq-icon::after {
+      width: 1px; height: 12px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .faq-item.open .faq-icon::after {
+      transform: translate(-50%, -50%) rotate(90deg);
+      opacity: 0;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+    }
+
+    .faq-answer p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--marshmallow-dim);
+      line-height: 1.75;
+      padding-bottom: 20px;
+    }
+
+    /* FOOTER NAV */
+    footer {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      padding: 14px 24px;
+      background: rgba(54, 25, 43, 0.92);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--marshmallow-faint);
+    }
+
+    footer a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--marshmallow-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: var(--marshmallow); }
+    footer a.active { color: var(--marshmallow); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="index.html"><img src="logo.png" alt="Nava" /></a>
+    <div class="nav-links">
+      <a href="faq.html">FAQ</a>
+      <a href="about.html">About us</a>
+    </div>
+  </nav>
+
+  <div class="page">
+    <p class="page-title">Nava · Origami</p>
+    <h1 class="page-heading">Frequently asked<br>questions.</h1>
+
+    <div class="faq-section">
+      <p class="faq-section-label">The Pieces</p>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>What is the Origami collection?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Origami is Nava's first collection — ten pieces, each resolved around a single geometric decision. The forms are inspired by the logic of folding: one move, one consequence, nothing added that isn't necessary.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>What is 9kt gold?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>9kt gold is 37.5% pure gold alloyed with metals that give it durability and wearability. It is harder than 18kt or 22kt gold, which makes it better suited to everyday wear. Nava's position is simple: the design is the value, not the carat weight.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Are the pieces available in other metals or karats?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Not currently. All Nava pieces are made in 9kt gold.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How do I know which size to order?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Each piece page carries a size guide. If you are uncertain, mention it when you begin your order — we will walk you through it over WhatsApp before anything is confirmed.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-section">
+      <p class="faq-section-label">Ordering</p>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How do I place an order?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Tap "Begin an order" on any piece page. This opens a WhatsApp conversation with a pre-filled message. We confirm details, size, and delivery address over WhatsApp before the piece goes into production.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Is there a minimum order value?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>No.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Can I order more than one piece at a time?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Yes. Begin with one piece and mention the others in the conversation.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Do you take custom or bespoke requests?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Not at this stage. Every piece in the collection is fixed in its form — that is part of the design position.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-section">
+      <p class="faq-section-label">Production & Delivery</p>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How long does it take?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>All Nava pieces are made to order. Production takes 18–22 days from order confirmation. Delivery is additional depending on your location.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How much does delivery cost?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Delivery is free across India.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Do you deliver outside India?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Not currently.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-section">
+      <p class="faq-section-label">Returns & Exchanges</p>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>What is your return policy?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Because every piece is made to order specifically for you, we do not accept returns. If your piece arrives damaged or with a manufacturing defect, contact us within 48 hours of delivery and we will resolve it.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Can I exchange a piece?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Exchanges are not offered as a standard option. Write to us if you have a specific concern — we will consider it on a case by case basis.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-section">
+      <p class="faq-section-label">Other</p>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How do I get in touch?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Via the <a href="contact.html" style="color: var(--marshmallow); text-decoration: underline; text-underline-offset: 3px;">Contact page</a>, or directly on WhatsApp at +91 73567 74555.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="contact.html">Contact</a>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(el => {
+          el.classList.remove('open');
+          el.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

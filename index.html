@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Collections — 9 Carat Gold Jewellery | Nava</title>
+<meta name="description" content="Nava's collections — made-to-order pieces in 9 carat gold. Bangles, rings, earrings, pendants, nosepins and hoops. Designed for the everyday.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nava">
+<meta property="og:title" content="Collections — 9 Carat Gold Jewellery | Nava">
+<meta property="og:description" content="Nava's collections — made-to-order pieces in 9 carat gold. Bangles, rings, earrings, pendants, nosepins and hoops. Designed for the everyday.">
+<meta property="og:url" content="https://navaonline.in/">
+<meta property="og:image" content="https://navaonline.in/nava-origami-flower.png">
+<link rel="canonical" href="https://navaonline.in/index.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,400;1,500&family=Josefin+Sans:wght@300;400;600&display=swap">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KVB4V9TTL4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KVB4V9TTL4');
+</script>
+<style>
+  .col-track { display:flex; width:200%; transition: transform 0.6s ease; }
+  .col-slide { width:50%; flex-shrink:0; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 24px 20px; box-sizing:border-box; }
+  .col-dot { width:6px; height:6px; border-radius:50%; background:rgba(240,237,228,0.3); transition: background 0.3s ease; }
+  .col-dot.on { background:#F0EDE4; }
+
+  .col-viewport { position:relative; }
+  .col-chev {
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:32px; height:32px; border-radius:50%;
+    background:rgba(240,237,228,0.08); backdrop-filter:blur(4px);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; z-index:10; transition:background 0.2s ease, opacity 0.2s ease;
+  }
+  .col-chev:hover { background:rgba(240,237,228,0.16); }
+  .col-chev.disabled { opacity:0; pointer-events:none; }
+  .col-chev-prev { left:10px; }
+  .col-chev-next { right:10px; }
+
+  .nav-collections { position:relative; }
+  .nav-collections-trigger {
+    color:rgba(240,237,228,0.75); font-size:11px; letter-spacing:0.12em; text-transform:uppercase;
+    text-decoration:none; font-family:'Josefin Sans',sans-serif; cursor:pointer;
+    display:flex; align-items:center; gap:4px;
+  }
+  .nav-collections-dd {
+    position:absolute; top:100%; left:0; margin-top:0; padding-top:14px;
+    background:transparent;
+    min-width:160px;
+    opacity:0; visibility:hidden; transform:translateY(-4px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index:20;
+  }
+  .nav-collections-dd-inner {
+    background:rgba(54,25,43,0.88); backdrop-filter:blur(10px);
+    border:0.5px solid rgba(240,237,228,0.15); border-radius:4px;
+    padding:6px 0;
+  }
+  .nav-collections:hover .nav-collections-dd,
+  .nav-collections:focus-within .nav-collections-dd {
+    opacity:1; visibility:visible; transform:translateY(0);
+  }
+  .nav-collections-dd a {
+    display:block; padding:10px 16px;
+    color:rgba(240,237,228,0.8); font-size:11px; letter-spacing:0.08em;
+    font-family:'Josefin Sans',sans-serif; text-decoration:none;
+    border-left:2px solid transparent;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .nav-collections-dd a:hover {
+    background:rgba(240,237,228,0.06);
+    border-left-color:#797842;
+    color:#F0EDE4;
+  }
+</style>
+</head>
+<body style="background:#36192B;margin:0;min-height:100vh;">
+
+<div style="display:flex;flex-direction:column;font-family:sans-serif;max-width:430px;margin:0 auto;">
+
+  <nav style="display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:0.5px solid rgba(240,237,228,0.1);">
+    <a href="#"><img src="logo.png" alt="Nava" style="height:36px;width:auto;"></a>
+    <div style="display:flex;gap:20px;align-items:center;">
+      <div class="nav-collections" tabindex="0">
+        <span class="nav-collections-trigger">Visit
+          <svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 1L4 4.5L7 1" stroke="rgba(240,237,228,0.6)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <div class="nav-collections-dd">
+          <div class="nav-collections-dd-inner">
+            <a href="index2.html">Home</a>
+            <a href="suri.html">Origami</a>
+            <a href="imai.html">Aadhi</a>
+          </div>
+        </div>
+      </div>
+      <a href="faq.html" style="color:rgba(240,237,228,0.75);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;font-family:'Josefin Sans',sans-serif;">FAQ</a>
+      <a href="about.html" style="color:rgba(240,237,228,0.75);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;font-family:'Josefin Sans',sans-serif;">About</a>
+    </div>
+  </nav>
+
+  <div style="flex:1;overflow:hidden;" class="col-viewport" id="colViewport">
+    <div class="col-chev col-chev-prev disabled" id="colPrev">
+      <svg width="9" height="14" viewBox="0 0 9 14" fill="none"><path d="M7.5 1L1.5 7L7.5 13" stroke="#F0EDE4" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="col-chev col-chev-next" id="colNext">
+      <svg width="9" height="14" viewBox="0 0 9 14" fill="none"><path d="M1.5 1L7.5 7L1.5 13" stroke="#F0EDE4" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="col-track" id="colTrack">
+
+      <div class="col-slide">
+        <img src="nava-origami-flower.png" alt="Origami collection" style="width:300px;height:auto;margin-bottom:2px;">
+        <div style="text-align:center;margin-bottom:16px;">
+          <div style="color:rgba(240,237,228,0.45);font-size:9px;letter-spacing:3px;margin-bottom:12px;font-family:'Josefin Sans', sans-serif;">COLLECTION</div>
+          <div style="font-family:'EB Garamond', Georgia, serif;font-style:italic;color:#F0EDE4;font-size:36px;line-height:1;letter-spacing:-0.5px;">Origami</div>
+        </div>
+        <p style="color:rgba(240,237,228,0.6);font-size:13px;line-height:1.8;text-align:center;max-width:280px;margin:0 0 32px;">
+          Ten pieces: Each one a study in geometric form — folds, creases and edges.
+        </p>
+        <a href="suri.html" class="col-cta" style="display:block;width:100%;max-width:280px;border:1px solid rgba(240,237,228,0.5);border-radius:2px;padding:16px;text-align:center;text-decoration:none;margin-bottom:16px;">
+          <span style="color:#F0EDE4;font-size:9px;letter-spacing:3px;font-family:'Josefin Sans', sans-serif;">EXPLORE ORIGAMI</span>
+        </a>
+      </div>
+
+      <div class="col-slide">
+        <!-- PLACEHOLDER: replace image, link, name, subtext for the 2nd collection -->
+        <img src="nava-aadhi-tree.png" alt="Second collection" style="width:300px;height:auto;margin-bottom:2px;">
+        <div style="text-align:center;margin-bottom:16px;">
+          <div style="color:rgba(240,237,228,0.45);font-size:9px;letter-spacing:3px;margin-bottom:12px;font-family:'Josefin Sans', sans-serif;">COLLECTION</div>
+          <div style="font-family:'EB Garamond', Georgia, serif;font-style:italic;color:#F0EDE4;font-size:36px;line-height:1;letter-spacing:-0.5px;">Aadhi</div>
+        </div>
+        <p style="color:rgba(240,237,228,0.6);font-size:13px;line-height:1.8;text-align:center;max-width:280px;margin:0 0 32px;">
+          Timeless pieces that signify life and its origins.
+        </p>
+        <a href="imai.html" class="col-cta" style="display:block;width:100%;max-width:280px;border:1px solid rgba(240,237,228,0.5);border-radius:2px;padding:16px;text-align:center;text-decoration:none;margin-bottom:16px;">
+          <span style="color:#F0EDE4;font-size:9px;letter-spacing:3px;font-family:'Josefin Sans', sans-serif;">EXPLORE AADHI</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="display:flex;gap:8px;justify-content:center;padding:16px 0 4px;">
+    <div class="col-dot" data-i="0"></div>
+    <div class="col-dot" data-i="1"></div>
+  </div>
+
+</div>
+
+<script>
+const track = document.getElementById('colTrack');
+const viewport = document.getElementById('colViewport');
+const prevChev = document.getElementById('colPrev');
+const nextChev = document.getElementById('colNext');
+const slideCount = 2;
+let active = 0;
+let autoTimer = null;
+
+function render() {
+  track.style.transform = `translateX(-${active * (100 / slideCount)}%)`;
+  document.querySelectorAll('.col-dot').forEach(d => {
+    d.classList.toggle('on', parseInt(d.dataset.i, 10) === active);
+  });
+  prevChev.classList.toggle('disabled', active === 0);
+  nextChev.classList.toggle('disabled', active === slideCount - 1);
+}
+
+function goTo(i) {
+  active = Math.max(0, Math.min(slideCount - 1, i));
+  render();
+  restartAuto();
+}
+
+function startAuto() {
+  autoTimer = setInterval(() => {
+    active = (active + 1) % slideCount;
+    render();
+  }, 5000);
+}
+function restartAuto() {
+  clearInterval(autoTimer);
+  startAuto();
+}
+
+render();
+startAuto();
+
+prevChev.addEventListener('click', () => goTo(active - 1));
+nextChev.addEventListener('click', () => goTo(active + 1));
+
+document.querySelectorAll('.nav-collections-dd a[data-i]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    goTo(parseInt(a.dataset.i, 10));
+  });
+});
+
+/* ── SWIPE / DRAG ── */
+let startX = 0, dragDx = 0, isDragging = false;
+function dragStart(x) { startX = x; dragDx = 0; isDragging = true; track.style.transition = 'none'; }
+function dragMove(x) {
+  if (!isDragging) return;
+  dragDx = x - startX;
+  const base = -active * (100 / slideCount);
+  const dxPct = (dragDx / viewport.offsetWidth) * 100;
+  track.style.transform = `translateX(${base + dxPct}%)`;
+}
+function dragEnd() {
+  if (!isDragging) return;
+  isDragging = false;
+  track.style.transition = 'transform 0.6s ease';
+  if (dragDx < -44) goTo(active + 1);
+  else if (dragDx > 44) goTo(active - 1);
+  else render();
+}
+viewport.addEventListener('touchstart', e => dragStart(e.touches[0].clientX), { passive: true });
+viewport.addEventListener('touchmove',  e => dragMove(e.touches[0].clientX),  { passive: true });
+viewport.addEventListener('touchend',   dragEnd, { passive: true });
+viewport.addEventListener('mousedown',  e => dragStart(e.clientX));
+viewport.addEventListener('mousemove',  e => dragMove(e.clientX));
+viewport.addEventListener('mouseup',    dragEnd);
+viewport.addEventListener('mouseleave', dragEnd);
+</script>
+
+<script src="nava-analytics.js"></script>
+<p style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;"> Nava is a fine jewellery brand specialising in 9 carat gold jewellery, made to order, in India. The Origami collection features ten pieces — bangles, rings, earrings, pendants, nosepins and hoops — each designed with intention. Purchases for 9 carat gold jewellery online or 9kt gold jewellery India can be done. </p>
+<footer style="display:flex;justify-content:center;gap:28px;padding:14px 24px;background:rgba(54,25,43,0.92);backdrop-filter:blur(10px);border-top:1px solid rgba(240,237,228,0.12);">
+  <a href="privacy.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Privacy Policy</a>
+  <a href="terms.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Terms of Service</a>
+  <a href="contact.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Contact</a>
+</footer>
+</body>
+</html>
