@@ -3,37 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Anbu — 9 Carat Gold ECG Pendant | Nava</title>
-<meta name="description" content="Anbu — 9 carat gold ECG Pendant from Nava's Aadhi collection. Made to order. Inspired by the rhythm of a heartbeat, a continuous folded line">
-<meta property="og:type" content="product">
+<title>Uyir — 9 Carat Gold from Aadhi Collection | Nava</title>
+<meta name="description" content="Uyir — 9 carat gold ECG Pendant from Nava's Aadhi collection. Made to order. Inspired by the rhythm of a heartbeat, a continuous folded line">
+<meta property="og:type" content="product.group">
 <meta property="og:site_name" content="Nava">
-<meta property="og:title" content="Anbu — 9 Carat Gold ECG Pendant | Nava">
-<meta property="og:description" content="Anbu — 9 carat gold ECG Pendant from Nava's Aadhi collection. Made to order. Inspired by the rhythm of a heartbeat, a continuous folded line">
-<meta property="og:url" content="https://navaonline.in/anbu.html">
-<meta property="og:image" content="https://navaonline.in/anbu/anbu_1.jpg">
-<link rel="canonical" href="https://navaonline.in/anbu.html">
+<title>Uyir — 9 Carat Gold from Aadhi Collection | Nava</title>
+<meta property="og:description" content="Uyir — 9 carat gold ECG Pendant from Nava's Aadhi collection. Made to order. Inspired by the rhythm of a heartbeat, a continuous folded line">
+<meta property="og:url" content="https://navaonline.in/uyir.html">
+<meta property="og:image" content="https://navaonline.in/uyir/uyir_1.jpg">
+<link rel="canonical" href="https://navaonline.in/uyir.html">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org/",
-  "@type": "Product",
-  "name": "Anbu",
-  "description": "Inspired by the rhythm of a heartbeat, a continuous folded line moves across the neckline in a clean, sculptural form.",
+  "@type": "ProductGroup",
+  "name": "Uyir",
+  "description": "From roses to geometry: I wanted to experiment with a piece that didn't need to be blocky to catch the eye, and a pair of earrings that caught the light",
   "brand": {
     "@type": "Brand",
     "name": "Nava"
   },
-  "material": "9 carat gold",
-  "image": "https://navaonline.in/anbu/anbu_1.jpg",
-  "offers": {
-    "@type": "Offer",
-    "priceCurrency": "INR",
-    "price": "26399",
-    "availability": "https://schema.org/PreOrder",
-    "seller": {
-      "@type": "Organization",
-      "name": "Nava"
+  "productGroupID": "niva",
+  "variesBy": ["https://schema.org/size"],
+  "hasVariant": [
+    {
+      "@type": "Product",
+      "name": "Uyir Pendant",
+      "material": "9 carat gold",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": "26399",
+        "availability": "https://schema.org/PreOrder",
+        "seller": { "@type": "Organization", "name": "Nava" }
+      }
     }
-  }
+   ]
+  ]
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,6 +54,55 @@ gtag('js', new Date());
 gtag('config', 'G-KVB4V9TTL4');
 </script>
 <style>
+/* ── VARIANT BOXES ── scoped to this page; sits below the hero, above the flower strip */
+.variant-boxes {
+  display: flex;
+  gap: 10px;
+  padding: 16px 20px 4px;
+  justify-content: center;
+}
+.variant-box {
+  /* CHANGE THIS: allows content to dictate the base size */
+  flex: 1 1 auto; 
+
+  /* ADD THIS: ensures a uniform height for flex centering to work */
+  min-height: 50px; 
+
+  max-width: 140px;
+  padding: 11px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: rgba(240,237,228,0.5);
+  background: rgba(240,237,228,0.04);
+  border: 0.5px solid rgba(240,237,228,0.14);
+  border-radius: 4px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+  user-select: none;
+}
+
+.variant-box:hover:not(.active) {
+  color: rgba(240,237,228,0.78);
+  border-color: rgba(240,237,228,0.24);
+}
+.variant-box.active {
+  color: #F0EDE4;
+  background: rgba(121,120,66,0.16);
+  border-color: rgba(121,120,66,0.55);
+}
+.variant-box:focus-visible {
+  outline: 1.5px solid rgba(240,237,228,0.6);
+  outline-offset: 2px;
+}
+
 /* ── EXHIBIT NAV CENTER (scoped to this page only, for testing) ── */
 .exhibit-nav-center {
   display: flex;
@@ -101,7 +155,7 @@ gtag('config', 'G-KVB4V9TTL4');
       <div class="nav-collections-dd">
         <div class="nav-collections-dd-inner">
           <a href="index.html">Home</a>
-          <a href="suri.html">Origami</a>
+          <a href="suri-hanging-earrings.html">Origami</a>
           <a href="imai.html">Aadhi</a>
         </div>
       </div>
@@ -127,6 +181,8 @@ gtag('config', 'G-KVB4V9TTL4');
     <div class="piece-name" id="pieceName"></div>
   </div>
 </div>
+
+<div class="variant-boxes" id="variantBoxes"></div>
 
 <div class="exhibit-nav" id="exhibitNav"></div>
 
@@ -209,119 +265,69 @@ gtag('config', 'G-KVB4V9TTL4');
 </div>
 
 <script>
-const piece = {
-  name: "Anbu",
-  collection: "Aadhi · Pendants",
-  imageFolder: "anbu",
-  images: ["anbu_1.jpg", "anbu_2.jpg"],
-  price: "₹ 26,399",
-  shopifyVariantId: 49695692456178,
-  story: "A geometric square stud defined by faceted surfaces and crisp angles. Architectural yet effortless, it brings subtle structure to everyday wear",
-  provenance: {
-    "Material": "9 kt gold, silver",
-    "Gold Weight": "2.71 grams",
-    "Silver Weight": "0.28 grams",
-    "Ready in": "18 – 22 days"
-  },
-  sizes: ["2.2″", "2.4″", "2.6″", "2.8″", "Custom"],
-  showSkinTones: false,
-  showSizes: false,
+/* ── DESIGN (shared across all Vaan variants) ── */
+const design = {
+  name: "Uyir",
   nextPiece: { name: "Ekai", file: "ekai.html" },
   prevPiece: { name: "Minn", file: "minn.html" }
-}
+};
+
+/* ── VARIANTS — each fully independent: own images, price, story,
+   provenance, sizes, and Shopify variant ID. "earring" is placeholder
+   data pending real photography/copy/pricing; "ring" carries the real
+   data this page previously shipped with. ── */
+const variants = {
+  pendant: {
+    label: "Pendant",
+    collection: "Aadhi · Pendants",
+    imageFolder: "uyir",
+    images: ["uyir_1.jpg", "uyir_2.jpg"],
+    price: "₹ 26,399",
+    shopifyVariantId: 49834647093490,
+    story: "This, like the heartbeat, is an essential. Gravity rendered into elegance gives you subtle presence in every situation",
+    provenance: {
+      "Material": "9 kt gold, silver",
+      "Gold Weight": "2.71 grams",
+      "Silver Weight": "0.28 grams",
+      "Ready in": "18 – 22 days"
+    },
+    sizes: [],
+    showSkinTones: false,
+    showSizes: false
+  }
+};
+
+let activeKey = "pendant";
+
 localStorage.setItem('nava_last_piece', window.location.pathname.split('/').pop());
 
 const PIECE_INDEX = 3;
 
-/* ── RENDER FROM PIECE ── */
-document.title = `Nava — ${piece.name}`;
+/* ── DOM refs ── */
+const track       = document.getElementById('heroTrack');
+const thumbsEl    = document.getElementById('heroThumbs');
+const heroTagEl   = document.getElementById('heroTag');
+const pieceNameEl = document.getElementById('pieceName');
+const panelDesign = document.getElementById('panel-design');
+const panelProv   = document.getElementById('panel-prov');
+const priceEl     = document.getElementById('priceDisplay');
+const sizeRowEl   = document.getElementById('sizeRow');
+const sizeExpRow  = document.getElementById('sizeExpRow');
+const skinExpRow  = document.getElementById('skinExpRow');
+const expandersWrap = document.getElementById('expandersWrap');
+const counter     = null; // no counter element on this page variant
 
-// Hero slides
-const track = document.getElementById('heroTrack');
-const totalSlides = piece.images.length;
-track.style.width = `${totalSlides * 100}%`;
-piece.images.forEach(src => {
-  const slide = document.createElement('div');
-  slide.className = 'hero-slide';
-  slide.style.width = `${100 / totalSlides}%`;
-  const img = document.createElement('img');
-  img.src = `${piece.imageFolder}/${src}`;
-  img.alt = piece.name;
-  slide.appendChild(img);
-  track.appendChild(slide);
-});
+pieceNameEl.textContent = design.name;
 
-document.getElementById('heroTag').textContent = piece.collection;
-
-// Hero thumbnails
-const thumbsEl = document.getElementById('heroThumbs');
-piece.images.forEach((src, i) => {
-  const th = document.createElement('div');
-  th.className = i === 0 ? 'hthumb on' : 'hthumb';
-  const tImg = document.createElement('img');
-  tImg.src = `${piece.imageFolder}/${src}`;
-  tImg.alt = '';
-  th.appendChild(tImg);
-  th.addEventListener('click', () => setSlide(i));
-  thumbsEl.appendChild(th);
-});
-
-// Piece header
-document.getElementById('pieceName').textContent = piece.name;
-
-// Story
-document.getElementById('panel-design').textContent = piece.story;
-
-// Provenance
-const provEl = document.getElementById('panel-prov');
-Object.entries(piece.provenance).forEach(([k, v]) => {
-  const row = document.createElement('div');
-  row.className = 'prow';
-  row.innerHTML = `<span class="pk">${k}</span><span class="pv">${v}</span>`;
-  provEl.appendChild(row);
-});
-
-// Price
-document.getElementById('priceDisplay').textContent = piece.price;
-
-// Sizes (select second by default)
-const showSkinTones = piece.showSkinTones !== false;
-const showSizes = piece.showSizes !== false && Array.isArray(piece.sizes) && piece.sizes.length > 0;
-
-if (!showSkinTones) {
-  document.getElementById('skinExpRow').style.display = 'none';
-}
-
-if (showSizes) {
-  const sizeRowEl = document.getElementById('sizeRow');
-  piece.sizes.forEach((s, i) => {
-    const btn = document.createElement('button');
-    btn.className = i === 1 ? 'szchip sel' : 'szchip';
-    btn.dataset.s = s;
-    btn.textContent = s;
-    sizeRowEl.appendChild(btn);
-  });
-} else {
-  document.getElementById('sizeExpRow').style.display = 'none';
-}
-
-if (!showSkinTones && !showSizes) {
-  document.getElementById('expandersWrap').style.display = 'none';
-}
-
-/* ── NAV SCROLL ── */
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 10);
-}, { passive: true });
-
-/* ── IMAGE SLIDER ── */
+/* ── IMAGE SLIDER STATE ── */
 let current    = 0;
+let totalSlides = 0;
 let startX     = 0;
 let dragDx     = 0;
 let isDragging = false;
 
 function setSlide(idx, animate) {
+  if (!totalSlides) return;
   if (animate === false) track.classList.add('no-transition');
   current = (idx + totalSlides) % totalSlides;
   track.style.transform = `translateX(-${current * (100 / totalSlides)}%)`;
@@ -329,6 +335,120 @@ function setSlide(idx, animate) {
   document.querySelectorAll('.hthumb').forEach((t, i) => t.classList.toggle('on', i === current));
 }
 
+/* ── RENDER A VARIANT'S CONTENT INTO THE PAGE ── */
+function renderVariant(key) {
+  const v = variants[key];
+  activeKey = key;
+
+  document.title = `Nava — ${design.name} ${v.label}`;
+
+  // Hero images
+  track.innerHTML = '';
+  thumbsEl.innerHTML = '';
+  totalSlides = v.images.length;
+  track.style.width = `${totalSlides * 100}%`;
+  v.images.forEach(src => {
+    const slide = document.createElement('div');
+    slide.className = 'hero-slide';
+    slide.style.width = `${100 / totalSlides}%`;
+    const img = document.createElement('img');
+    img.src = `${v.imageFolder}/${src}`;
+    img.alt = `${design.name} ${v.label}`;
+    slide.appendChild(img);
+    track.appendChild(slide);
+  });
+  v.images.forEach((src, i) => {
+    const th = document.createElement('div');
+    th.className = i === 0 ? 'hthumb on' : 'hthumb';
+    const tImg = document.createElement('img');
+    tImg.src = `${v.imageFolder}/${src}`;
+    tImg.alt = '';
+    th.appendChild(tImg);
+    th.addEventListener('click', () => setSlide(i));
+    thumbsEl.appendChild(th);
+  });
+  setSlide(0, false);
+
+  heroTagEl.textContent = v.collection;
+
+  // Story
+  panelDesign.textContent = v.story;
+
+  // Provenance
+  panelProv.innerHTML = '';
+  Object.entries(v.provenance).forEach(([k, val]) => {
+    const row = document.createElement('div');
+    row.className = 'prow';
+    row.innerHTML = `<span class="pk">${k}</span><span class="pv">${val}</span>`;
+    panelProv.appendChild(row);
+  });
+
+  // Price
+  priceEl.textContent = v.price;
+
+  const showSkinTones = v.showSkinTones !== false;
+  const showSizes = v.showSizes !== false && Array.isArray(v.sizes) && v.sizes.length > 0;
+
+  skinExpRow.style.display = showSkinTones ? '' : 'none';
+
+  sizeRowEl.innerHTML = '';
+  if (showSizes) {
+    sizeExpRow.style.display = '';
+    v.sizes.forEach((s, i) => {
+      const btn = document.createElement('button');
+      btn.className = i === 1 ? 'szchip sel' : 'szchip';
+      btn.dataset.s = s;
+      btn.textContent = s;
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.szchip').forEach(x => x.classList.remove('sel'));
+        this.classList.add('sel');
+      });
+      sizeRowEl.appendChild(btn);
+    });
+  } else {
+    sizeExpRow.style.display = 'none';
+  }
+
+  expandersWrap.style.display = (showSkinTones || showSizes) ? '' : 'none';
+
+  // Reset quantity
+  currentQty = 1;
+  qtyValueEl.textContent = currentQty;
+}
+
+/* ── VARIANT BOXES ── */
+const variantBoxesEl = document.getElementById('variantBoxes');
+Object.entries(variants).forEach(([key, v]) => {
+  const box = document.createElement('div');
+  box.className = key === activeKey ? 'variant-box active' : 'variant-box';
+  box.textContent = v.label;
+  box.dataset.key = key;
+  box.tabIndex = 0;
+  box.setAttribute('role', 'button');
+  box.setAttribute('aria-pressed', key === activeKey ? 'true' : 'false');
+  const activate = () => {
+    if (key === activeKey) return;
+    renderVariant(key);
+    document.querySelectorAll('.variant-box').forEach(b => {
+      const on = b.dataset.key === key;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  };
+  box.addEventListener('click', activate);
+  box.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+  });
+  variantBoxesEl.appendChild(box);
+});
+
+/* ── NAV SCROLL ── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+/* ── DRAG / SWIPE ── */
 const heroEl = document.getElementById('hero');
 function dragStart(x) { startX = x; dragDx = 0; isDragging = true; }
 function dragMove(x)  { if (isDragging) dragDx = x - startX; }
@@ -345,29 +465,29 @@ heroEl.addEventListener('mousemove',  e => dragMove(e.clientX));
 heroEl.addEventListener('mouseup',    dragEnd);
 heroEl.addEventListener('mouseleave', dragEnd);
 
-/* ── EXHIBIT NAV ── */
+/* ── EXHIBIT NAV ── Vaan occupies exactly one slot regardless of
+   which variant box is active; Next/Prev skip straight to the next
+   design (Imai), never into the earring/ring/pendant sub-states. ── */
 const PIECES = [
   { file: 'imai.html' },
   { file: 'minn.html' },
-  { file: 'anbu.html' },
+  { file: 'uyir.html' },
   { file: 'ekai.html' },
-  { file: 'agam.html' },
-  { file: 'vaan.html' }
+  { file: 'agam.html' }
 ];
 function buildExhibitNav() {
   const nav = document.getElementById('exhibitNav');
-  const collectionName = piece.collection.split('·')[0].trim();
   const prevChevron = `<svg viewBox="0 0 10 10" fill="none" width="10" height="10"><path d="M7 2L3 5L7 8" stroke="rgba(240,237,228,0.7)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   const nextChevron = `<svg viewBox="0 0 10 10" fill="none" width="10" height="10"><path d="M3 2L7 5L3 8" stroke="rgba(240,237,228,0.7)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
   const prevSide = document.createElement('a');
   prevSide.className = 'exhibit-nav-side prev';
-  if (piece.prevPiece) {
-    prevSide.href = piece.prevPiece.file;
-    prevSide.innerHTML = `<div class="exhibit-nav-label-row">${prevChevron}<span class="exhibit-nav-name">${piece.prevPiece.name}</span></div><span class="exhibit-nav-count">${PIECE_INDEX - 1} / ${PIECES.length}</span>`;
+  if (design.prevPiece) {
+    prevSide.href = design.prevPiece.file;
+    prevSide.innerHTML = `<div class="exhibit-nav-label-row">${prevChevron}<span class="exhibit-nav-name">${design.prevPiece.name}</span></div><span class="exhibit-nav-count">${PIECE_INDEX - 1} / ${PIECES.length}</span>`;
   } else {
     prevSide.href = 'index.html';
-    prevSide.innerHTML = `<div class="exhibit-nav-label-row">${prevChevron}<span class="exhibit-nav-name">${collectionName}</span></div><span class="exhibit-nav-count">Back to collection</span>`;
+    prevSide.innerHTML = `<div class="exhibit-nav-label-row">${prevChevron}<span class="exhibit-nav-name">Origami</span></div><span class="exhibit-nav-count">Back to collection</span>`;
   }
   nav.appendChild(prevSide);
 
@@ -381,10 +501,11 @@ function buildExhibitNav() {
   addBtn.innerHTML = `<svg viewBox="0 0 16 16" fill="none" width="15" height="15"><path d="M8 14C8 14 1.5 9.8 1.5 5.2C1.5 2.9 3.3 1.5 5.2 1.5C6.5 1.5 8 2.3 8 3.9C8 2.3 9.5 1.5 10.8 1.5C12.7 1.5 14.5 2.9 14.5 5.2C14.5 9.8 8 14 8 14Z" stroke="#797842" stroke-width="1.4" stroke-linejoin="round"/></svg><span class="exhibit-nav-tooltip">I like it</span>`;
   addBtn.addEventListener('click', async () => {
     addBtn.disabled = true;
+    const v = variants[activeKey];
     try {
-      await addToCart(piece.shopifyVariantId, 1);
+      await addToCart(v.shopifyVariantId, 1);
       await updateCartBadge();
-      showToast(`${piece.name} added to cart`);
+      showToast(`${design.name} ${v.label} added to cart`);
     } catch (err) {
       showToast('Could not add to cart — please try again');
       console.error(err);
@@ -396,7 +517,7 @@ function buildExhibitNav() {
 
   const gridBtn = document.createElement('a');
   gridBtn.className = 'exhibit-nav-grid';
-  gridBtn.href = 'aadhi.html';
+  gridBtn.href = 'origami.html';
   gridBtn.setAttribute('aria-label', 'View all');
   gridBtn.innerHTML = `<svg viewBox="0 0 16 16" fill="none" width="15" height="15"><rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1" fill="#797842"/><rect x="9" y="1.5" width="5.5" height="5.5" rx="1" fill="#797842"/><rect x="1.5" y="9" width="5.5" height="5.5" rx="1" fill="#797842"/><rect x="9" y="9" width="5.5" height="5.5" rx="1" fill="#797842"/></svg><span class="exhibit-nav-tooltip">View all</span>`;
   centerWrap.appendChild(gridBtn);
@@ -405,12 +526,12 @@ function buildExhibitNav() {
 
   const nextSide = document.createElement('a');
   nextSide.className = 'exhibit-nav-side next';
-  if (piece.nextPiece) {
-    nextSide.href = piece.nextPiece.file;
-    nextSide.innerHTML = `<div class="exhibit-nav-label-row"><span class="exhibit-nav-name">${piece.nextPiece.name}</span>${nextChevron}</div><span class="exhibit-nav-count">${PIECE_INDEX + 1} / ${PIECES.length}</span>`;
+  if (design.nextPiece) {
+    nextSide.href = design.nextPiece.file;
+    nextSide.innerHTML = `<div class="exhibit-nav-label-row"><span class="exhibit-nav-name">${design.nextPiece.name}</span>${nextChevron}</div><span class="exhibit-nav-count">${PIECE_INDEX + 1} / ${PIECES.length}</span>`;
   } else {
     nextSide.href = 'index.html';
-    nextSide.innerHTML = `<div class="exhibit-nav-label-row"><span class="exhibit-nav-name">${collectionName}</span>${nextChevron}</div><span class="exhibit-nav-count">Back to collection</span>`;
+    nextSide.innerHTML = `<div class="exhibit-nav-label-row"><span class="exhibit-nav-name">Origami</span>${nextChevron}</div><span class="exhibit-nav-count">Back to collection</span>`;
   }
   nav.appendChild(nextSide);
 }
@@ -447,14 +568,7 @@ document.getElementById('skinRow').querySelectorAll('.stile').forEach(t => {
   });
 });
 
-/* ── SIZE CHIPS ── */
-document.getElementById('sizeRow').querySelectorAll('.szchip').forEach(c => {
-  c.addEventListener('click', function () {
-    document.querySelectorAll('.szchip').forEach(x => x.classList.remove('sel'));
-    this.classList.add('sel');
-  });
-});
-
+/* ── QUANTITY ── */
 let currentQty = 1;
 const qtyValueEl = document.getElementById('qtyValue');
 document.getElementById('qtyMinus').addEventListener('click', () => {
@@ -464,14 +578,16 @@ document.getElementById('qtyPlus').addEventListener('click', () => {
   currentQty++; qtyValueEl.textContent = currentQty;
 });
 
+/* ── ADD TO CART — always reads the currently active variant, no backend ── */
 document.getElementById('ctaBtn').addEventListener('click', async () => {
   const btn = document.getElementById('ctaBtn');
+  const v = variants[activeKey];
   btn.disabled = true;
   btn.textContent = 'Adding...';
   try {
-    await addToCart(piece.shopifyVariantId, currentQty);
+    await addToCart(v.shopifyVariantId, currentQty);
     await updateCartBadge();
-    showToast(`${piece.name} added to cart`);
+    showToast(`${design.name} ${v.label} added to cart`);
     currentQty = 1;
     qtyValueEl.textContent = currentQty;
   } catch (err) {
@@ -482,6 +598,9 @@ document.getElementById('ctaBtn').addEventListener('click', async () => {
     btn.textContent = 'Add to cart';
   }
 });
+
+/* ── INITIAL RENDER ── earring is the default open variant ── */
+renderVariant(activeKey);
 </script>
 <script src="nava-analytics.js"></script>
 <footer style="display:flex;justify-content:center;gap:28px;padding:14px 24px;background:rgba(54,25,43,0.92);backdrop-filter:blur(10px);border-top:1px solid rgba(240,237,228,0.12);">

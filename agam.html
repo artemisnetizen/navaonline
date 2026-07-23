@@ -51,18 +51,6 @@
     },
     {
       "@type": "Product",
-      "name": "Agam Flag Studs",
-      "material": "9 carat gold",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "INR",
-        "price": "5899",
-        "availability": "https://schema.org/PreOrder",
-        "seller": { "@type": "Organization", "name": "Nava" }
-      }
-    },
-    {
-      "@type": "Product",
       "name": "Agam Earcuffs",
       "material": "9 carat gold",
       "offers": {
@@ -302,7 +290,7 @@ gtag('config', 'G-KVB4V9TTL4');
 /* ── DESIGN (shared across all Agam variants) ── */
 const design = {
   name: "Agam",
-  nextPiece: { name: "Vaan", file: "vaan.html" },
+  nextPiece: null,
   prevPiece: { name: "Ekai", file: "ekai.html" }
 };
 
@@ -317,7 +305,7 @@ const variants = {
     imageFolder: "agam",
     images: ["agamr_1.jpg", "agamr_2.jpg"],
     price: "₹ 12,999",
-    shopifyVariantId: "REPLACE_VARIANT_ID_EARRING",
+    shopifyVariantId: 49834657939698,
     story: "A series of stepped facets creates an architectural silhouette, bringing depth, dimension, and movement to a compact everyday stud",
     provenance: {
       "Material": "9 kt gold",
@@ -334,28 +322,11 @@ const variants = {
     imageFolder: "agam",
     images: ["agams_1.jpg", "agams_2.jpg"],
     price: "₹ 6,699",
-    shopifyVariantId: 49695699108082,
+    shopifyVariantId: 49834658431218,
     story: "A four-point star formed from intersecting folded surfaces, creating a crisp, dimensional silhouette. Small in scale yet striking in detail, it brings a modern edge to a familiar motif",
     provenance: {
       "Material": "9 kt gold",
       "Weight": "0.65 grams",
-      "Ready in": "18 – 22 days"
-    },
-    sizes: [],
-    showSkinTones: false,
-    showSizes: false
-  },
-  "flag studs": {
-    label: "Flag",
-    collection: "Aadhi · Studs",
-    imageFolder: "agam",
-    images: ["agamf_1.jpg", "agamf_2.jpg"],
-    price: "₹ 5,899",
-    shopifyVariantId: "REPLACE_VARIANT_ID_PENDANT",
-    story: "A four-point star formed from intersecting folded surfaces, creating a crisp, dimensional silhouette. Small in scale yet striking in detail, it brings a modern edge to a familiar motif",
-    provenance: {
-      "Material": "9 kt gold",
-      "Weight": "0.54 grams",
       "Ready in": "18 – 22 days"
     },
     sizes: [],
@@ -368,7 +339,7 @@ const variants = {
     imageFolder: "agam",
     images: ["agame_1.jpg", "agame_2.jpg"],
     price: "₹ 7,599",
-    shopifyVariantId: "REPLACE_VARIANT_ID_PENDANT",
+    shopifyVariantId: 49834658791666,
     story: "A rhythmic arrangement of folded facets wraps around the ear, creating a look that feels both modern and effortless",
     provenance: {
       "Material": "9 kt gold",
@@ -555,10 +526,9 @@ heroEl.addEventListener('mouseleave', dragEnd);
 const PIECES = [
   { file: 'imai.html' },
   { file: 'minn.html' },
-  { file: 'anbu.html' },
+  { file: 'uyir.html' },
   { file: 'ekai.html' },
-  { file: 'agam.html' },
-  { file: 'vaan.html' }
+  { file: 'agam.html' }
 ];
 function buildExhibitNav() {
   const nav = document.getElementById('exhibitNav');
