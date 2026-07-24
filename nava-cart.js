@@ -94,9 +94,22 @@ function toVariantGid(variantId) {
   return str.startsWith("gid://") ? str : `gid://shopify/ProductVariant/${str}`;
 }
 
+/* Reads the currently selected size chip live from the DOM (mirrors how
+   shopifyVariantId is re-read live on every click, to avoid staleness). */
+function getSelectedSizeLineAttributes() {
+  const sizeRow = document.getElementById('sizeRow') || document.querySelector('.size-row');
+  if (!sizeRow || sizeRow.offsetParent === null) return undefined;
+  const selChip = sizeRow.querySelector('.szchip.sel');
+  if (!selChip) return undefined;
+  const size = selChip.dataset.s || selChip.textContent.trim();
+  if (!size) return undefined;
+  return [{ key: "Size", value: size }];
+}
+
 async function addToCart(variantId, qty) {
   qty = qty || 1;
   variantId = toVariantGid(variantId);
+  const sizeAttributes = getSelectedSizeLineAttributes();
   const existingId = getStoredCartId();
   if (!existingId) {
     return createCart(variantId, qty);
@@ -110,9 +123,11 @@ async function addToCart(variantId, qty) {
     }
   `;
   try {
+    const line = { merchandiseId: variantId, quantity: qty };
+    if (sizeAttributes) line.attributes = sizeAttributes;
     const data = await storefrontFetch(query, {
       cartId: existingId,
-      lines: [{ merchandiseId: variantId, quantity: qty }]
+      lines: [line]
     });
     if (data.cartLinesAdd.userErrors?.length) {
       throw new Error(data.cartLinesAdd.userErrors[0].message);
