@@ -75,7 +75,7 @@ body {
   width: auto;
   display: block;
 }
-.nav-links { display: flex; gap: 22px; align-items: center; }
+.nav-links { display: flex; gap: 38px; align-items: center; }
 .nav-link {
   font-family: var(--body);
   font-size: 0.7rem;
@@ -267,7 +267,7 @@ body {
 }
 .pv {
   font-family: var(--body);
-  font-size: 0.88rem;
+  font-size: 0.57rem;
   font-weight: 300;
   color: var(--marshmallow-dim);
 }
@@ -647,3 +647,590 @@ body {
   width: 100%;
   display: block;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   PROMOTED FROM PER-FILE DUPLICATION — sourced from vara.html
+   (desktop hero-stage/panel scaffold, hero-identity variant-boxes
+   pattern, and the Thinking/Provenance vertical stack, confirmed
+   live there) plus suri.html/imai.html/minn.html (mobile hamburger
+   menu, FAQ nav dropdown, exhibit-nav center cluster + social
+   icons — confirmed byte-identical across all four sampled files
+   aside from page-specific data). Previously copy-pasted into each
+   product page's own <style> block; now lives here once.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── VARIANT BOXES (base) ── */
+.variant-boxes {
+  display: flex;
+  gap: 10px;
+  padding: 16px 20px 4px;
+  justify-content: center;
+}
+.variant-box {
+  flex: 1 1 auto;
+  min-height: 50px;
+  max-width: 140px;
+  padding: 11px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: rgba(240,237,228,0.5);
+  background: rgba(240,237,228,0.04);
+  border: 0.5px solid rgba(240,237,228,0.14);
+  border-radius: 4px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+  user-select: none;
+}
+.variant-box:hover:not(.active) {
+  color: rgba(240,237,228,0.78);
+  border-color: rgba(240,237,228,0.24);
+}
+.variant-box.active {
+  color: #F0EDE4;
+  background: rgba(121,120,66,0.16);
+  border-color: rgba(121,120,66,0.55);
+}
+.variant-box:focus-visible {
+  outline: 1.5px solid rgba(240,237,228,0.6);
+  outline-offset: 2px;
+}
+
+/* ── EXHIBIT NAV — heart/grid center cluster + social icons (v14/v17) ── */
+.exhibit-nav-center {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 0 0 auto;
+}
+.exhibit-nav-grid {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: none;
+  border: 0.5px solid rgba(240,237,228,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex: 0 0 38px;
+  align-self: center;
+  padding: 0;
+}
+.exhibit-nav-grid svg { width: 15px; height: 15px; }
+.exhibit-nav-grid:hover .exhibit-nav-tooltip,
+.exhibit-nav-grid:focus .exhibit-nav-tooltip,
+.exhibit-nav-grid:focus-visible .exhibit-nav-tooltip {
+  opacity: 1;
+}
+.exhibit-nav-add {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+}
+.exhibit-nav-add svg { width: 15px; height: 15px; }
+.exhibit-nav-name { font-size: 17px !important; }
+.exhibit-nav-count { font-size: 11px !important; }
+.desktop-hero-social {
+  position: absolute;
+  top: 18px;
+  right: 122px;
+  display: flex;
+  gap: 16px;
+  z-index: 2;
+}
+.exhibit-nav-social {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(240,237,228,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(240,237,228,0.75);
+  flex: 0 0 38px;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+.exhibit-nav-social:hover {
+  border-color: #797842;
+  color: #F0EDE4;
+  background: rgba(121,120,66,0.14);
+}
+.exhibit-nav-social svg { width: 16px; height: 16px; }
+
+/* ── MOBILE HAMBURGER MENU (v17) ── */
+.nav-right-controls { display: flex; align-items: center; gap: 18px; }
+.hamburger-btn {
+  width: 22px; height: 16px; position: relative;
+  background: none; border: none; padding: 0; cursor: pointer;
+}
+.hamburger-btn span {
+  display: block; position: absolute; left: 0; width: 100%; height: 1.6px;
+  background: #F0EDE4;
+}
+.hamburger-btn span:nth-child(1) { top: 0; }
+.hamburger-btn span:nth-child(2) { top: 7px; }
+.hamburger-btn span:nth-child(3) { top: 14px; }
+.mobile-menu-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: #36192B;
+  display: flex; flex-direction: column;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+.mobile-menu-overlay.open { transform: translateX(0); }
+.mobile-menu-header { display: flex; justify-content: flex-end; padding: 20px; }
+.close-menu-btn {
+  width: 20px; height: 20px; position: relative;
+  background: none; border: none; padding: 0; cursor: pointer;
+}
+.close-menu-btn span {
+  position: absolute; top: 9px; left: 0; width: 20px; height: 1.6px;
+  background: #F0EDE4;
+}
+.close-menu-btn span:nth-child(1) { transform: rotate(45deg); }
+.close-menu-btn span:nth-child(2) { transform: rotate(-45deg); }
+.mobile-menu-links { display: flex; flex-direction: column; gap: 26px; padding: 12px 28px 0; }
+.mobile-menu-link,
+.mobile-menu-collections-trigger {
+  font-family: 'EB Garamond', Georgia, serif; font-style: italic; font-size: 26px;
+  color: #F0EDE4; text-decoration: none;
+  background: none; border: none; text-align: left; cursor: pointer;
+  display: flex; align-items: center; gap: 8px; padding: 0;
+}
+.mobile-menu-sublist {
+  display: none; flex-direction: column; gap: 12px;
+  margin: 14px 0 0 4px; padding-left: 14px;
+  border-left: 1px solid rgba(240,237,228,0.25);
+}
+.mobile-menu-sublist.open { display: flex; }
+.mobile-menu-sublist a {
+  font-family: 'Josefin Sans', sans-serif; font-size: 12px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(240,237,228,0.65); text-decoration: none;
+}
+.mobile-menu-social { display: flex; gap: 14px; padding: 32px 28px; margin-top: auto; }
+.mobile-menu-social-icon {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid rgba(240,237,228,0.5);
+  display: flex; align-items: center; justify-content: center;
+  color: #F0EDE4;
+}
+.mobile-menu-social-icon svg { width: 16px; height: 16px; }
+
+/* ── FAQ NAV DROPDOWN — desktop hover panel (v19) ── */
+.nav-faq { position: relative; }
+.nav-faq-trigger {
+  color: rgba(240,237,228,0.75); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  text-decoration: none; font-family: 'Josefin Sans', sans-serif; cursor: pointer;
+  display: flex; align-items: center; gap: 4px;
+}
+.nav-faq-dd {
+  position: absolute; top: 100%; left: 0; margin-top: 0; padding-top: 14px;
+  background: transparent; min-width: 160px;
+  opacity: 0; visibility: hidden; transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 20;
+}
+.nav-faq-dd-inner {
+  background: rgba(54,25,43,0.88); backdrop-filter: blur(10px);
+  border: 0.5px solid rgba(240,237,228,0.15); border-radius: 4px;
+  padding: 6px 0;
+}
+.nav-faq:hover .nav-faq-dd,
+.nav-faq:focus-within .nav-faq-dd {
+  opacity: 1; visibility: visible; transform: translateY(0);
+}
+.nav-faq-dd a {
+  display: block; padding: 10px 16px;
+  color: rgba(240,237,228,0.8); font-size: 11px; letter-spacing: 0.08em;
+  font-family: 'Josefin Sans', sans-serif; text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.nav-faq-dd a:hover {
+  background: rgba(240,237,228,0.06);
+  border-left-color: #797842;
+  color: #F0EDE4;
+}
+
+/* ── DESKTOP DEVICE-ROUTER SCAFFOLD ── */
+html, body { margin: 0; }
+html.nava-desktop,
+html.nava-desktop body {
+  max-width: none !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+.desktop-shell {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+.desktop-shell .nav {
+  flex: 0 0 auto;
+  position: static !important;
+}
+.desktop-main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.3fr 460px;
+  min-height: 0;
+}
+.desktop-hero-stage {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--aubergine-dim, #2a1421);
+  border-right: 0.5px solid rgba(240,237,228,0.14);
+}
+.desktop-shell .hero.desktop-hero {
+  position: relative !important;
+  height: 100% !important;
+  width: auto !important;
+  aspect-ratio: 2 / 3;
+  max-width: 100%;
+  overflow: hidden;
+}
+.desktop-shell .hero.desktop-hero #heroTrack,
+.desktop-shell .hero.desktop-hero .hero-track {
+  height: 100% !important;
+}
+.desktop-shell .hero.desktop-hero .hero-slide {
+  height: 100% !important;
+}
+.desktop-shell .hero.desktop-hero .hero-slide img {
+  height: 100% !important;
+  width: 100% !important;
+  object-fit: cover;
+  display: block;
+}
+.desktop-panel {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 44px 44px 44px;
+  background: rgba(0,0,0,0.14);
+}
+.desktop-shell .price-block {
+  margin: 24px 0 16px;
+}
+.desktop-hero-stage::before,
+.desktop-hero-stage::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 170px;
+  z-index: 1;
+  pointer-events: none;
+}
+.desktop-hero-stage::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(54,25,43,0.55), transparent);
+}
+.desktop-hero-stage::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(54,25,43,0.55), transparent);
+}
+.desktop-hero-stage > .exhibit-nav {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  pointer-events: none;
+  z-index: 2;
+}
+.desktop-hero-stage > .exhibit-nav > * {
+  pointer-events: auto;
+}
+.desktop-hero-stage > .exhibit-nav .exhibit-nav-side {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 130px;
+  flex: none;
+}
+.desktop-hero-stage > .exhibit-nav .exhibit-nav-side .exhibit-nav-name {
+  font-size: 29px !important;
+  line-height: 1.15;
+}
+.desktop-hero-stage > .exhibit-nav .exhibit-nav-side .exhibit-nav-count {
+  font-size: 12px !important;
+  letter-spacing: 0.08em;
+}
+.desktop-hero-stage > .exhibit-nav .exhibit-nav-side .exhibit-nav-label-row {
+  gap: 8px;
+}
+.desktop-hero-stage > .exhibit-nav .exhibit-nav-side svg {
+  width: 15px !important;
+  height: 15px !important;
+}
+.desktop-hero-stage > .exhibit-nav .exhibit-nav-side.prev {
+  left: 56px;
+}
+.desktop-hero-stage > .exhibit-nav .exhibit-nav-side.next {
+  right: 56px;
+}
+.desktop-hero-stage > .exhibit-nav .exhibit-nav-center {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+}
+.desktop-shell .story { font-size: 0.75rem; }
+.desktop-shell .prow .pk,
+.desktop-shell .prow .pv { font-size: 0.75rem; }
+.desktop-shell .expanders {
+  margin: 0 0 20px;
+}
+.desktop-shell footer {
+  flex: 0 0 auto;
+  position: static !important;
+}
+
+/* ── DESKTOP: variant boxes inside the hero (replaces the old
+   top-of-panel position + tabbed Thinking/Provenance — confirmed
+   live on vara.html) ── */
+.desktop-hero-stage .hero-identity {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+.desktop-hero-stage .hero-identity .variant-boxes {
+  padding: 0;
+  gap: 8px;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  max-width: none;
+  /* .hero-identity has pointer-events:none above so the hero image
+     beneath it stays draggable/clickable; restore clicks for the
+     boxes that now live inside it. */
+  pointer-events: auto;
+}
+.desktop-hero-stage .hero-identity .variant-boxes .variant-box {
+  flex: 0 0 70px;
+  max-width: 70px;
+  min-height: 44px;
+  padding: 8px 4px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: rgba(240,237,228,0.68);
+}
+.desktop-hero-stage .hero-identity .variant-boxes .variant-box.active {
+  color: #F0EDE4;
+}
+
+/* ── DESKTOP: Thinking + Provenance as a vertical stack (replaces
+   the old .tabs-wrap/#tabRow tabbed pattern — confirmed live on
+   vara.html). Markup pairing: .thinking-provenance-stack contains
+   two .section-block elements (each with a .section-heading + its
+   content) separated by two .thinking-provenance-spacer elements
+   (one before Provenance, one after), so Provenance sits centered
+   in whatever vertical space is left between Thinking and the
+   expanders/price/CTA group below. ── */
+.desktop-shell .thinking-provenance-stack {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  margin: 0 0 8px;
+}
+.desktop-shell .thinking-provenance-spacer {
+  flex: 1;
+}
+.desktop-shell .section-heading {
+  font-family: var(--body);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--olive-light);
+  font-size: 0.8rem;
+  margin-bottom: 12px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   EXPANDED FOOTER (.exp-footer*) — promoted here (v22). Previously
+   this lived ONLY in index.html's own local <style> block (see
+   Section 5/8 of the brief: "not yet promoted to nava-styles.css").
+   That gap is what broke the footer on the new Gold Guide pages —
+   they link this shared stylesheet but never carried index.html's
+   local style block, so .exp-footer* was simply undefined for them
+   and the footer rendered as unstyled default links. Copied
+   verbatim from index.html; index.html's own local copy is left
+   untouched (harmless duplication, safer than editing that file's
+   internals in this pass).
+   ══════════════════════════════════════════════════════════════ */
+.exp-footer { background: rgba(54,25,43,0.96); }
+.exp-footer-heading {
+  font-family: 'Josefin Sans', sans-serif; font-size: 11px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #F0EDE4; margin-bottom: 14px;
+}
+.exp-footer-link {
+  display: block; font-family: 'DM Sans', sans-serif; font-size: 12px;
+  color: rgba(240,237,228,0.65); text-decoration: none; margin-bottom: 10px;
+}
+.exp-footer-link:last-child { margin-bottom: 0; }
+.exp-footer-link:hover { color: #F0EDE4; }
+.exp-footer-address {
+  font-family: 'DM Sans', sans-serif; font-size: 12px; color: rgba(240,237,228,0.65);
+  line-height: 1.7;
+}
+.exp-footer-legal {
+  border-top: 1px solid rgba(240,237,228,0.12); padding: 20px 0;
+  display: flex; justify-content: center; align-items: center; gap: 28px;
+}
+.exp-footer-legal a {
+  font-family: 'DM Sans', sans-serif; font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(240,237,228,0.5); text-decoration: none;
+}
+.exp-footer-legal span {
+  font-family: 'DM Sans', sans-serif; font-size: 10px; letter-spacing: 0.08em;
+  color: rgba(240,237,228,0.4);
+}
+.exp-footer-desktop-cols {
+  display: grid; grid-template-columns: repeat(5,1fr); gap: 24px;
+  padding: 40px 48px 32px;
+}
+.exp-footer-mobile { padding: 28px 20px 0; }
+.exp-footer-mobile-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 22px 16px; margin-bottom: 24px;
+}
+.exp-footer-mobile .exp-footer-heading { font-size: 10.5px; letter-spacing: 0.1em; margin-bottom: 10px; }
+.exp-footer-mobile .exp-footer-link { margin-bottom: 7px; }
+.exp-footer-mobile-address {
+  border-top: 1px solid rgba(240,237,228,0.1); padding-top: 20px; margin-bottom: 22px;
+}
+.exp-footer-legal-mobile {
+  border-top: 1px solid rgba(240,237,228,0.12); padding: 20px 0;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.exp-footer-legal-mobile a {
+  font-family: 'DM Sans', sans-serif; font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(240,237,228,0.5); text-decoration: none;
+}
+.exp-footer-legal-mobile span {
+  font-family: 'DM Sans', sans-serif; font-size: 10px; letter-spacing: 0.06em;
+  color: rgba(240,237,228,0.4); text-align: center;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   INDEX.HTML-STYLE DESKTOP NAV — promoted here (v22) so pages
+   other than index.html (the Gold Guide article pages) can share
+   index.html's exact top-nav treatment (logo + Collections/FAQ
+   dropdowns + About links) without re-declaring it per file.
+   index.html itself keeps its own local copy unchanged, per the
+   v21 CSS-architecture principle of not editing files outside a
+   session's stated scope; this is additive only.
+   ══════════════════════════════════════════════════════════════ */
+.desktop-nav {
+  flex: 0 0 auto; height: 76px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 44px; background: #36192B; border-bottom: 1px solid rgba(240,237,228,0.1);
+}
+.desktop-nav-right { display: flex; align-items: center; gap: 38px; }
+.desktop-nav-link {
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(240,237,228,0.75);
+  text-decoration: none; cursor: pointer; font-family: 'Josefin Sans', sans-serif; transition: color .2s;
+}
+.desktop-nav-link:hover { color: #F0EDE4; }
+
+/* ══════════════════════════════════════════════════════════════
+   GOLD GUIDE — ARTICLE CONTENT PAGES (v22)
+   Shared by gold-karats.html, gold-maintenance.html,
+   gold-prices.html, gold-jewellery-types.html. Nav and footer on
+   these pages reuse index.html's exact markup/classes (desktop-nav
+   above, nav-collections/nav-faq, hamburger menu, exp-footer — all
+   already promoted). This block covers only what's new: the wide,
+   single-column article body itself, on both breakpoints.
+   ══════════════════════════════════════════════════════════════ */
+.gg-mobile {
+  max-width: 430px; margin: 0 auto; width: 100%;
+}
+.gg-content-mobile { padding: 30px 22px 56px; }
+.gg-content-desktop {
+  max-width: 900px; margin: 0 auto; padding: 68px 48px 110px;
+}
+.gg-eyebrow {
+  font-family: var(--heading); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--olive-light); margin-bottom: 16px;
+}
+.gg-title {
+  font-family: var(--highlight); font-style: italic; font-weight: 400;
+  color: var(--marshmallow); line-height: 1.05; margin-bottom: 20px;
+  font-size: 2.1rem;
+}
+.gg-content-desktop .gg-title { font-size: 3.1rem; margin-bottom: 26px; }
+.gg-intro {
+  font-family: var(--body); font-weight: 300; line-height: 1.85;
+  color: var(--text-body); font-size: 0.92rem; padding-bottom: 8px;
+  border-bottom: 1px solid var(--bg-line);
+}
+.gg-content-desktop .gg-intro { font-size: 1rem; max-width: 720px; }
+.gg-h2 {
+  font-family: var(--heading); font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--olive-light); font-size: 0.72rem;
+  margin: 40px 0 16px; padding-top: 28px; border-top: 1px solid var(--bg-line);
+}
+.gg-h2:first-of-type { margin-top: 32px; padding-top: 0; border-top: none; }
+.gg-content-desktop .gg-h2 { font-size: 0.8rem; margin: 52px 0 18px; padding-top: 36px; }
+.gg-content-desktop .gg-h2:first-of-type { margin-top: 40px; padding-top: 0; border-top: none; }
+.gg-h3 {
+  font-family: var(--highlight); font-style: italic; font-weight: 400;
+  color: var(--marshmallow-dim); font-size: 1.15rem; margin: 24px 0 10px;
+}
+.gg-content-desktop .gg-h3 { font-size: 1.35rem; margin: 28px 0 12px; }
+.gg-p {
+  font-family: var(--body); font-weight: 300; line-height: 1.9;
+  color: var(--text-body); font-size: 0.86rem; margin-bottom: 16px;
+}
+.gg-content-desktop .gg-p { font-size: 0.94rem; max-width: 760px; }
+.gg-list { list-style: none; margin: 0 0 18px; padding: 0; }
+.gg-list li {
+  position: relative; padding-left: 20px; margin-bottom: 10px;
+  font-family: var(--body); font-weight: 300; line-height: 1.7;
+  color: var(--text-body); font-size: 0.86rem;
+}
+.gg-content-desktop .gg-list li { font-size: 0.92rem; max-width: 720px; }
+.gg-list li::before {
+  content: ''; position: absolute; left: 2px; top: 9px;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--olive);
+}
+.gg-best-for {
+  font-family: var(--highlight); font-style: italic; color: var(--marshmallow-dim);
+  font-size: 0.9rem; line-height: 1.6; margin: 18px 0 8px;
+  padding: 14px 18px; border-left: 2px solid var(--olive); background: rgba(121,120,66,0.08);
+}
+.gg-content-desktop .gg-best-for { font-size: 0.98rem; max-width: 720px; }
+.gg-table-wrap { overflow-x: auto; margin: 6px 0 22px; }
+.gg-table { width: 100%; border-collapse: collapse; font-family: var(--body); }
+.gg-table th {
+  font-family: var(--heading); font-weight: 400; font-size: 0.6rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--marshmallow); text-align: left;
+  padding: 10px 14px; border-bottom: 1px solid var(--olive); white-space: nowrap;
+}
+.gg-table td {
+  padding: 10px 14px; border-bottom: 1px solid var(--bg-line);
+  color: var(--text-body); font-weight: 300; font-size: 0.8rem;
+}
+.gg-content-desktop .gg-table th { font-size: 0.66rem; padding: 12px 18px; }
+.gg-content-desktop .gg-table td { font-size: 0.86rem; padding: 12px 18px; }
+.gg-final {
+  margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--bg-line);
+}
+.gg-final .gg-p:last-child { margin-bottom: 0; }

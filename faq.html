@@ -7,71 +7,30 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,400;1,500&family=Josefin+Sans:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="nava-styles.css">
+  <script src="nava-cart.js"></script>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+    /* Local overrides for two variables that carry DIFFERENT values in
+       nava-styles.css than they did in this page's original :root —
+       kept local (not "duplicated brand variables") so the accordion
+       CSS below renders identically to before. --marshmallow-faint and
+       --olive-faint don't exist in nava-styles.css at all, so they stay
+       here too. */
     :root {
-      --aubergine: #36192B;
-      --olive: #797842;
-      --jet: #020202;
-      --marshmallow: #F0EDE4;
       --marshmallow-dim: rgba(240, 237, 228, 0.5);
       --marshmallow-faint: rgba(240, 237, 228, 0.12);
       --olive-faint: rgba(121, 120, 66, 0.2);
     }
 
-    html, body {
-      background: var(--aubergine);
-      color: var(--marshmallow);
-      font-family: 'DM Sans', sans-serif;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* NAV */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      height: 60px;
-      background: var(--aubergine);
-      border-bottom: 1px solid var(--marshmallow-faint);
-    }
-
-    nav .logo img {
-      height: 48px;
-      display: block;
-    }
-
-    nav .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-    }
-
-    nav .nav-links a {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--marshmallow);
-      text-decoration: none;
-      opacity: 0.75;
-      transition: opacity 0.2s;
-    }
-
-    nav .nav-links a:hover { opacity: 1; }
-
-    /* PAGE */
+    /* ── PAGE (mobile) — top/bottom padding reduced from the original
+       100px/100px: that value existed to clear a position:fixed nav and
+       footer. Nav is now nava-styles.css's sticky .nav (no overlay to
+       clear) and the footer is now normal in-flow (see footer notes
+       below), so the old clearance padding would just be dead space. ── */
     .page {
       max-width: 430px;
       margin: 0 auto;
-      padding: 100px 24px 100px;
+      padding: 24px 24px 60px;
     }
 
     .page-title {
@@ -93,9 +52,10 @@
       margin-bottom: 48px;
     }
 
-    /* FAQ SECTIONS */
+    /* ── FAQ SECTIONS (accordion CSS — unchanged from original file) ── */
     .faq-section {
       margin-bottom: 40px;
+      scroll-margin-top: 84px;
     }
 
     .faq-section-label {
@@ -110,7 +70,6 @@
       border-bottom: 1px solid var(--olive-faint);
     }
 
-    /* ACCORDION ITEMS */
     .faq-item {
       border-bottom: 1px solid var(--marshmallow-faint);
     }
@@ -190,232 +149,585 @@
       padding-bottom: 20px;
     }
 
-    /* FOOTER NAV */
-    footer {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
+    /* ── MOBILE HAMBURGER MENU (copied verbatim from suri.html) ── */
+    .nav-right-controls { display: flex; align-items: center; gap: 18px; }
+
+    .hamburger-btn {
+      width: 22px; height: 16px; position: relative;
+      background: none; border: none; padding: 0; cursor: pointer;
+    }
+    .hamburger-btn span {
+      display: block; position: absolute; left: 0; width: 100%; height: 1.6px;
+      background: #F0EDE4;
+    }
+    .hamburger-btn span:nth-child(1) { top: 0; }
+    .hamburger-btn span:nth-child(2) { top: 7px; }
+    .hamburger-btn span:nth-child(3) { top: 14px; }
+
+    .mobile-menu-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: #36192B;
+      display: flex; flex-direction: column;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    .mobile-menu-overlay.open { transform: translateX(0); }
+
+    .mobile-menu-header { display: flex; justify-content: flex-end; padding: 20px; }
+    .close-menu-btn {
+      width: 20px; height: 20px; position: relative;
+      background: none; border: none; padding: 0; cursor: pointer;
+    }
+    .close-menu-btn span {
+      position: absolute; top: 9px; left: 0; width: 20px; height: 1.6px;
+      background: #F0EDE4;
+    }
+    .close-menu-btn span:nth-child(1) { transform: rotate(45deg); }
+    .close-menu-btn span:nth-child(2) { transform: rotate(-45deg); }
+
+    .mobile-menu-links { display: flex; flex-direction: column; gap: 26px; padding: 12px 28px 0; }
+    .mobile-menu-link,
+    .mobile-menu-collections-trigger {
+      font-family: 'EB Garamond', Georgia, serif; font-style: italic; font-size: 26px;
+      color: #F0EDE4; text-decoration: none;
+      background: none; border: none; text-align: left; cursor: pointer;
+      display: flex; align-items: center; gap: 8px; padding: 0;
+    }
+    .mobile-menu-sublist {
+      display: none; flex-direction: column; gap: 12px;
+      margin: 14px 0 0 4px; padding-left: 14px;
+      border-left: 1px solid rgba(240,237,228,0.25);
+    }
+    .mobile-menu-sublist.open { display: flex; }
+    .mobile-menu-sublist a {
+      font-family: 'Josefin Sans', sans-serif; font-size: 12px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(240,237,228,0.65); text-decoration: none;
+    }
+
+    .mobile-menu-social { display: flex; gap: 14px; padding: 32px 28px; margin-top: auto; }
+    .mobile-menu-social-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid rgba(240,237,228,0.5);
+      display: flex; align-items: center; justify-content: center;
+      color: #F0EDE4;
+    }
+    .mobile-menu-social-icon svg { width: 16px; height: 16px; }
+
+    /* ── DESKTOP FAQ DROPDOWN — mirrors .nav-collections-dd exactly,
+       under new class names (nava-styles.css is not edited). ── */
+    .nav-faq { position: relative; }
+    .nav-faq-trigger {
+      color: rgba(240,237,228,0.75); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      text-decoration: none; font-family: 'Josefin Sans', sans-serif; cursor: pointer;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .nav-faq-dd {
+      position: absolute; top: 100%; left: 0; margin-top: 0; padding-top: 14px;
+      background: transparent; min-width: 160px;
+      opacity: 0; visibility: hidden; transform: translateY(-4px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 20;
+    }
+    .nav-faq-dd-inner {
+      background: rgba(54,25,43,0.88); backdrop-filter: blur(10px);
+      border: 0.5px solid rgba(240,237,228,0.15); border-radius: 4px;
+      padding: 6px 0;
+    }
+    .nav-faq:hover .nav-faq-dd,
+    .nav-faq:focus-within .nav-faq-dd {
+      opacity: 1; visibility: visible; transform: translateY(0);
+    }
+    .nav-faq-dd a {
+      display: block; padding: 10px 16px;
+      color: rgba(240,237,228,0.8); font-size: 11px; letter-spacing: 0.08em;
+      font-family: 'Josefin Sans', sans-serif; text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+    .nav-faq-dd a:hover {
+      background: rgba(240,237,228,0.06);
+      border-left-color: #797842;
+      color: #F0EDE4;
+    }
+
+    /* ── DESKTOP SHELL — neutralization rules reused verbatim from
+       suri.html; no hero on this page, so no .desktop-hero-stage /
+       .desktop-panel / .desktop-main grid — a simple centered column
+       instead. ── */
+    html, body { margin: 0; }
+    html.nava-desktop,
+    html.nava-desktop body {
+      max-width: none !important;
+      width: 100% !important;
+      height: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+    }
+
+    .desktop-shell {
       display: flex;
-      justify-content: center;
-      gap: 28px;
-      padding: 14px 24px;
-      background: rgba(54, 25, 43, 0.92);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid var(--marshmallow-faint);
+      flex-direction: column;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .desktop-shell .nav {
+      flex: 0 0 auto;
+      position: static !important;
+    }
+    .desktop-main-faq {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .desktop-faq-column {
+      width: 100%;
+      max-width: 430px;
+      padding: 60px 24px 100px;
+    }
+    .desktop-shell footer {
+      flex: 0 0 auto;
+      position: static !important;
     }
 
-    footer a {
+    /* ── DESKTOP TAB ROW — sits above .desktop-faq-column, outside its
+       430px constraint, so it never wraps. Sized to its own content
+       (width:fit-content) and centered independently via margin:auto —
+       NOT stretched to the viewport, NOT space-between. .tab-btn's
+       color/hover/.on-border styling is reused as-is from
+       nava-styles.css; only font-size is bumped here. ── */
+    .faq-tab-row {
+      display: flex;
+      flex-wrap: nowrap;
+      width: fit-content;
+      gap: 56px;
+      margin: 48px auto 0;
+      border-bottom: 1px solid var(--bg-line);
+    }
+    .faq-tab-row .tab-btn {
+      font-size: 0.8rem;
+    }
+    .faq-static-q {
       font-family: 'DM Sans', sans-serif;
-      font-size: 10px;
-      font-weight: 400;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--marshmallow-dim);
-      text-decoration: none;
-      transition: color 0.2s;
+      font-size: 14px;
+      color: var(--marshmallow);
+      margin-bottom: 6px;
     }
-
-    footer a:hover { color: var(--marshmallow); }
-    footer a.active { color: var(--marshmallow); }
+    .faq-static-a {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 13px;
+      color: var(--marshmallow-dim);
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a class="logo" href="index.html"><img src="logo.png" alt="Nava" /></a>
-    <div class="nav-links">
-      <a href="faq.html">FAQ</a>
-      <a href="about.html">About us</a>
-    </div>
-  </nav>
+<noscript>
+  <p style="font-family:sans-serif;padding:24px;color:#333;">
+    Nava — FAQ. Please enable JavaScript to view this page,
+    or <a href="contact.html">contact us</a> for details.
+  </p>
+</noscript>
 
-  <div class="page">
-    <p class="page-title">Nava · Origami</p>
-    <h1 class="page-heading">Frequently asked<br>questions.</h1>
+<template id="tpl-mobile">
 
-    <div class="faq-section">
-      <p class="faq-section-label">The Pieces</p>
+<nav class="nav" id="nav">
+  <a href="index.html" style="display:flex;align-items:center;">
+    <img src="logo.png" alt="Nava" style="height:36px;width:auto;">
+  </a>
+  <div class="nav-right-controls">
+    <button class="hamburger-btn" id="hamburgerBtn" type="button" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
 
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <span>What is the Origami collection?</span>
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer">
-          <p>Origami is Nava's first collection — ten pieces, each resolved around a single geometric decision. The forms are inspired by the logic of folding: one move, one consequence, nothing added that isn't necessary.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <span>What is 9kt gold?</span>
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer">
-          <p>9kt gold is 37.5% pure gold alloyed with metals that give it durability and wearability. It is harder than 18kt or 22kt gold, which makes it better suited to everyday wear. Nava's position is simple: the design is the value, not the carat weight.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <span>Are the pieces available in other metals or karats?</span>
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer">
-          <p>Not currently. All Nava pieces are made in 9kt gold.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <span>How do I know which size to order?</span>
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer">
-          <p>Each piece page carries a size guide. If you are uncertain, mention it when you begin your order — we will walk you through it over WhatsApp before anything is confirmed.</p>
-        </div>
+<div class="mobile-menu-overlay" id="mobileMenuOverlay">
+  <div class="mobile-menu-header">
+    <button class="close-menu-btn" id="closeMenuBtn" type="button" aria-label="Close menu">
+      <span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu-links">
+    <div class="mobile-menu-collections">
+      <button class="mobile-menu-collections-trigger" id="collectionsToggle" type="button">
+        Collections
+        <svg width="10" height="7" viewBox="0 0 8 6" fill="none"><path d="M1 1L4 4.5L7 1" stroke="rgba(240,237,228,0.7)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="mobile-menu-sublist" id="collectionsSubList">
+        <a href="index.html">Home</a>
+        <a href="suri-hanging-earrings.html">Origami</a>
+        <a href="imai.html">Aadhi</a>
       </div>
     </div>
-
-    <div class="faq-section">
-      <p class="faq-section-label">Ordering</p>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <span>How do I place an order?</span>
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer">
-          <p>Tap "Begin an order" on any piece page. This opens a WhatsApp conversation with a pre-filled message. We confirm details, size, and delivery address over WhatsApp before the piece goes into production.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <span>Is there a minimum order value?</span>
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer">
-          <p>No.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <span>Can I order more than one piece at a time?</span>
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer">
-          <p>Yes. Begin with one piece and mention the others in the conversation.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <span>Do you take custom or bespoke requests?</span>
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer">
-          <p>Not at this stage. Every piece in the collection is fixed in its form — that is part of the design position.</p>
-        </div>
-      </div>
+    <div class="mobile-menu-collections">
+      <button class="mobile-menu-collections-trigger" id="faqMenuToggle" type="button">
+        FAQ
+        <svg width="10" height="7" viewBox="0 0 8 6" fill="none"><path d="M1 1L4 4.5L7 1" stroke="rgba(240,237,228,0.7)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="mobile-menu-sublist" id="faqMenuSubList"></div>
     </div>
+    <a class="mobile-menu-link" href="about.html">About</a>
+    <a class="mobile-menu-link" href="gold.html">About 9K Gold</a>
+  </div>
+  <div class="mobile-menu-social">
+    <a class="mobile-menu-social-icon" href="https://in.pinterest.com/NavaOnlineIndia/" target="_blank" rel="noopener" aria-label="Nava on Pinterest">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6"/><circle cx="13.3" cy="10.1" r="3.4" fill="currentColor"/><rect x="10.1" y="7.4" width="2.5" height="11" rx="1.25" fill="currentColor"/></svg>
+    </a>
+    <a class="mobile-menu-social-icon" href="https://www.instagram.com/navaonline.in/" target="_blank" rel="noopener" aria-label="Nava on Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="0.6" fill="currentColor" stroke="none"/></svg>
+    </a>
+  </div>
+</div>
 
-    <div class="faq-section">
-      <p class="faq-section-label">Production & Delivery</p>
+<div class="page">
+  <p class="page-title">Nava · Origami</p>
+  <h1 class="page-heading">Frequently asked<br>questions.</h1>
+</div>
 
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <span>How long does it take?</span>
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer">
-          <p>All Nava pieces are made to order. Production takes 18–22 days from order confirmation. Delivery is additional depending on your location.</p>
+<footer style="display:flex;justify-content:center;gap:28px;padding:14px 24px;background:rgba(54,25,43,0.92);backdrop-filter:blur(10px);border-top:1px solid rgba(240,237,228,0.12);">
+  <a href="privacy.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Privacy Policy</a>
+  <a href="terms.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Terms of Service</a>
+  <a href="contact.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Contact</a>
+</footer>
+
+</template>
+
+<template id="tpl-desktop">
+
+  <div class="desktop-shell">
+
+    <nav class="nav" id="nav">
+      <a href="index.html" style="display:flex;align-items:center;">
+        <img src="logo.png" alt="Nava" style="height:36px;width:auto;">
+      </a>
+      <div class="nav-links">
+        <div class="nav-collections" tabindex="0">
+          <span class="nav-collections-trigger">Collections
+            <svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 1L4 4.5L7 1" stroke="rgba(240,237,228,0.6)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <div class="nav-collections-dd">
+            <div class="nav-collections-dd-inner">
+              <a href="index.html">Home</a>
+              <a href="suri-hanging-earrings.html">Origami</a>
+              <a href="imai.html">Aadhi</a>
+            </div>
+          </div>
         </div>
+        <div class="nav-faq" tabindex="0">
+          <span class="nav-faq-trigger">FAQ
+            <svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 1L4 4.5L7 1" stroke="rgba(240,237,228,0.6)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <div class="nav-faq-dd">
+            <div class="nav-faq-dd-inner" id="navFaqDdInner"></div>
+          </div>
+        </div>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="gold.html">About 9K Gold</a>
       </div>
+    </nav>
 
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <span>How much does delivery cost?</span>
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer">
-          <p>Delivery is free across India.</p>
-        </div>
-      </div>
+    <div class="desktop-main-faq">
+      <div class="faq-tab-row" id="faqTabRow"></div>
+      <div class="desktop-faq-column">
+        <p class="page-title">Nava · Origami</p>
+        <h1 class="page-heading">Frequently asked<br>questions.</h1>
 
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <span>Do you deliver outside India?</span>
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer">
-          <p>Not currently.</p>
-        </div>
+        <div class="faq-tab-panel-desktop" id="faqTabPanelDesktop"></div>
       </div>
     </div>
 
-    <div class="faq-section">
-      <p class="faq-section-label">Returns & Exchanges</p>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <span>What is your return policy?</span>
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer">
-          <p>Because every piece is made to order specifically for you, we do not accept returns. If your piece arrives damaged or with a manufacturing defect, contact us within 48 hours of delivery and we will resolve it.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <span>Can I exchange a piece?</span>
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer">
-          <p>Exchanges are not offered as a standard option. Write to us if you have a specific concern — we will consider it on a case by case basis.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="faq-section">
-      <p class="faq-section-label">Other</p>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <span>How do I get in touch?</span>
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer">
-          <p>Via the <a href="contact.html" style="color: var(--marshmallow); text-decoration: underline; text-underline-offset: 3px;">Contact page</a>, or directly on WhatsApp at +91 73567 74555.</p>
-        </div>
-      </div>
-    </div>
+    <footer style="display:flex;justify-content:center;gap:28px;padding:14px 24px;background:rgba(54,25,43,0.92);backdrop-filter:blur(10px);border-top:1px solid rgba(240,237,228,0.12);">
+      <a href="privacy.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Privacy Policy</a>
+      <a href="terms.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Terms of Service</a>
+      <a href="contact.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Contact</a>
+    </footer>
 
   </div>
 
-  <footer>
-    <a href="privacy.html">Privacy Policy</a>
-    <a href="terms.html">Terms of Service</a>
-    <a href="contact.html">Contact</a>
-  </footer>
+</template>
 
-  <script>
-    document.querySelectorAll('.faq-question').forEach(btn => {
+<script>
+/* ── FAQ DATA — single source of truth. Migrated verbatim from the
+   previous hardcoded markup; no question/answer text altered. The
+   "Other" section's one answer carries an inline <a> to contact.html,
+   so it's flagged html:true and rendered via innerHTML — every other
+   answer renders as plain text. ── */
+const FAQ_DATA = {
+  pieces: {
+    label: "The Pieces",
+    items: [
+      { q: "What is the Origami collection?", a: "Origami is Nava's first collection — ten pieces, each resolved around a single geometric decision. The forms are inspired by the logic of folding: one move, one consequence, nothing added that isn't necessary." },
+      { q: "What is 9kt gold?", a: "9kt gold is 37.5% pure gold alloyed with metals that give it durability and wearability. It is harder than 18kt or 22kt gold, which makes it better suited to everyday wear. Nava's position is simple: the design is the value, not the carat weight." },
+      { q: "Are the pieces available in other metals or karats?", a: "Not currently. All Nava pieces are made in 9kt gold." },
+      { q: "How do I know which size to order?", a: "Each piece page carries a size guide. If you are uncertain, mention it when you begin your order — we will walk you through it over WhatsApp before anything is confirmed." }
+    ]
+  },
+  ordering: {
+    label: "Ordering",
+    items: [
+      { q: "How do I place an order?", a: 'Tap "Begin an order" on any piece page. This opens a WhatsApp conversation with a pre-filled message. We confirm details, size, and delivery address over WhatsApp before the piece goes into production.' },
+      { q: "Is there a minimum order value?", a: "No." },
+      { q: "Can I order more than one piece at a time?", a: "Yes. Begin with one piece and mention the others in the conversation." },
+      { q: "Do you take custom or bespoke requests?", a: "Not at this stage. Every piece in the collection is fixed in its form — that is part of the design position." }
+    ]
+  },
+  delivery: {
+    label: "Production & Delivery",
+    items: [
+      { q: "How long does it take?", a: "All Nava pieces are made to order. Production takes 18–22 days from order confirmation. Delivery is additional depending on your location." },
+      { q: "How much does delivery cost?", a: "Delivery is free across India." },
+      { q: "Do you deliver outside India?", a: "Not currently." }
+    ]
+  },
+  returns: {
+    label: "Returns & Exchanges",
+    items: [
+      { q: "What is your return policy?", a: "Because every piece is made to order specifically for you, we do not accept returns. If your piece arrives damaged or with a manufacturing defect, contact us within 48 hours of delivery and we will resolve it." },
+      { q: "Can I exchange a piece?", a: "Exchanges are not offered as a standard option. Write to us if you have a specific concern — we will consider it on a case by case basis." }
+    ]
+  },
+  other: {
+    label: "Other",
+    items: [
+      { q: "How do I get in touch?", a: 'Via the <a href="contact.html" style="color: var(--marshmallow); text-decoration: underline; text-underline-offset: 3px;">Contact page</a>, or directly on WhatsApp at +91 73567 74555.', html: true }
+    ]
+  }
+};
+const FAQ_ORDER = ["pieces", "ordering", "delivery", "returns", "other"];
+
+/* ── MOBILE ACCORDION RENDER — data-driven; click handlers are
+   attached to each button right after it's created (the old
+   parse-time querySelectorAll wiring doesn't apply to JS-built
+   markup). ── */
+function renderMobileFaq() {
+  const page = document.querySelector('.page');
+  if (!page) return;
+
+  FAQ_ORDER.forEach(key => {
+    const section = FAQ_DATA[key];
+    const sectionEl = document.createElement('div');
+    sectionEl.className = 'faq-section';
+    sectionEl.id = `section-${key}`;
+
+    const label = document.createElement('p');
+    label.className = 'faq-section-label';
+    label.textContent = section.label;
+    sectionEl.appendChild(label);
+
+    section.items.forEach(item => {
+      const itemEl = document.createElement('div');
+      itemEl.className = 'faq-item';
+
+      const btn = document.createElement('button');
+      btn.className = 'faq-question';
+      btn.setAttribute('aria-expanded', 'false');
+
+      const span = document.createElement('span');
+      span.textContent = item.q;
+      const icon = document.createElement('span');
+      icon.className = 'faq-icon';
+      icon.setAttribute('aria-hidden', 'true');
+      btn.appendChild(span);
+      btn.appendChild(icon);
+
+      const answer = document.createElement('div');
+      answer.className = 'faq-answer';
+      const p = document.createElement('p');
+      if (item.html) { p.innerHTML = item.a; } else { p.textContent = item.a; }
+      answer.appendChild(p);
+
       btn.addEventListener('click', () => {
-        const item = btn.closest('.faq-item');
-        const isOpen = item.classList.contains('open');
+        const isOpen = itemEl.classList.contains('open');
         document.querySelectorAll('.faq-item.open').forEach(el => {
           el.classList.remove('open');
           el.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
         });
         if (!isOpen) {
-          item.classList.add('open');
+          itemEl.classList.add('open');
           btn.setAttribute('aria-expanded', 'true');
         }
       });
+
+      itemEl.appendChild(btn);
+      itemEl.appendChild(answer);
+      sectionEl.appendChild(itemEl);
     });
-  </script>
+
+    page.appendChild(sectionEl);
+  });
+}
+
+/* ── DESKTOP TABS + STATIC PANEL ── */
+function buildDesktopTabs() {
+  const row = document.getElementById('faqTabRow');
+  if (!row) return;
+  FAQ_ORDER.forEach((key, i) => {
+    const btn = document.createElement('button');
+    btn.className = i === 0 ? 'tab-btn on' : 'tab-btn';
+    btn.dataset.t = key;
+    btn.textContent = FAQ_DATA[key].label;
+    btn.addEventListener('click', () => goToFaqSection(key));
+    row.appendChild(btn);
+  });
+}
+
+function renderDesktopFaqPanel(key) {
+  const panel = document.getElementById('faqTabPanelDesktop');
+  if (!panel) return;
+  panel.innerHTML = '';
+  FAQ_DATA[key].items.forEach(item => {
+    const itemEl = document.createElement('div');
+    itemEl.className = 'faq-static-item';
+
+    const q = document.createElement('p');
+    q.className = 'faq-static-q';
+    q.textContent = item.q;
+
+    const a = document.createElement('p');
+    a.className = 'faq-static-a';
+    if (item.html) { a.innerHTML = item.a; } else { a.textContent = item.a; }
+
+    itemEl.appendChild(q);
+    itemEl.appendChild(a);
+    panel.appendChild(itemEl);
+  });
+}
+
+/* ── FAQ link lists (hamburger sublist + desktop dropdown) — built
+   from FAQ_ORDER/FAQ_DATA so labels can never drift from the data. ── */
+function buildFaqLinkList(container) {
+  if (!container) return;
+  FAQ_ORDER.forEach(key => {
+    const a = document.createElement('a');
+    a.href = `faq.html#${key}`;
+    a.textContent = FAQ_DATA[key].label;
+    container.appendChild(a);
+  });
+}
+
+/* ── goToFaqSection — dual-mode: desktop swaps the active tab/panel;
+   mobile closes whatever's open, scrolls the section into view (via
+   scroll-margin-top on .faq-section, not a manual offset), and opens
+   the section's first item. ── */
+function goToFaqSection(key) {
+  if (!FAQ_ORDER.includes(key)) return;
+
+  if (document.documentElement.classList.contains('nava-desktop')) {
+    document.querySelectorAll('#faqTabRow .tab-btn').forEach(b => {
+      b.classList.toggle('on', b.dataset.t === key);
+    });
+    renderDesktopFaqPanel(key);
+  } else {
+    document.querySelectorAll('.faq-item.open').forEach(el => {
+      el.classList.remove('open');
+      el.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+    });
+    const sectionEl = document.getElementById(`section-${key}`);
+    if (sectionEl) {
+      sectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const firstItem = sectionEl.querySelector('.faq-item');
+      if (firstItem) {
+        firstItem.classList.add('open');
+        firstItem.querySelector('.faq-question').setAttribute('aria-expanded', 'true');
+      }
+    }
+  }
+}
+
+/* ── Intercept in-page FAQ links (nav dropdown + hamburger sublist)
+   so that, while already on faq.html, clicking them switches section
+   without a reload; from any other page they navigate normally and
+   the hash is picked up by the on-load logic below. ── */
+function wireFaqLinks() {
+  document.querySelectorAll('a[href^="faq.html#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const key = a.getAttribute('href').split('#')[1];
+      if (!FAQ_ORDER.includes(key)) return;
+      if (window.location.pathname.endsWith('faq.html')) {
+        e.preventDefault();
+        const menuOverlay = document.getElementById('mobileMenuOverlay');
+        if (menuOverlay) menuOverlay.classList.remove('open');
+        if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+        goToFaqSection(key);
+      }
+    });
+  });
+}
+</script>
+
+<script>
+/* ── DEVICE ROUTER — decides once, synchronously, before any FAQ
+   markup renders. Same pattern as suri.html. ── */
+(function () {
+  var isDesktop = window.matchMedia(
+    '(min-width: 1024px) and (hover: hover) and (pointer: fine)'
+  ).matches;
+  document.documentElement.classList.toggle('nava-desktop', isDesktop);
+  var tpl = document.getElementById(isDesktop ? 'tpl-desktop' : 'tpl-mobile');
+  document.body.appendChild(tpl.content.cloneNode(true));
+})();
+</script>
+
+<script>
+/* ── INIT — hamburger/collections/FAQ-toggle wiring (only wires up
+   elements that exist for the cloned template; adapted from suri.html's
+   pattern minus the cart-icon-hide step, since this page has no cart
+   icon), FAQ render, and hash-based landing. ── */
+(function () {
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const closeMenuBtn = document.getElementById('closeMenuBtn');
+  const menuOverlay = document.getElementById('mobileMenuOverlay');
+  const collectionsToggle = document.getElementById('collectionsToggle');
+  const collectionsSubList = document.getElementById('collectionsSubList');
+  const faqMenuToggle = document.getElementById('faqMenuToggle');
+  const faqMenuSubList = document.getElementById('faqMenuSubList');
+
+  if (hamburgerBtn) {
+    hamburgerBtn.addEventListener('click', () => {
+      menuOverlay.classList.add('open');
+    });
+  }
+  if (closeMenuBtn) {
+    closeMenuBtn.addEventListener('click', () => {
+      menuOverlay.classList.remove('open');
+    });
+  }
+  if (collectionsToggle) {
+    collectionsToggle.addEventListener('click', () => {
+      collectionsSubList.classList.toggle('open');
+    });
+  }
+  if (faqMenuToggle) {
+    faqMenuToggle.addEventListener('click', () => {
+      faqMenuSubList.classList.toggle('open');
+    });
+  }
+
+  buildFaqLinkList(document.getElementById('faqMenuSubList'));
+  buildFaqLinkList(document.getElementById('navFaqDdInner'));
+
+  renderMobileFaq();
+  buildDesktopTabs();
+  if (document.getElementById('faqTabRow')) {
+    renderDesktopFaqPanel('pieces');
+  }
+
+  wireFaqLinks();
+
+  const hashKey = window.location.hash.slice(1);
+  if (FAQ_ORDER.includes(hashKey)) {
+    goToFaqSection(hashKey);
+  }
+})();
+</script>
 
 </body>
 </html>

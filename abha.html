@@ -53,115 +53,19 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-KVB4V9TTL4');
 </script>
-<style>
-/* ── VARIANT BOXES ── scoped to this page; sits below the hero, above the flower strip */
-.variant-boxes {
-  display: flex;
-  gap: 10px;
-  padding: 16px 20px 4px;
-  justify-content: center;
-}
-.variant-box {
-  /* CHANGE THIS: allows content to dictate the base size */
-  flex: 1 1 auto; 
-
-  /* ADD THIS: ensures a uniform height for flex centering to work */
-  min-height: 50px; 
-
-  max-width: 140px;
-  padding: 11px 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  color: rgba(240,237,228,0.5);
-  background: rgba(240,237,228,0.04);
-  border: 0.5px solid rgba(240,237,228,0.14);
-  border-radius: 4px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  cursor: pointer;
-  transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
-  user-select: none;
-}
-
-.variant-box:hover:not(.active) {
-  color: rgba(240,237,228,0.78);
-  border-color: rgba(240,237,228,0.24);
-}
-.variant-box.active {
-  color: #F0EDE4;
-  background: rgba(121,120,66,0.16);
-  border-color: rgba(121,120,66,0.55);
-}
-.variant-box:focus-visible {
-  outline: 1.5px solid rgba(240,237,228,0.6);
-  outline-offset: 2px;
-}
-
-/* ── EXHIBIT NAV CENTER (scoped to this page only, for testing) ── */
-.exhibit-nav-center {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex: 0 0 auto;
-}
-.exhibit-nav-grid {
-  position: relative;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: none;
-  border: 0.5px solid rgba(240,237,228,0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  flex: 0 0 38px;
-  align-self: center;
-  padding: 0;
-}
-.exhibit-nav-grid svg { width: 15px; height: 15px; }
-.exhibit-nav-grid:hover .exhibit-nav-tooltip,
-.exhibit-nav-grid:focus .exhibit-nav-tooltip,
-.exhibit-nav-grid:focus-visible .exhibit-nav-tooltip {
-  opacity: 1;
-}
-.exhibit-nav-add {
-  width: 38px;
-  height: 38px;
-  flex: 0 0 38px;
-}
-.exhibit-nav-add svg { width: 15px; height: 15px; }
-.exhibit-nav-name { font-size: 17px !important; }
-.exhibit-nav-count { font-size: 11px !important; }
-</style>
 </head>
 <body>
+
+<template id="tpl-mobile">
 
 <nav class="nav" id="nav">
   <a href="index.html" style="display:flex;align-items:center;">
     <img src="logo.png" alt="Nava" style="height:36px;width:auto;">
   </a>
-  <div class="nav-links">
-    <div class="nav-collections" tabindex="0">
-      <span class="nav-collections-trigger">Visit
-        <svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 1L4 4.5L7 1" stroke="rgba(240,237,228,0.6)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </span>
-      <div class="nav-collections-dd">
-        <div class="nav-collections-dd-inner">
-          <a href="index.html">Home</a>
-          <a href="suri-hanging-earrings.html">Origami</a>
-          <a href="imai.html">Aadhi</a>
-        </div>
-      </div>
-    </div>
-    <a class="nav-link" href="faq.html">FAQ</a>
-    <a class="nav-link" href="about.html">About</a>
+  <div class="nav-right-controls">
+    <button class="hamburger-btn" id="hamburgerBtn" type="button" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
     <a class="nav-link cart-icon-link" id="cartIconLink" href="cart.html">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M6 7h12l-1 13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 7Z"/>
@@ -171,6 +75,50 @@ gtag('config', 'G-KVB4V9TTL4');
     </a>
   </div>
 </nav>
+
+<div class="mobile-menu-overlay" id="mobileMenuOverlay">
+  <div class="mobile-menu-header">
+    <button class="close-menu-btn" id="closeMenuBtn" type="button" aria-label="Close menu">
+      <span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu-links">
+    <div class="mobile-menu-collections">
+      <button class="mobile-menu-collections-trigger" id="collectionsToggle" type="button">
+        Collections
+        <svg width="10" height="7" viewBox="0 0 8 6" fill="none"><path d="M1 1L4 4.5L7 1" stroke="rgba(240,237,228,0.7)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="mobile-menu-sublist" id="collectionsSubList">
+        <a href="index.html">Home</a>
+        <a href="suri-hanging-earrings.html">Origami</a>
+        <a href="imai.html">Aadhi</a>
+      </div>
+    </div>
+    <div class="mobile-menu-collections">
+      <button class="mobile-menu-collections-trigger" id="faqMenuToggle" type="button">
+        FAQ
+        <svg width="10" height="7" viewBox="0 0 8 6" fill="none"><path d="M1 1L4 4.5L7 1" stroke="rgba(240,237,228,0.7)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="mobile-menu-sublist" id="faqMenuSubList">
+        <a href="faq.html#pieces">The Pieces</a>
+        <a href="faq.html#ordering">Ordering</a>
+        <a href="faq.html#delivery">Production &amp; Delivery</a>
+        <a href="faq.html#returns">Returns &amp; Exchanges</a>
+        <a href="faq.html#other">Other</a>
+      </div>
+    </div>
+    <a class="mobile-menu-link" href="about.html">About</a>
+    <a class="mobile-menu-link" href="gold.html">About 9K Gold</a>
+  </div>
+  <div class="mobile-menu-social">
+    <a class="mobile-menu-social-icon" href="https://in.pinterest.com/NavaOnlineIndia/" target="_blank" rel="noopener" aria-label="Nava on Pinterest">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6"/><circle cx="13.3" cy="10.1" r="3.4" fill="currentColor"/><rect x="10.1" y="7.4" width="2.5" height="11" rx="1.25" fill="currentColor"/></svg>
+    </a>
+    <a class="mobile-menu-social-icon" href="https://www.instagram.com/navaonline.in/" target="_blank" rel="noopener" aria-label="Nava on Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="0.6" fill="currentColor" stroke="none"/></svg>
+    </a>
+  </div>
+</div>
 
 <div class="hero" id="hero">
   <div class="hero-track" id="heroTrack"></div>
@@ -263,6 +211,227 @@ gtag('config', 'G-KVB4V9TTL4');
     <button class="cta-btn" id="ctaBtn" type="button">Add to cart</button>
   </div>
 </div>
+
+<footer style="display:flex;justify-content:center;gap:28px;padding:14px 24px;background:rgba(54,25,43,0.92);backdrop-filter:blur(10px);border-top:1px solid rgba(240,237,228,0.12);">
+  <a href="privacy.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Privacy Policy</a>
+  <a href="terms.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Terms of Service</a>
+  <a href="contact.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Contact</a>
+</footer>
+
+</template>
+
+<template id="tpl-desktop">
+
+  <div class="desktop-shell">
+
+    <nav class="nav" id="nav">
+      <a href="index.html" style="display:flex;align-items:center;">
+        <img src="logo.png" alt="Nava" style="height:36px;width:auto;">
+      </a>
+      <div class="nav-links">
+        <div class="nav-collections" tabindex="0">
+          <span class="nav-collections-trigger">Collections
+            <svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 1L4 4.5L7 1" stroke="rgba(240,237,228,0.6)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <div class="nav-collections-dd">
+            <div class="nav-collections-dd-inner">
+              <a href="index.html">Home</a>
+              <a href="suri-hanging-earrings.html">Origami</a>
+              <a href="imai.html">Aadhi</a>
+            </div>
+          </div>
+        </div>
+        <div class="nav-faq" tabindex="0">
+          <span class="nav-faq-trigger">FAQ
+            <svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 1L4 4.5L7 1" stroke="rgba(240,237,228,0.6)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <div class="nav-faq-dd">
+            <div class="nav-faq-dd-inner">
+              <a href="faq.html#pieces">The Pieces</a>
+              <a href="faq.html#ordering">Ordering</a>
+              <a href="faq.html#delivery">Production &amp; Delivery</a>
+              <a href="faq.html#returns">Returns &amp; Exchanges</a>
+              <a href="faq.html#other">Other</a>
+            </div>
+          </div>
+        </div>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="gold.html">About 9K Gold</a>
+        <a class="nav-link cart-icon-link" id="cartIconLink" href="cart.html">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 7h12l-1 13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 7Z"/>
+            <path d="M9 7V5a3 3 0 0 1 6 0v2"/>
+          </svg>
+          <span class="cart-badge" id="cartBadge"></span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="desktop-main">
+
+      <div class="desktop-hero-stage">
+        <div class="hero desktop-hero" id="hero">
+          <div class="hero-track" id="heroTrack"></div>
+          <div class="hero-overlay"></div>
+          <div class="hero-thumbs" id="heroThumbs"></div>
+          <div class="hero-identity">
+            <div class="hero-identity-text">
+              <div class="hero-tag" id="heroTag"></div>
+              <div class="piece-name" id="pieceName"></div>
+            </div>
+            <div class="variant-boxes" id="variantBoxes"></div>
+          </div>
+        </div>
+        <div class="exhibit-nav" id="exhibitNav"></div>
+        <div class="desktop-hero-social">
+          <a class="exhibit-nav-social" href="https://in.pinterest.com/NavaOnlineIndia/" target="_blank" rel="noopener" aria-label="Nava on Pinterest">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6"/><circle cx="13.3" cy="10.1" r="3.4" fill="currentColor"/><rect x="10.1" y="7.4" width="2.5" height="11" rx="1.25" fill="currentColor"/></svg>
+          </a>
+          <a class="exhibit-nav-social" href="https://www.instagram.com/navaonline.in/" target="_blank" rel="noopener" aria-label="Nava on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="0.6" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="desktop-panel">
+
+        <div class="thinking-provenance-stack">
+          <div class="section-block">
+            <div class="section-heading">The thinking</div>
+            <div id="panel-design" class="story"></div>
+          </div>
+          <div class="thinking-provenance-spacer"></div>
+          <div class="section-block">
+            <div class="section-heading">Provenance</div>
+            <div id="panel-prov" class="prov-rows"></div>
+          </div>
+          <div class="thinking-provenance-spacer"></div>
+        </div>
+
+        <div class="expanders" id="expandersWrap">
+          <div class="exp-row" id="skinExpRow">
+            <div class="exp-head" id="skinHead">
+              <span class="exp-label">How it sits on you</span>
+              <div class="exp-icon" id="skinIcon">
+                <svg viewBox="0 0 10 10" fill="none"><path d="M5 1V9M1 5H9" stroke="#797842" stroke-width="1.3" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+            <div class="exp-body" id="skinBody">
+              <div class="exp-inner">
+                <div class="skin-row" id="skinRow">
+                  <div class="stile t1 sel" data-i="0">
+                    <svg class="sring-svg" viewBox="0 0 60 24" fill="none"><ellipse cx="30" cy="12" rx="27" ry="10" stroke="#9a9a58" stroke-width="3.5" fill="none"/></svg>
+                    <span class="slabel">Light</span>
+                  </div>
+                  <div class="stile t2" data-i="1">
+                    <svg class="sring-svg" viewBox="0 0 60 24" fill="none"><ellipse cx="30" cy="12" rx="27" ry="10" stroke="#b0b068" stroke-width="3.5" fill="none"/></svg>
+                    <span class="slabel">Medium</span>
+                  </div>
+                  <div class="stile t3" data-i="2">
+                    <svg class="sring-svg" viewBox="0 0 60 24" fill="none"><ellipse cx="30" cy="12" rx="27" ry="10" stroke="#c8c878" stroke-width="3.5" fill="none"/></svg>
+                    <span class="slabel">Deep warm</span>
+                  </div>
+                  <div class="stile t4" data-i="3">
+                    <svg class="sring-svg" viewBox="0 0 60 24" fill="none"><ellipse cx="30" cy="12" rx="27" ry="10" stroke="#d8d890" stroke-width="3.5" fill="none"/></svg>
+                    <span class="slabel">Deep</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="exp-row" id="sizeExpRow">
+            <div class="exp-head" id="sizeHead">
+              <span class="exp-label">Size</span>
+              <div class="exp-icon" id="sizeIcon">
+                <svg viewBox="0 0 10 10" fill="none"><path d="M5 1V9M1 5H9" stroke="#797842" stroke-width="1.3" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+            <div class="exp-body" id="sizeBody">
+              <div class="exp-inner">
+                <div class="size-row" id="sizeRow"></div>
+                <div class="sz-note">Not sure of your size? We will help — just ask when you order.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="price-block">
+          <div class="price" id="priceDisplay"></div>
+          <div class="price-note">Made to order · Free delivery</div>
+        </div>
+
+        <div class="qty-cta-row">
+          <div class="qty-block">
+            <div class="qty-stepper">
+              <button class="qty-btn" id="qtyMinus" type="button">−</button>
+              <span class="qty-value" id="qtyValue">1</span>
+              <button class="qty-btn" id="qtyPlus" type="button">+</button>
+            </div>
+          </div>
+          <div class="cta-block">
+            <button class="cta-btn" id="ctaBtn" type="button">Add to cart</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer style="display:flex;justify-content:center;gap:28px;padding:14px 24px;background:rgba(54,25,43,0.92);backdrop-filter:blur(10px);border-top:1px solid rgba(240,237,228,0.12);">
+      <a href="privacy.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Privacy Policy</a>
+      <a href="terms.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Terms of Service</a>
+      <a href="contact.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Contact</a>
+    </footer>
+
+  </div>
+
+</template>
+
+<script>
+/* ── DEVICE ROUTER — decides once, synchronously, before any piece
+   data renders. No redirect, no second URL: same file, different
+   markup cloned in from the two <template>s above. ── */
+(function () {
+  var isDesktop = window.matchMedia(
+    '(min-width: 1024px) and (hover: hover) and (pointer: fine)'
+  ).matches;
+  document.documentElement.classList.toggle('nava-desktop', isDesktop);
+  var tpl = document.getElementById(isDesktop ? 'tpl-desktop' : 'tpl-mobile');
+  document.body.appendChild(tpl.content.cloneNode(true));
+})();
+</script>
+
+<script>
+/* ── MOBILE HAMBURGER MENU — only wires up if the mobile template was
+   cloned in (elements will simply not exist otherwise). ── */
+(function initMobileMenu() {
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  if (!hamburgerBtn) return;
+
+  const closeMenuBtn = document.getElementById('closeMenuBtn');
+  const menuOverlay = document.getElementById('mobileMenuOverlay');
+  const cartIconLink = document.getElementById('cartIconLink');
+  const collectionsToggle = document.getElementById('collectionsToggle');
+  const collectionsSubList = document.getElementById('collectionsSubList');
+  const faqMenuToggle = document.getElementById('faqMenuToggle');
+  const faqMenuSubList = document.getElementById('faqMenuSubList');
+
+  hamburgerBtn.addEventListener('click', () => {
+    menuOverlay.classList.add('open');
+    cartIconLink.style.display = 'none';
+  });
+  closeMenuBtn.addEventListener('click', () => {
+    menuOverlay.classList.remove('open');
+    cartIconLink.style.display = '';
+  });
+  collectionsToggle.addEventListener('click', () => {
+    collectionsSubList.classList.toggle('open');
+  });
+  faqMenuToggle.addEventListener('click', () => {
+    faqMenuSubList.classList.toggle('open');
+  });
+})();
+</script>
 
 <script>
 /* ── DESIGN (shared across all Vaan variants) ── */
@@ -537,16 +706,20 @@ function buildExhibitNav() {
 }
 buildExhibitNav();
 
-/* ── TABS ── */
-document.getElementById('tabRow').querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', function () {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('on'));
-    this.classList.add('on');
-    const t = this.dataset.t;
-    document.getElementById('panel-design').style.display = t === 'design' ? 'block' : 'none';
-    document.getElementById('panel-prov').style.display   = t === 'prov'   ? 'block' : 'none';
+/* ── TABS (mobile only — desktop shows Thinking + Provenance stacked,
+   not tabbed; see nava-styles.css .thinking-provenance-stack) ── */
+const tabRowEl = document.getElementById('tabRow');
+if (tabRowEl) {
+  tabRowEl.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('on'));
+      this.classList.add('on');
+      const t = this.dataset.t;
+      document.getElementById('panel-design').style.display = t === 'design' ? 'block' : 'none';
+      document.getElementById('panel-prov').style.display   = t === 'prov'   ? 'block' : 'none';
+    });
   });
-});
+}
 
 /* ── EXPANDERS ── */
 function makeExp(headId, iconId, bodyId) {
@@ -603,10 +776,5 @@ document.getElementById('ctaBtn').addEventListener('click', async () => {
 renderVariant(activeKey);
 </script>
 <script src="nava-analytics.js"></script>
-<footer style="display:flex;justify-content:center;gap:28px;padding:14px 24px;background:rgba(54,25,43,0.92);backdrop-filter:blur(10px);border-top:1px solid rgba(240,237,228,0.12);">
-  <a href="privacy.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Privacy Policy</a>
-  <a href="terms.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Terms of Service</a>
-  <a href="contact.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Contact</a>
-</footer>
 </body>
 </html>
