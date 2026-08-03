@@ -1234,3 +1234,255 @@ html.nava-desktop body {
   margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--bg-line);
 }
 .gg-final .gg-p:last-child { margin-bottom: 0; }
+
+.fly-badge {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  pointer-events: none;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #F0EDE4;
+  background: #797842;
+  border-radius: 999px;
+  padding: 3px 9px;
+  line-height: 1;
+  white-space: nowrap;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  transition: transform 800ms cubic-bezier(.32,.72,.36,1),
+              opacity 800ms cubic-bezier(.32,.72,.36,1);
+}
+.fly-badge.fly-land { opacity: 0; }
+
+@keyframes cartBadgeBump {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.4); }
+  65%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+.cart-badge.bump { animation: cartBadgeBump 380ms ease; }
+
+/* ══════════════════════════════════════════════════════════════
+   CART.HTML — DESKTOP LAYOUT (page-scoped; cart.html is a utility
+   list page, not a hero page, so it does NOT reuse the shared
+   .desktop-shell/.desktop-main/.desktop-panel grid built for product
+   pages — those assume a hero column. This block is intentionally
+   scoped to cart.html only, per the project's standing rule that
+   scoped per-file CSS is correct for genuinely page-specific content.
+   Nav classes used here (.nav, .nav-links, .nav-collections,
+   .nav-faq, .cart-icon-link) ARE the shared, unscoped versions —
+   reused as-is, not redeclared.
+   ══════════════════════════════════════════════════════════════ */
+.cart-desktop-shell {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+.cart-desktop-shell .nav {
+  flex: 0 0 auto;
+  position: static !important;
+}
+.cart-desktop-main {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 56px 64px 0;
+}
+.cart-desktop-main footer {
+  margin: 64px 0 0;
+}
+.cart-desktop-content {
+  max-width: 1040px;
+  width: 100%;
+  margin: 0 auto;
+}
+.cart-desktop-title {
+  font-family: 'Josefin Sans', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 28px;
+  color: #F0EDE4;
+  margin-bottom: 40px;
+}
+.cart-desktop-header-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 160px 140px 90px;
+  gap: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(240,237,228,0.25);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(240,237,228,0.45);
+}
+.cart-line-desktop {
+  display: grid;
+  grid-template-columns: 90px 1fr 160px 140px 90px;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(240,237,228,0.12);
+}
+.cart-line-desktop-img {
+  width: 78px;
+  height: 98px;
+  object-fit: cover;
+  border-radius: 4px;
+  background: rgba(240,237,228,0.06);
+}
+.cart-line-desktop-name {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 19px;
+  color: #F0EDE4;
+}
+.cart-line-desktop-price {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 13px;
+  color: rgba(240,237,228,0.6);
+  margin-top: 6px;
+}
+.cart-line-desktop-total {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 16px;
+  color: #F0EDE4;
+  text-align: right;
+}
+.cart-line-desktop .cart-qty-stepper {
+  width: 100%;
+  justify-content: space-between;
+}
+.cart-desktop-summary {
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 24px;
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(240,237,228,0.2);
+}
+.cart-desktop-summary-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(240,237,228,0.6);
+}
+.cart-desktop-summary-total {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 26px;
+  color: #F0EDE4;
+}
+.cart-desktop-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 28px;
+}
+.cart-desktop-checkout-btn {
+  padding: 16px 52px;
+  background: transparent;
+  border: 1px solid #F0EDE4;
+  color: #F0EDE4;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.cart-desktop-checkout-btn:hover { background: rgba(240,237,228,0.08); }
+.cart-desktop-checkout-btn:disabled { opacity: 0.5; cursor: default; }
+.cart-desktop-continue-link {
+  padding: 16px 36px;
+  background: transparent;
+  border: 1px solid rgba(240,237,228,0.5);
+  color: #F0EDE4;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+}
+.cart-desktop-continue-link:hover { background: rgba(240,237,228,0.08); }
+
+/* Empty state — bigger/more expansive on desktop, per direct instruction */
+.cart-desktop-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  text-align: center;
+}
+.cart-desktop-empty img { width: 460px; height: auto; margin-bottom: 4px; }
+.cart-desktop-empty .cde-eyebrow {
+  color: rgba(240,237,228,0.45); font-size: 11px; letter-spacing: 4px;
+  margin-bottom: 18px; font-family: 'Josefin Sans', sans-serif;
+}
+.cart-desktop-empty .cde-title {
+  font-family: 'EB Garamond', Georgia, serif; font-style: italic;
+  color: #F0EDE4; font-size: 56px; line-height: 1; letter-spacing: -0.5px;
+  margin-bottom: 20px;
+}
+.cart-desktop-empty .cde-copy {
+  color: rgba(240,237,228,0.6); font-size: 15px; line-height: 1.8;
+  max-width: 380px; margin: 0 0 48px;
+}
+.cart-desktop-empty .cde-begin {
+  display: block; width: 100%; max-width: 320px;
+  border: 1px solid rgba(240,237,228,0.5); border-radius: 2px;
+  padding: 18px; text-align: center; text-decoration: none;
+}
+.cart-desktop-empty .cde-begin:hover { background: rgba(240,237,228,0.08); }
+.cart-desktop-empty .cde-begin span {
+  color: #F0EDE4; font-size: 10px; letter-spacing: 3px;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   COLLECTION MOSAIC PAGES (origami.html / aadhi.html) — DESKTOP
+   Shared shell: both pages use identical row-weight structure
+   (220/160/130), only tile content/images/links differ per file.
+   Page-scoped rather than reusing .desktop-shell/.desktop-main,
+   since those assume a two-column hero grid this page doesn't have.
+   ══════════════════════════════════════════════════════════════ */
+.mosaic-desktop-shell {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+.mosaic-desktop-shell .nav {
+  flex: 0 0 auto;
+  position: static !important;
+}
+.mosaic-desktop-main {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+.mosaic-desktop-wrap {
+  max-width: 700px;
+  margin: 0 auto;
+  height: calc(100vh - 76px);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.mosaic-desktop-wrap .mosaic-row {
+  display: flex;
+  gap: 2px;
+  min-height: 0;
+}

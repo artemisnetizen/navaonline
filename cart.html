@@ -174,41 +174,210 @@
 </head>
 <body>
 
-<nav class="nav" id="nav">
-  <a href="index.html" style="display:flex;align-items:center;">
-    <img src="logo.png" alt="Nava" style="height:24px;width:auto;">
-  </a>
-  <div class="nav-links">
-    <a class="nav-link" href="faq.html">FAQ</a>
-    <a class="nav-link" href="about.html">About us</a>
-    <a class="nav-link cart-icon-link" id="cartIconLink" href="cart.html">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M6 7h12l-1 13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 7Z"/>
-        <path d="M9 7V5a3 3 0 0 1 6 0v2"/>
-      </svg>
-      <span class="cart-badge" id="cartBadge"></span>
+<template id="tpl-mobile">
+
+  <nav class="nav" id="nav">
+    <a href="index.html" style="display:flex;align-items:center;">
+      <img src="logo.png" alt="Nava" style="height:36px;width:auto;">
     </a>
-  </div>
-</nav>
+    <div class="nav-right-controls">
+      <button class="hamburger-btn" id="hamburgerBtn" type="button" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <a class="nav-link cart-icon-link" id="cartIconLink" href="cart.html">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 7h12l-1 13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 7Z"/>
+          <path d="M9 7V5a3 3 0 0 1 6 0v2"/>
+        </svg>
+        <span class="cart-badge" id="cartBadge"></span>
+      </a>
+    </div>
+  </nav>
 
-<div class="cart-wrap">
-  <div class="cart-title">Your cart</div>
-  <div id="cartContent">
-    <div class="cart-loading">Loading your cart...</div>
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+    <div class="mobile-menu-header">
+      <button class="close-menu-btn" id="closeMenuBtn" type="button" aria-label="Close menu">
+        <span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu-links">
+      <div class="mobile-menu-collections">
+        <button class="mobile-menu-collections-trigger" id="collectionsToggle" type="button">
+          Collections
+          <svg width="10" height="7" viewBox="0 0 8 6" fill="none"><path d="M1 1L4 4.5L7 1" stroke="rgba(240,237,228,0.7)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="mobile-menu-sublist" id="collectionsSubList">
+          <a href="index.html">Home</a>
+          <a href="suri-hanging-earrings.html">Origami</a>
+          <a href="imai.html">Aadhi</a>
+        </div>
+      </div>
+      <div class="mobile-menu-collections">
+        <button class="mobile-menu-collections-trigger" id="faqMenuToggle" type="button">
+          FAQ
+          <svg width="10" height="7" viewBox="0 0 8 6" fill="none"><path d="M1 1L4 4.5L7 1" stroke="rgba(240,237,228,0.7)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="mobile-menu-sublist" id="faqMenuSubList">
+          <a href="faq.html#pieces">The Pieces</a>
+          <a href="faq.html#ordering">Ordering</a>
+          <a href="faq.html#delivery">Production &amp; Delivery</a>
+          <a href="faq.html#returns">Returns &amp; Exchanges</a>
+          <a href="faq.html#other">Other</a>
+        </div>
+      </div>
+      <a class="mobile-menu-link" href="about.html">About</a>
+      <a class="mobile-menu-link" href="gold.html">About 9K Gold</a>
+    </div>
+    <div class="mobile-menu-social">
+      <a class="mobile-menu-social-icon" href="https://in.pinterest.com/NavaOnlineIndia/" target="_blank" rel="noopener" aria-label="Nava on Pinterest">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6"/><circle cx="13.3" cy="10.1" r="3.4" fill="currentColor"/><rect x="10.1" y="7.4" width="2.5" height="11" rx="1.25" fill="currentColor"/></svg>
+      </a>
+      <a class="mobile-menu-social-icon" href="https://www.instagram.com/navaonline.in/" target="_blank" rel="noopener" aria-label="Nava on Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="0.6" fill="currentColor" stroke="none"/></svg>
+      </a>
+    </div>
   </div>
-</div>
 
-<footer style="display:flex;justify-content:center;gap:28px;padding:14px 24px;background:rgba(54,25,43,0.92);backdrop-filter:blur(10px);border-top:1px solid rgba(240,237,228,0.12);">
-  <a href="privacy.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Privacy Policy</a>
-  <a href="terms.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Terms of Service</a>
-  <a href="contact.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Contact</a>
-</footer>
+  <div class="cart-wrap">
+    <div class="cart-title">Your cart</div>
+    <div id="cartContent">
+      <div class="cart-loading">Loading your cart...</div>
+    </div>
+  </div>
+
+  <footer style="display:flex;justify-content:center;gap:28px;padding:14px 24px;background:rgba(54,25,43,0.92);backdrop-filter:blur(10px);border-top:1px solid rgba(240,237,228,0.12);">
+    <a href="privacy.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Privacy Policy</a>
+    <a href="terms.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Terms of Service</a>
+    <a href="contact.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Contact</a>
+  </footer>
+
+</template>
+
+<template id="tpl-desktop">
+
+  <div class="cart-desktop-shell">
+
+    <nav class="nav" id="nav">
+      <a href="index.html" style="display:flex;align-items:center;">
+        <img src="logo.png" alt="Nava" style="height:36px;width:auto;">
+      </a>
+      <div class="nav-links">
+        <div class="nav-collections" tabindex="0">
+          <span class="nav-collections-trigger">Collections
+            <svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 1L4 4.5L7 1" stroke="rgba(240,237,228,0.6)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <div class="nav-collections-dd">
+            <div class="nav-collections-dd-inner">
+              <a href="index.html">Home</a>
+              <a href="suri-hanging-earrings.html">Origami</a>
+              <a href="imai.html">Aadhi</a>
+            </div>
+          </div>
+        </div>
+        <div class="nav-faq" tabindex="0">
+          <span class="nav-faq-trigger">FAQ
+            <svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 1L4 4.5L7 1" stroke="rgba(240,237,228,0.6)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <div class="nav-faq-dd">
+            <div class="nav-faq-dd-inner">
+              <a href="faq.html#pieces">The Pieces</a>
+              <a href="faq.html#ordering">Ordering</a>
+              <a href="faq.html#delivery">Production &amp; Delivery</a>
+              <a href="faq.html#returns">Returns &amp; Exchanges</a>
+              <a href="faq.html#other">Other</a>
+            </div>
+          </div>
+        </div>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="gold.html">About 9K Gold</a>
+        <a class="nav-link cart-icon-link" id="cartIconLink" href="cart.html">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 7h12l-1 13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 7Z"/>
+            <path d="M9 7V5a3 3 0 0 1 6 0v2"/>
+          </svg>
+          <span class="cart-badge" id="cartBadge"></span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="cart-desktop-main">
+      <div class="cart-desktop-content">
+        <div class="cart-desktop-title">Your cart</div>
+        <div id="cartContent">
+          <div class="cart-loading">Loading your cart...</div>
+        </div>
+      </div>
+
+      <footer style="display:flex;justify-content:center;gap:28px;padding:14px 24px;background:rgba(54,25,43,0.92);backdrop-filter:blur(10px);border-top:1px solid rgba(240,237,228,0.12);">
+        <a href="privacy.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Privacy Policy</a>
+        <a href="terms.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Terms of Service</a>
+        <a href="contact.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Contact</a>
+      </footer>
+    </div>
+
+  </div>
+
+</template>
+
+<script>
+/* ── DEVICE ROUTER — identical mechanism to suri.html and every other
+   product/utility page. Decides once, synchronously, before cart data
+   renders. ── */
+(function () {
+  var isDesktop = window.matchMedia(
+    '(min-width: 1024px) and (hover: hover) and (pointer: fine)'
+  ).matches;
+  document.documentElement.classList.toggle('nava-desktop', isDesktop);
+  var tpl = document.getElementById(isDesktop ? 'tpl-desktop' : 'tpl-mobile');
+  document.body.appendChild(tpl.content.cloneNode(true));
+})();
+</script>
+
+<script>
+/* ── MOBILE HAMBURGER MENU — only wires up if the mobile template was
+   cloned in; identical to suri.html's version. ── */
+(function initMobileMenu() {
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  if (!hamburgerBtn) return;
+
+  const closeMenuBtn = document.getElementById('closeMenuBtn');
+  const menuOverlay = document.getElementById('mobileMenuOverlay');
+  const cartIconLink = document.getElementById('cartIconLink');
+  const collectionsToggle = document.getElementById('collectionsToggle');
+  const collectionsSubList = document.getElementById('collectionsSubList');
+  const faqMenuToggle = document.getElementById('faqMenuToggle');
+  const faqMenuSubList = document.getElementById('faqMenuSubList');
+
+  hamburgerBtn.addEventListener('click', () => {
+    menuOverlay.classList.add('open');
+    cartIconLink.style.display = 'none';
+  });
+  closeMenuBtn.addEventListener('click', () => {
+    menuOverlay.classList.remove('open');
+    cartIconLink.style.display = '';
+  });
+  collectionsToggle.addEventListener('click', () => {
+    collectionsSubList.classList.toggle('open');
+  });
+  faqMenuToggle.addEventListener('click', () => {
+    faqMenuSubList.classList.toggle('open');
+  });
+})();
+</script>
 
 <script>
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 10);
 }, { passive: true });
+// Desktop's shell scrolls internally (window itself doesn't scroll),
+// so mirror the same 'scrolled' toggle onto the desktop content area.
+const cartDesktopMain = document.querySelector('.cart-desktop-main');
+if (cartDesktopMain) {
+  cartDesktopMain.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', cartDesktopMain.scrollTop > 10);
+  }, { passive: true });
+}
 
 function formatPrice(amount, currencyCode) {
   const num = parseFloat(amount);
@@ -219,67 +388,123 @@ function formatPrice(amount, currencyCode) {
 }
 
 async function renderCart() {
+  const isDesktop = document.documentElement.classList.contains('nava-desktop');
   const contentEl = document.getElementById('cartContent');
-  const titleEl = document.querySelector('.cart-title');
+  const titleEl = document.querySelector(isDesktop ? '.cart-desktop-title' : '.cart-title');
   const cart = await getCart();
 
   if (!cart || cart.lines.edges.length === 0) {
     if (titleEl) titleEl.style.display = 'none';
-    contentEl.innerHTML = `
-      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px 20px;">
-        <img src="nava-origami-flower.png" alt="Origami collection" style="width:300px;height:auto;margin-bottom:2px;">
-        <div style="text-align:center;margin-bottom:16px;">
-          <div style="color:rgba(240,237,228,0.45);font-size:9px;letter-spacing:3px;margin-bottom:12px;font-family:'Josefin Sans', sans-serif;">CART</div>
-          <div style="font-family:'EB Garamond', Georgia, serif;font-style:italic;color:#F0EDE4;font-size:36px;line-height:1;letter-spacing:-0.5px;">Origami</div>
+
+    if (isDesktop) {
+      contentEl.innerHTML = `
+        <div class="cart-desktop-empty">
+          <img src="nava-origami-flower.png" alt="Origami collection">
+          <div class="cde-eyebrow">CART</div>
+          <div class="cde-title">Origami</div>
+          <p class="cde-copy">Your cart is empty. Tap "begin" to explore.</p>
+          <a href="suri-hanging-earrings.html" class="cde-begin"><span>BEGIN</span></a>
         </div>
-        <p style="color:rgba(240,237,228,0.6);font-size:13px;line-height:1.8;text-align:center;max-width:280px;margin:0 0 44px;">
-          Your cart is empty. Tap "begin" to explore.
-        </p>
-        <a href="suri-hanging-earrings.html" style="display:block;width:100%;max-width:280px;border:1px solid rgba(240,237,228,0.5);border-radius:2px;padding:16px;text-align:center;text-decoration:none;">
-          <span style="color:#F0EDE4;font-size:9px;letter-spacing:3px;font-family:'Josefin Sans', sans-serif;">BEGIN</span>
-        </a>
-      </div>
-    `;
+      `;
+    } else {
+      contentEl.innerHTML = `
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px 20px;">
+          <img src="nava-origami-flower.png" alt="Origami collection" style="width:300px;height:auto;margin-bottom:2px;">
+          <div style="text-align:center;margin-bottom:16px;">
+            <div style="color:rgba(240,237,228,0.45);font-size:9px;letter-spacing:3px;margin-bottom:12px;font-family:'Josefin Sans', sans-serif;">CART</div>
+            <div style="font-family:'EB Garamond', Georgia, serif;font-style:italic;color:#F0EDE4;font-size:36px;line-height:1;letter-spacing:-0.5px;">Origami</div>
+          </div>
+          <p style="color:rgba(240,237,228,0.6);font-size:13px;line-height:1.8;text-align:center;max-width:280px;margin:0 0 44px;">
+            Your cart is empty. Tap "begin" to explore.
+          </p>
+          <a href="suri-hanging-earrings.html" style="display:block;width:100%;max-width:280px;border:1px solid rgba(240,237,228,0.5);border-radius:2px;padding:16px;text-align:center;text-decoration:none;">
+            <span style="color:#F0EDE4;font-size:9px;letter-spacing:3px;font-family:'Josefin Sans', sans-serif;">BEGIN</span>
+          </a>
+        </div>
+      `;
+    }
     return;
   }
 
   if (titleEl) titleEl.style.display = 'block';
-  let html = '';
-  cart.lines.edges.forEach(({ node: line }) => {
-    const variant = line.merchandise;
-    const imgUrl = variant.image ? variant.image.url : '';
-    const lineTotal = (parseFloat(variant.price.amount) * line.quantity).toFixed(2);
-    html += `
-      <div class="cart-line" data-line-id="${line.id}">
-        ${imgUrl ? `<img class="cart-line-img" src="${imgUrl}" alt="${variant.product.title}">` : '<div class="cart-line-img"></div>'}
-        <div class="cart-line-info">
-          <div>
-            <div class="cart-line-name">${variant.product.title}</div>
-            <div class="cart-line-price">${formatPrice(lineTotal, variant.price.currencyCode)}</div>
-          </div>
-          <div class="cart-line-controls">
-            <div class="cart-qty-stepper">
-              <button class="cart-qty-btn" data-action="minus" data-line-id="${line.id}" data-qty="${line.quantity}" type="button">−</button>
-              <span class="cart-qty-value">${line.quantity}</span>
-              <button class="cart-qty-btn" data-action="plus" data-line-id="${line.id}" data-qty="${line.quantity}" type="button">+</button>
-            </div>
-            <button class="cart-remove-btn" data-line-id="${line.id}" type="button">Remove</button>
-          </div>
-        </div>
+
+  if (isDesktop) {
+    let html = `
+      <div class="cart-desktop-header-row">
+        <span></span><span>Piece</span><span>Quantity</span><span style="text-align:right;">Total</span><span></span>
       </div>
     `;
-  });
+    cart.lines.edges.forEach(({ node: line }) => {
+      const variant = line.merchandise;
+      const imgUrl = variant.image ? variant.image.url : '';
+      const lineTotal = (parseFloat(variant.price.amount) * line.quantity).toFixed(2);
+      html += `
+        <div class="cart-line-desktop" data-line-id="${line.id}">
+          ${imgUrl ? `<img class="cart-line-desktop-img" src="${imgUrl}" alt="${variant.product.title}">` : '<div class="cart-line-desktop-img"></div>'}
+          <div>
+            <div class="cart-line-desktop-name">${variant.product.title}</div>
+            <div class="cart-line-desktop-price">${formatPrice(variant.price.amount, variant.price.currencyCode)}</div>
+          </div>
+          <div class="cart-qty-stepper">
+            <button class="cart-qty-btn" data-action="minus" data-line-id="${line.id}" data-qty="${line.quantity}" type="button">−</button>
+            <span class="cart-qty-value">${line.quantity}</span>
+            <button class="cart-qty-btn" data-action="plus" data-line-id="${line.id}" data-qty="${line.quantity}" type="button">+</button>
+          </div>
+          <div class="cart-line-desktop-total">${formatPrice(lineTotal, variant.price.currencyCode)}</div>
+          <button class="cart-remove-btn" data-line-id="${line.id}" type="button">Remove</button>
+        </div>
+      `;
+    });
 
-  html += `
-    <div class="cart-summary">
-      <span class="cart-summary-label">Total</span>
-      <span class="cart-summary-total">${formatPrice(cart.cost.totalAmount.amount, cart.cost.totalAmount.currencyCode)}</span>
-    </div>
-    <button class="cart-checkout-btn" id="checkoutBtn" type="button">Checkout</button>
-    <a class="cart-continue-link" id="continueLink" href="${localStorage.getItem('nava_last_piece') || 'suri-hanging-earrings.html'}">Continue browsing</a>
-  `;
+    html += `
+      <div class="cart-desktop-summary">
+        <span class="cart-desktop-summary-label">Total</span>
+        <span class="cart-desktop-summary-total">${formatPrice(cart.cost.totalAmount.amount, cart.cost.totalAmount.currencyCode)}</span>
+      </div>
+      <div class="cart-desktop-actions">
+        <a class="cart-desktop-continue-link" id="continueLink" href="${localStorage.getItem('nava_last_piece') || 'suri-hanging-earrings.html'}">Continue browsing</a>
+        <button class="cart-desktop-checkout-btn" id="checkoutBtn" type="button">Checkout</button>
+      </div>
+    `;
+    contentEl.innerHTML = html;
 
-  contentEl.innerHTML = html;
+  } else {
+    let html = '';
+    cart.lines.edges.forEach(({ node: line }) => {
+      const variant = line.merchandise;
+      const imgUrl = variant.image ? variant.image.url : '';
+      const lineTotal = (parseFloat(variant.price.amount) * line.quantity).toFixed(2);
+      html += `
+        <div class="cart-line" data-line-id="${line.id}">
+          ${imgUrl ? `<img class="cart-line-img" src="${imgUrl}" alt="${variant.product.title}">` : '<div class="cart-line-img"></div>'}
+          <div class="cart-line-info">
+            <div>
+              <div class="cart-line-name">${variant.product.title}</div>
+              <div class="cart-line-price">${formatPrice(lineTotal, variant.price.currencyCode)}</div>
+            </div>
+            <div class="cart-line-controls">
+              <div class="cart-qty-stepper">
+                <button class="cart-qty-btn" data-action="minus" data-line-id="${line.id}" data-qty="${line.quantity}" type="button">−</button>
+                <span class="cart-qty-value">${line.quantity}</span>
+                <button class="cart-qty-btn" data-action="plus" data-line-id="${line.id}" data-qty="${line.quantity}" type="button">+</button>
+              </div>
+              <button class="cart-remove-btn" data-line-id="${line.id}" type="button">Remove</button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    html += `
+      <div class="cart-summary">
+        <span class="cart-summary-label">Total</span>
+        <span class="cart-summary-total">${formatPrice(cart.cost.totalAmount.amount, cart.cost.totalAmount.currencyCode)}</span>
+      </div>
+      <button class="cart-checkout-btn" id="checkoutBtn" type="button">Checkout</button>
+      <a class="cart-continue-link" id="continueLink" href="${localStorage.getItem('nava_last_piece') || 'suri-hanging-earrings.html'}">Continue browsing</a>
+    `;
+    contentEl.innerHTML = html;
+  }
 
   contentEl.querySelectorAll('.cart-qty-btn').forEach(btn => {
     btn.addEventListener('click', async () => {

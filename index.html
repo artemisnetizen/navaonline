@@ -233,6 +233,67 @@ gtag('config', 'G-KVB4V9TTL4');
   }
   .mobile-menu-social-icon svg { width: 16px; height: 16px; }
 
+  /* ── ORIGAMI COLLECTION ROW (mobile only) ── */
+  .origami-row-section { padding: 32px 0 8px; }
+
+  .origami-row-heading {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 20px 16px;
+  }
+  .origami-row-title {
+    font-family: 'Josefin Sans', sans-serif; font-size: 13px; letter-spacing: 1px;
+    text-transform: uppercase; color: #F0EDE4;
+  }
+  .origami-row-chevron {
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 1px solid rgba(240,237,228,0.4);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .origami-row {
+    display: flex; gap: 12px; overflow-x: auto;
+    scroll-snap-type: x mandatory; padding: 0 20px 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; -ms-overflow-style: none;
+  }
+  .origami-row::-webkit-scrollbar { display: none; }
+
+  .origami-row-card {
+    flex: 0 0 70%; scroll-snap-align: center; height: 70vh;
+    border-radius: 10px; overflow: hidden; position: relative;
+    background-size: cover; background-position: center;
+  }
+  .origami-row-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 55%, rgba(54,25,43,0.75) 100%);
+    pointer-events: none;
+  }
+  .origami-row-card-content {
+    position: absolute; left: 16px; right: 16px; bottom: 16px; z-index: 1;
+  }
+  .origami-row-name {
+    font-family: 'EB Garamond', serif; font-style: italic; font-size: 30px;
+    color: #F0EDE4; line-height: 1.1; margin-bottom: 10px;
+  }
+  .origami-row-variants { display: flex; gap: 6px; }
+  .origami-row-variant-box {
+    flex: 1; min-width: 0; text-align: center; padding: 8px 4px;
+    border-radius: 4px; font-size: 9px;
+    background: rgba(54,25,43,0.35);
+    border: 1px solid rgba(240,237,228,0.25);
+    color: rgba(240,237,228,0.7);
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+  }
+  .origami-row-variant-box.active {
+    background: rgba(54,25,43,0.55);
+    border-color: rgba(121,120,66,0.7);
+    color: #F0EDE4;
+  }
+
   /* ══════════════════════ DESKTOP ══════════════════════ */
   html.nava-desktop, html.nava-desktop body { max-width:none !important; width:100% !important; margin:0 !important; }
 
@@ -475,7 +536,7 @@ gtag('config', 'G-KVB4V9TTL4');
               Ten pieces: Each one a study in geometric form.
             </p>
             <a href="suri.html" class="col-cta" style="display:block;width:100%;max-width:280px;border:1px solid rgba(240,237,228,0.5);border-radius:2px;padding:16px;text-align:center;text-decoration:none;margin-bottom:16px;">
-              <span style="color:#F0EDE4;font-size:9px;letter-spacing:3px;font-family:'Josefin Sans', sans-serif;">EXPLORE ORIGAMI</span>
+              <span style="color:#F0EDE4;font-size:9px;letter-spacing:3px;font-family:'Josefin Sans', sans-serif;">EXPLORE THE ORIGAMI COLLECTION</span>
             </a>
           </div>
 
@@ -489,12 +550,75 @@ gtag('config', 'G-KVB4V9TTL4');
               Timeless pieces that signify life and its origins.
             </p>
             <a href="imai.html" class="col-cta" style="display:block;width:100%;max-width:280px;border:1px solid rgba(240,237,228,0.5);border-radius:2px;padding:16px;text-align:center;text-decoration:none;margin-bottom:16px;">
-              <span style="color:#F0EDE4;font-size:9px;letter-spacing:3px;font-family:'Josefin Sans', sans-serif;">EXPLORE AADHI</span>
+              <span style="color:#F0EDE4;font-size:9px;letter-spacing:3px;font-family:'Josefin Sans', sans-serif;">EXPLORE THE AADHI COLLECTION</span>
             </a>
           </div>
 
         </div>
       </div>
+
+      <section class="origami-row-section">
+        <div class="origami-row-heading">
+          <span class="origami-row-title">The Origami collection</span>
+          <div class="origami-row-chevron" aria-hidden="true">
+            <svg width="9" height="14" viewBox="0 0 9 14" fill="none"><path d="M1.5 1L7.5 7L1.5 13" stroke="#F0EDE4" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div class="origami-row">
+          <div class="origami-row-card" style="background-image:url('Suri_Hanging_Earrings/suri_hanging_earrings_1.webp');">
+            <div class="origami-row-card-content">
+              <div class="origami-row-name">Suri</div>
+              <div class="origami-row-variants">
+                <div class="origami-row-variant-box active">Earrings</div>
+                <div class="origami-row-variant-box">Ring</div>
+              </div>
+            </div>
+          </div>
+          <div class="origami-row-card" style="background-image:url('Niva_Earrings/niva_earrings_1.webp');">
+            <div class="origami-row-card-content">
+              <div class="origami-row-name">Niva</div>
+              <div class="origami-row-variants">
+                <div class="origami-row-variant-box active">Earrings</div>
+              </div>
+            </div>
+          </div>
+          <div class="origami-row-card" style="background-image:url('Vara/Vara_2.webp');">
+            <div class="origami-row-card-content">
+              <div class="origami-row-name">Vara</div>
+              <div class="origami-row-variants">
+                <div class="origami-row-variant-box active">Bangle</div>
+                <div class="origami-row-variant-box">Hoops</div>
+                <div class="origami-row-variant-box">Nosepin</div>
+                <div class="origami-row-variant-box">Pendant</div>
+              </div>
+            </div>
+          </div>
+          <div class="origami-row-card" style="background-image:url('Rani_Nosepin/rani_nosepin_1.webp');">
+            <div class="origami-row-card-content">
+              <div class="origami-row-name">Rani</div>
+              <div class="origami-row-variants">
+                <div class="origami-row-variant-box active">Nosepin</div>
+              </div>
+            </div>
+          </div>
+          <div class="origami-row-card" style="background-image:url('Abha_Ring/abha_ring_1.webp');">
+            <div class="origami-row-card-content">
+              <div class="origami-row-name">Abha</div>
+              <div class="origami-row-variants">
+                <div class="origami-row-variant-box active">Ring</div>
+              </div>
+            </div>
+          </div>
+          <div class="origami-row-card" style="background-image:url('Sama_Pendant/Sama_Pendant_1.webp');">
+            <div class="origami-row-card-content">
+              <div class="origami-row-name">Sama</div>
+              <div class="origami-row-variants">
+                <div class="origami-row-variant-box active">Pendant</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <div class="social-row" style="padding:36px 0 8px; flex:0 0 auto;">
         <a href="https://in.pinterest.com/NavaOnlineIndia/" target="_blank" rel="noopener" aria-label="Nava on Pinterest" class="social-link">
@@ -613,7 +737,7 @@ gtag('config', 'G-KVB4V9TTL4');
           <div class="hero-coll-block">
             <img class="hero-thumb" src="nava-origami-flower.png" alt="Origami collection">
             <div class="hero-text">
-              <a class="hero-title-link" href="suri.html">Explore Origami</a>
+              <a class="hero-title-link" href="suri.html">Explore the Origami Collection</a>
               <div class="hero-subtext">Experiments with shapes and geometry.</div>
             </div>
           </div>
@@ -641,7 +765,7 @@ gtag('config', 'G-KVB4V9TTL4');
           <div class="hero-coll-block reverse">
             <img class="hero-thumb" src="nava-aadhi-tree.png" alt="Aadhi collection">
             <div class="hero-text reverse">
-              <a class="hero-title-link" href="imai.html">Explore Aadhi</a>
+              <a class="hero-title-link" href="imai.html">Explore the Aadhi Collection</a>
               <div class="hero-subtext">Mixing tradition and pizzazz.</div>
             </div>
           </div>

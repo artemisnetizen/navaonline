@@ -761,6 +761,7 @@ function buildExhibitNav() {
     const v = variants[activeKey];
     try {
       await addToCart(v.shopifyVariantId, 1);
+      flyToCart(addBtn, 1);
       await updateCartBadge();
       showToast(`${design.name} ${v.label} added to cart`);
     } catch (err) {
@@ -829,6 +830,48 @@ document.getElementById('skinRow').querySelectorAll('.stile').forEach(t => {
   });
 });
 
+function flyToCart(originEl, qty) {
+  const cartIconEl = document.getElementById('cartIconLink');
+  const cartBadgeEl = document.getElementById('cartBadge');
+  if (!originEl || !cartIconEl) return;
+
+  const originRect = originEl.getBoundingClientRect();
+  const targetRect = cartIconEl.getBoundingClientRect();
+  const originX = originRect.left + originRect.width / 2;
+  const originY = originRect.top + originRect.height / 2;
+  const targetX = targetRect.left + targetRect.width / 2;
+  const targetY = targetRect.top + targetRect.height / 2;
+
+  const badge = document.createElement('div');
+  badge.className = 'fly-badge';
+  badge.textContent = `+${qty}`;
+  badge.style.left = `${originX}px`;
+  badge.style.top = `${originY}px`;
+  badge.style.transform = 'translate(-50%, -50%) scale(1)';
+  document.body.appendChild(badge);
+
+  // Force layout so the browser registers the start position/transform
+  // before the next one is applied — otherwise the flight jumps straight
+  // to the end with no visible motion.
+  void badge.offsetWidth;
+
+  requestAnimationFrame(() => {
+    const dx = targetX - originX;
+    const dy = targetY - originY;
+    badge.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0.6)`;
+    badge.classList.add('fly-land');
+  });
+
+  badge.addEventListener('transitionend', () => {
+    badge.remove();
+    if (cartBadgeEl) {
+      cartBadgeEl.classList.remove('bump');
+      void cartBadgeEl.offsetWidth;
+      cartBadgeEl.classList.add('bump');
+    }
+  }, { once: true });
+}
+
 /* ── QUANTITY ── */
 let currentQty = 1;
 const qtyValueEl = document.getElementById('qtyValue');
@@ -845,8 +888,10 @@ document.getElementById('ctaBtn').addEventListener('click', async () => {
   const v = variants[activeKey];
   btn.disabled = true;
   btn.textContent = 'Adding...';
+  const qtyAtClick = currentQty;
   try {
-    await addToCart(v.shopifyVariantId, currentQty);
+    await addToCart(v.shopifyVariantId, qtyAtClick);
+    flyToCart(document.getElementById('qtyValue'), qtyAtClick);
     await updateCartBadge();
     showToast(`${design.name} ${v.label} added to cart`);
     currentQty = 1;
