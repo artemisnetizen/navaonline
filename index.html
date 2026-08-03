@@ -890,6 +890,13 @@ gtag('config', 'G-KVB4V9TTL4');
     });
   }
 
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+      document.querySelectorAll('.origami-row-card.origami-row-navigating')
+        .forEach(card => card.classList.remove('origami-row-navigating'));
+    }
+  });
+
   function render() {
     track.style.transform = `translateX(-${active * (100 / slideCount)}%)`;
     document.querySelectorAll('.col-dot').forEach(d => {
