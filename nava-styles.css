@@ -472,6 +472,19 @@ body {
   padding: 0;
 }
 
+/* ── HERO CLOSE BUTTON (mobile — shown only when arriving from the
+   Origami row on index.html; see sessionStorage 'navaFromOrigamiRow') ── */
+.hero-close-btn {
+  position: absolute; top: 16px; right: 16px; z-index: 5;
+  width: 34px; height: 34px; border-radius: 50%;
+  display: none; align-items: center; justify-content: center;
+  background: rgba(2,2,2,0.55);
+  border: 1px solid rgba(240,237,228,0.35);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  color: #F0EDE4; cursor: pointer; padding: 0;
+}
+.hero-close-btn.show { display: flex; }
+
 /* ── THUMBNAIL STRIP ── */
 .hero-thumbs {
   position: absolute; right: 0; top: 0; bottom: 0; width: 56px; z-index: 5;

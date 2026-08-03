@@ -128,6 +128,11 @@ gtag('config', 'G-KVB4V9TTL4');
     <div class="hero-tag" id="heroTag"></div>
     <div class="piece-name" id="pieceName"></div>
   </div>
+  <button class="hero-close-btn" id="heroCloseBtn" type="button" aria-label="Close and return" style="display:none;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M6 6l12 12M18 6L6 18"/>
+    </svg>
+  </button>
 </div>
 
 <div class="variant-boxes" id="variantBoxes"></div>
@@ -429,6 +434,21 @@ gtag('config', 'G-KVB4V9TTL4');
   });
   faqMenuToggle.addEventListener('click', () => {
     faqMenuSubList.classList.toggle('open');
+  });
+
+  const heroCloseBtn = document.getElementById('heroCloseBtn');
+  if (sessionStorage.getItem('navaFromOrigamiRow') === '1') {
+    heroCloseBtn.classList.add('show');
+    sessionStorage.removeItem('navaFromOrigamiRow');
+  }
+  heroCloseBtn.addEventListener('click', () => {
+    const startHref = window.location.href;
+    history.back();
+    setTimeout(() => {
+      if (window.location.href === startHref) {
+        window.location.href = 'index.html';
+      }
+    }, 600);
   });
 })();
 </script>

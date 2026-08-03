@@ -260,9 +260,11 @@ gtag('config', 'G-KVB4V9TTL4');
   .origami-row::-webkit-scrollbar { display: none; }
 
   .origami-row-card {
-    flex: 0 0 70%; scroll-snap-align: center; height: 70vh;
+    flex: 0 0 80.5%; scroll-snap-align: center; height: 56vh;
     border-radius: 10px; overflow: hidden; position: relative;
     background-size: cover; background-position: center;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    cursor: pointer;
   }
   .origami-row-card::before {
     content: '';
@@ -270,28 +272,34 @@ gtag('config', 'G-KVB4V9TTL4');
     background: linear-gradient(to bottom, transparent 55%, rgba(54,25,43,0.75) 100%);
     pointer-events: none;
   }
-  .origami-row-card-content {
-    position: absolute; left: 16px; right: 16px; bottom: 16px; z-index: 1;
-  }
   .origami-row-name {
+    position: relative; z-index: 1; padding: 0 16px; margin-bottom: 10px;
     font-family: 'EB Garamond', serif; font-style: italic; font-size: 30px;
-    color: #F0EDE4; line-height: 1.1; margin-bottom: 10px;
+    color: #F0EDE4; line-height: 1.1;
   }
-  .origami-row-variants { display: flex; gap: 6px; }
+  .origami-row-variants {
+    display: flex; width: 100%; position: relative; z-index: 1;
+  }
   .origami-row-variant-box {
-    flex: 1; min-width: 0; text-align: center; padding: 8px 4px;
-    border-radius: 4px; font-size: 9px;
-    background: rgba(54,25,43,0.35);
-    border: 1px solid rgba(240,237,228,0.25);
-    color: rgba(240,237,228,0.7);
-    font-family: 'Josefin Sans', sans-serif;
-    font-weight: 500;
-    letter-spacing: 0.14em;
+    flex: 1; min-width: 0; text-align: center; padding: 10px 3px;
+    font-family: 'Josefin Sans', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.04em;
+    background: rgba(54,25,43,0.55);
+    border-top: 1px solid rgba(240,237,228,0.2);
+    color: rgba(240,237,228,0.6);
+    cursor: pointer;
+  }
+  .origami-row-variant-box + .origami-row-variant-box {
+    border-left: 1px solid rgba(240,237,228,0.12);
   }
   .origami-row-variant-box.active {
-    background: rgba(54,25,43,0.55);
-    border-color: rgba(121,120,66,0.7);
+    background: rgba(121,120,66,0.35);
     color: #F0EDE4;
+    border-top-color: rgba(121,120,66,0.8);
+  }
+  .origami-row-card.origami-row-navigating {
+    opacity: 0; transform: scale(1.03);
+    transition: opacity 0.35s ease, transform 0.35s ease;
   }
 
   /* ══════════════════════ DESKTOP ══════════════════════ */
@@ -560,61 +568,49 @@ gtag('config', 'G-KVB4V9TTL4');
       <section class="origami-row-section">
         <div class="origami-row-heading">
           <span class="origami-row-title">The Origami collection</span>
-          <div class="origami-row-chevron" aria-hidden="true">
+          <div class="origami-row-chevron" data-page="suri.html" aria-hidden="true">
             <svg width="9" height="14" viewBox="0 0 9 14" fill="none"><path d="M1.5 1L7.5 7L1.5 13" stroke="#F0EDE4" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
         </div>
         <div class="origami-row">
-          <div class="origami-row-card" style="background-image:url('Suri_Hanging_Earrings/suri_hanging_earrings_1.webp');">
-            <div class="origami-row-card-content">
-              <div class="origami-row-name">Suri</div>
-              <div class="origami-row-variants">
-                <div class="origami-row-variant-box active">Earrings</div>
-                <div class="origami-row-variant-box">Ring</div>
-              </div>
+          <div class="origami-row-card" data-page="suri.html" style="background-image:url('Suri_Hanging_Earrings/suri_hanging_earrings_1.webp');">
+            <div class="origami-row-name">Suri</div>
+            <div class="origami-row-variants">
+              <div class="origami-row-variant-box active" data-image="Suri_Hanging_Earrings/suri_hanging_earrings_1.webp">Earrings</div>
+              <div class="origami-row-variant-box" data-image="Suri_Ring/suri_ring_1.jpg">Ring</div>
             </div>
           </div>
-          <div class="origami-row-card" style="background-image:url('Niva_Earrings/niva_earrings_1.webp');">
-            <div class="origami-row-card-content">
-              <div class="origami-row-name">Niva</div>
-              <div class="origami-row-variants">
-                <div class="origami-row-variant-box active">Earrings</div>
-              </div>
+          <div class="origami-row-card" data-page="niva.html" style="background-image:url('Niva_Earrings/niva_earrings_1.webp');">
+            <div class="origami-row-name">Niva</div>
+            <div class="origami-row-variants">
+              <div class="origami-row-variant-box active" data-image="Niva_Earrings/niva_earrings_1.webp">Earrings</div>
             </div>
           </div>
-          <div class="origami-row-card" style="background-image:url('Vara/Vara_2.webp');">
-            <div class="origami-row-card-content">
-              <div class="origami-row-name">Vara</div>
-              <div class="origami-row-variants">
-                <div class="origami-row-variant-box active">Bangle</div>
-                <div class="origami-row-variant-box">Hoops</div>
-                <div class="origami-row-variant-box">Nosepin</div>
-                <div class="origami-row-variant-box">Pendant</div>
-              </div>
+          <div class="origami-row-card" data-page="vara.html" style="background-image:url('Vara/Vara_2.webp');">
+            <div class="origami-row-name">Vara</div>
+            <div class="origami-row-variants">
+              <div class="origami-row-variant-box active" data-image="Vara/Vara_2.webp">Bangle</div>
+              <div class="origami-row-variant-box" data-image="Vara_Hoops/vara_hoops_1.webp">Hoops</div>
+              <div class="origami-row-variant-box" data-image="Vara_Nosepin/vara_nosepin_1.webp">Nosepin</div>
+              <div class="origami-row-variant-box" data-image="Vara_Pendant/vara_pendant_1.webp">Pendant</div>
             </div>
           </div>
-          <div class="origami-row-card" style="background-image:url('Rani_Nosepin/rani_nosepin_1.webp');">
-            <div class="origami-row-card-content">
-              <div class="origami-row-name">Rani</div>
-              <div class="origami-row-variants">
-                <div class="origami-row-variant-box active">Nosepin</div>
-              </div>
+          <div class="origami-row-card" data-page="rani.html" style="background-image:url('Rani_Nosepin/rani_nosepin_1.webp');">
+            <div class="origami-row-name">Rani</div>
+            <div class="origami-row-variants">
+              <div class="origami-row-variant-box active" data-image="Rani_Nosepin/rani_nosepin_1.webp">Nosepin</div>
             </div>
           </div>
-          <div class="origami-row-card" style="background-image:url('Abha_Ring/abha_ring_1.webp');">
-            <div class="origami-row-card-content">
-              <div class="origami-row-name">Abha</div>
-              <div class="origami-row-variants">
-                <div class="origami-row-variant-box active">Ring</div>
-              </div>
+          <div class="origami-row-card" data-page="abha.html" style="background-image:url('Abha_Ring/abha_ring_1.webp');">
+            <div class="origami-row-name">Abha</div>
+            <div class="origami-row-variants">
+              <div class="origami-row-variant-box active" data-image="Abha_Ring/abha_ring_1.webp">Ring</div>
             </div>
           </div>
-          <div class="origami-row-card" style="background-image:url('Sama_Pendant/Sama_Pendant_1.webp');">
-            <div class="origami-row-card-content">
-              <div class="origami-row-name">Sama</div>
-              <div class="origami-row-variants">
-                <div class="origami-row-variant-box active">Pendant</div>
-              </div>
+          <div class="origami-row-card" data-page="sama.html" style="background-image:url('Sama_Pendant/Sama_Pendant_1.webp');">
+            <div class="origami-row-name">Sama</div>
+            <div class="origami-row-variants">
+              <div class="origami-row-variant-box active" data-image="Sama_Pendant/Sama_Pendant_1.webp">Pendant</div>
             </div>
           </div>
         </div>
@@ -866,6 +862,33 @@ gtag('config', 'G-KVB4V9TTL4');
   faqMenuToggle.addEventListener('click', () => {
     faqMenuSubList.classList.toggle('open');
   });
+
+  const origamiRow = document.querySelector('.origami-row');
+  const origamiChevron = document.querySelector('.origami-row-chevron');
+  if (origamiChevron) {
+    origamiChevron.addEventListener('click', () => {
+      window.location.href = origamiChevron.dataset.page;
+    });
+  }
+  if (origamiRow) {
+    origamiRow.addEventListener('click', (e) => {
+      const variantBox = e.target.closest('.origami-row-variant-box');
+      if (variantBox) {
+        e.stopPropagation();
+        const card = variantBox.closest('.origami-row-card');
+        card.style.backgroundImage = `url('${variantBox.dataset.image}')`;
+        card.querySelectorAll('.origami-row-variant-box').forEach(b => b.classList.remove('active'));
+        variantBox.classList.add('active');
+        return;
+      }
+      const card = e.target.closest('.origami-row-card');
+      if (card) {
+        card.classList.add('origami-row-navigating');
+        sessionStorage.setItem('navaFromOrigamiRow', '1');
+        setTimeout(() => { window.location.href = card.dataset.page; }, 350);
+      }
+    });
+  }
 
   function render() {
     track.style.transform = `translateX(-${active * (100 / slideCount)}%)`;
