@@ -297,6 +297,11 @@ gtag('config', 'G-KVB4V9TTL4');
             </div>
             <div class="variant-boxes" id="variantBoxes"></div>
           </div>
+          <button class="hero-close-btn" id="heroCloseBtn" type="button" aria-label="Close and return">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M6 6l12 12M18 6L6 18"/>
+            </svg>
+          </button>
         </div>
         <div class="exhibit-nav" id="exhibitNav"></div>
         <div class="desktop-hero-social">
@@ -447,7 +452,12 @@ gtag('config', 'G-KVB4V9TTL4');
     faqMenuSubList.classList.toggle('open');
   });
 
+})();
+
+function initHeroCloseBtn() {
   const heroCloseBtn = document.getElementById('heroCloseBtn');
+  if (!heroCloseBtn) return;
+
   if (sessionStorage.getItem('navaFromAadhiRow') === '1') {
     heroCloseBtn.classList.add('show');
     sessionStorage.removeItem('navaFromAadhiRow');
@@ -461,7 +471,9 @@ gtag('config', 'G-KVB4V9TTL4');
       }
     }, 600);
   });
-})();
+}
+
+initHeroCloseBtn();
 </script>
 
 <script>

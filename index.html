@@ -272,6 +272,32 @@ gtag('config', 'G-KVB4V9TTL4');
     background: linear-gradient(to bottom, transparent 55%, rgba(54,25,43,0.75) 100%);
     pointer-events: none;
   }
+
+  /* ── TEXT CARD (collection row) — same size/snap/radius as an image
+     card via the shared .collection-row-card base class; this modifier
+     swaps the background image for a bordered, embossed copy block. ── */
+  .collection-row-card-text {
+    box-sizing: border-box;
+    background: #2a1421;
+    border: 1.5px solid #797842;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 36px 26px;
+    text-align: center;
+    cursor: default;
+  }
+  .collection-row-card-text::before { content: none; }
+  .collection-row-card-text-copy {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.5;
+    color: #F0EDE4;
+    letter-spacing: 0.01em;
+  }
+
   .collection-row-name {
     position: relative; z-index: 1; padding: 0 16px; margin-bottom: 10px;
     font-family: 'EB Garamond', serif; font-style: italic; font-size: 30px;
@@ -305,6 +331,48 @@ gtag('config', 'G-KVB4V9TTL4');
   /* ══════════════════════ DESKTOP ══════════════════════ */
   html.nava-desktop, html.nava-desktop body { max-width:none !important; width:100% !important; margin:0 !important; }
 
+  /* ── COLLECTION ROW (desktop override) ──
+     Same card in absolute px instead of %/vh — 314×473px is the mobile
+     80.5%/56vh card at a 430×844 reference viewport. Adjust these two
+     numbers directly if the proportions look off against the real hero. */
+  html.nava-desktop .collection-row-section {
+    padding: 56px 0;
+  }
+  html.nava-desktop .collection-row-heading {
+    padding: 0 44px 20px;
+  }
+  html.nava-desktop .collection-row-wrap {
+    position: relative; /* anchors the scroll buttons — see Bug 2 */
+  }
+  html.nava-desktop .collection-row {
+    padding: 0 44px 4px;
+  }
+  html.nava-desktop .collection-row-card {
+    flex: 0 0 314px;
+    height: 473px;
+    cursor: pointer;
+  }
+  html.nava-desktop .collection-row-card:hover {
+    outline: 1px solid rgba(240,237,228,0.35);
+    outline-offset: -1px;
+  }
+
+  /* ── SCROLL CHEVRONS (desktop only — no swipe gesture to fall back on) ── */
+  .collection-row-scroll-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 40px; height: 40px; border-radius: 50%; z-index: 3;
+    display: none; align-items: center; justify-content: center;
+    background: rgba(2,2,2,0.55); border: 1px solid rgba(240,237,228,0.35);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    color: #F0EDE4; cursor: pointer; padding: 0;
+    transition: background 0.2s;
+  }
+  .collection-row-scroll-btn:hover { background: rgba(121,120,66,0.55); }
+  .collection-row-scroll-btn.prev { left: 8px; }
+  .collection-row-scroll-btn.next { right: 8px; }
+  .collection-row-scroll-btn.hidden { display: none !important; }
+  html.nava-desktop .collection-row-scroll-btn.visible { display: flex; }
+
   .desktop-nav {
     flex:0 0 auto; height:76px; display:flex; align-items:center; justify-content:space-between;
     padding:0 44px; background:#36192B; border-bottom:1px solid rgba(240,237,228,0.1);
@@ -326,6 +394,13 @@ gtag('config', 'G-KVB4V9TTL4');
     position:absolute; inset:0; width:100%; height:100%;
     object-fit:cover; object-position:center; display:block;
   }
+  .desktop-hero-video-wrap { position:absolute; inset:0; width:100%; height:100%; }
+  .desktop-hero-video-a, .desktop-hero-video-b {
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; object-position:center; display:block;
+    opacity:0; transition:opacity 1s linear;
+  }
+  .desktop-hero-video-a.is-visible, .desktop-hero-video-b.is-visible { opacity:1; }
   .desktop-hero-overlay {
     position:absolute; left:0; right:0; bottom:0;
     padding:0 48px 40px; display:flex; align-items:flex-end; justify-content:center;
@@ -586,6 +661,9 @@ gtag('config', 'G-KVB4V9TTL4');
               <div class="collection-row-variant-box active" data-image="Niva_Earrings/niva_earrings_1.webp">Earrings</div>
             </div>
           </div>
+          <div class="collection-row-card collection-row-card-text">
+            <div class="collection-row-card-text-copy">One Design. Many Forms. Complete the Look.</div>
+          </div>
           <div class="collection-row-card" data-page="vara.html" style="background-image:url('Vara/Vara_2.webp');">
             <div class="collection-row-name">Vara</div>
             <div class="collection-row-variants">
@@ -600,6 +678,9 @@ gtag('config', 'G-KVB4V9TTL4');
             <div class="collection-row-variants">
               <div class="collection-row-variant-box active" data-image="Rani_Nosepin/rani_nosepin_1.webp">Nosepin</div>
             </div>
+          </div>
+          <div class="collection-row-card collection-row-card-text">
+            <div class="collection-row-card-text-copy">Why own plated metals. Own real gold for the same price</div>
           </div>
           <div class="collection-row-card" data-page="abha.html" style="background-image:url('Abha_Ring/abha_ring_1.webp');">
             <div class="collection-row-name">Abha</div>
@@ -643,6 +724,9 @@ gtag('config', 'G-KVB4V9TTL4');
             <div class="collection-row-variants">
               <div class="collection-row-variant-box active" data-image="uyir/uyir_1.jpg">Pendant</div>
             </div>
+          </div>
+          <div class="collection-row-card collection-row-card-text">
+            <div class="collection-row-card-text-copy">A piece for every role we play in our lives.</div>
           </div>
           <div class="collection-row-card" data-page="ekai.html" style="background-image:url('ekai_earrings/ee_1.jpg');">
             <div class="collection-row-name">Ekai</div>
@@ -772,7 +856,14 @@ gtag('config', 'G-KVB4V9TTL4');
     </nav>
 
     <div class="desktop-hero">
-      <img class="desktop-hero-img" src="hero.jpg" alt="Nava — 9 carat gold jewellery">
+      <div class="desktop-hero-video-wrap">
+        <video class="desktop-hero-video-a is-visible" muted autoplay playsinline preload="auto" aria-hidden="true">
+          <source src="sampleloop.mp4" type="video/mp4">
+        </video>
+        <video class="desktop-hero-video-b" muted playsinline preload="auto" aria-hidden="true">
+          <source src="sampleloop.mp4" type="video/mp4">
+        </video>
+      </div>
       <div class="desktop-hero-overlay">
         <div class="desktop-hero-row">
 
@@ -815,6 +906,128 @@ gtag('config', 'G-KVB4V9TTL4');
         </div>
       </div>
     </div>
+
+    <section class="collection-row-section">
+      <div class="collection-row-heading">
+        <span class="collection-row-title">The Origami collection</span>
+        <div class="collection-row-chevron" data-page="suri.html" aria-hidden="true">
+          <svg width="9" height="14" viewBox="0 0 9 14" fill="none"><path d="M1.5 1L7.5 7L1.5 13" stroke="#F0EDE4" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="collection-row-wrap">
+        <button class="collection-row-scroll-btn prev" type="button" aria-label="Scroll left">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <div class="collection-row" data-flag="navaFromOrigamiRow">
+          <div class="collection-row-card" data-page="suri.html" style="background-image:url('Suri_Hanging_Earrings/suri_hanging_earrings_1.webp');">
+            <div class="collection-row-name">Suri</div>
+            <div class="collection-row-variants">
+              <div class="collection-row-variant-box active" data-image="Suri_Hanging_Earrings/suri_hanging_earrings_1.webp">Earrings</div>
+              <div class="collection-row-variant-box" data-image="Suri_Ring/suri_ring_1.jpg">Ring</div>
+            </div>
+          </div>
+          <div class="collection-row-card" data-page="niva.html" style="background-image:url('Niva_Earrings/niva_earrings_1.webp');">
+            <div class="collection-row-name">Niva</div>
+            <div class="collection-row-variants">
+              <div class="collection-row-variant-box active" data-image="Niva_Earrings/niva_earrings_1.webp">Earrings</div>
+            </div>
+          </div>
+          <div class="collection-row-card collection-row-card-text">
+            <div class="collection-row-card-text-copy">One Design. Many Forms. Complete the Look.</div>
+          </div>
+          <div class="collection-row-card" data-page="vara.html" style="background-image:url('Vara/Vara_2.webp');">
+            <div class="collection-row-name">Vara</div>
+            <div class="collection-row-variants">
+              <div class="collection-row-variant-box active" data-image="Vara/Vara_2.webp">Bangle</div>
+              <div class="collection-row-variant-box" data-image="Vara_Hoops/vara_hoops_1.webp">Hoops</div>
+              <div class="collection-row-variant-box" data-image="Vara_Nosepin/vara_nosepin_1.webp">Nosepin</div>
+              <div class="collection-row-variant-box" data-image="Vara_Pendant/vara_pendant_1.webp">Pendant</div>
+            </div>
+          </div>
+          <div class="collection-row-card" data-page="rani.html" style="background-image:url('Rani_Nosepin/rani_nosepin_1.webp');">
+            <div class="collection-row-name">Rani</div>
+            <div class="collection-row-variants">
+              <div class="collection-row-variant-box active" data-image="Rani_Nosepin/rani_nosepin_1.webp">Nosepin</div>
+            </div>
+          </div>
+          <div class="collection-row-card collection-row-card-text">
+            <div class="collection-row-card-text-copy">Why own plated metals. Own real gold for the same price</div>
+          </div>
+          <div class="collection-row-card" data-page="abha.html" style="background-image:url('Abha_Ring/abha_ring_1.webp');">
+            <div class="collection-row-name">Abha</div>
+            <div class="collection-row-variants">
+              <div class="collection-row-variant-box active" data-image="Abha_Ring/abha_ring_1.webp">Ring</div>
+            </div>
+          </div>
+          <div class="collection-row-card" data-page="sama.html" style="background-image:url('Sama_Pendant/Sama_Pendant_1.webp');">
+            <div class="collection-row-name">Sama</div>
+            <div class="collection-row-variants">
+              <div class="collection-row-variant-box active" data-image="Sama_Pendant/Sama_Pendant_1.webp">Pendant</div>
+            </div>
+          </div>
+        </div>
+        <button class="collection-row-scroll-btn next" type="button" aria-label="Scroll right">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <section class="collection-row-section">
+      <div class="collection-row-heading">
+        <span class="collection-row-title">The Aadhi collection</span>
+        <div class="collection-row-chevron" data-page="imai.html" aria-hidden="true">
+          <svg width="9" height="14" viewBox="0 0 9 14" fill="none"><path d="M1.5 1L7.5 7L1.5 13" stroke="#F0EDE4" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="collection-row-wrap">
+        <button class="collection-row-scroll-btn prev" type="button" aria-label="Scroll left">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <div class="collection-row" data-flag="navaFromAadhiRow">
+          <div class="collection-row-card" data-page="imai.html" style="background-image:url('imai_large_earrings/ile_1.jpg');">
+            <div class="collection-row-name">Imai</div>
+            <div class="collection-row-variants">
+              <div class="collection-row-variant-box active" data-image="imai_large_earrings/ile_1.jpg">Large earrings</div>
+              <div class="collection-row-variant-box" data-image="imai_ring/imai_ring_1.jpg">Ring</div>
+              <div class="collection-row-variant-box" data-image="imai_pendant/ip_1.jpg">Pendant</div>
+            </div>
+          </div>
+          <div class="collection-row-card" data-page="minn.html" style="background-image:url('minn/minn_1.jpg');">
+            <div class="collection-row-name">Minn</div>
+            <div class="collection-row-variants">
+              <div class="collection-row-variant-box active" data-image="minn/minn_1.jpg">Earrings</div>
+            </div>
+          </div>
+          <div class="collection-row-card" data-page="uyir.html" style="background-image:url('uyir/uyir_1.jpg');">
+            <div class="collection-row-name">Uyir</div>
+            <div class="collection-row-variants">
+              <div class="collection-row-variant-box active" data-image="uyir/uyir_1.jpg">Pendant</div>
+            </div>
+          </div>
+          <div class="collection-row-card collection-row-card-text">
+            <div class="collection-row-card-text-copy">A piece for every role we play in our lives.</div>
+          </div>
+          <div class="collection-row-card" data-page="ekai.html" style="background-image:url('ekai_earrings/ee_1.jpg');">
+            <div class="collection-row-name">Ekai</div>
+            <div class="collection-row-variants">
+              <div class="collection-row-variant-box active" data-image="ekai_earrings/ee_1.jpg">Earrings</div>
+              <div class="collection-row-variant-box" data-image="ekai_ring/er_1.jpg">Ring</div>
+            </div>
+          </div>
+          <div class="collection-row-card" data-page="agam.html" style="background-image:url('agam/agamr_1.jpg');">
+            <div class="collection-row-name">Agam</div>
+            <div class="collection-row-variants">
+              <div class="collection-row-variant-box active" data-image="agam/agamr_1.jpg">Rectangle</div>
+              <div class="collection-row-variant-box" data-image="agam/agams_1.jpg">Star</div>
+              <div class="collection-row-variant-box" data-image="agam/agame_1.jpg">Earcuffs</div>
+            </div>
+          </div>
+        </div>
+        <button class="collection-row-scroll-btn next" type="button" aria-label="Scroll right">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </section>
 
     <footer class="exp-footer">
       <div class="exp-footer-desktop-cols">
@@ -875,6 +1088,64 @@ gtag('config', 'G-KVB4V9TTL4');
 </script>
 
 <script>
+/* ── DESKTOP HERO VIDEO — crossfade loop, only wires up if the
+   desktop template was cloned in (element simply won't exist on
+   mobile). Mirrors the tpl-desktop/tpl-mobile guard pattern used
+   by initMobile() below. ── */
+(function initHeroVideo() {
+  var wrap = document.querySelector('.desktop-hero-video-wrap');
+  if (!wrap) return;
+
+  var vidA = wrap.querySelector('.desktop-hero-video-a');
+  var vidB = wrap.querySelector('.desktop-hero-video-b');
+  var RATE = 0.2;              /* 5x slower than native speed */
+  var FADE_REAL_SECONDS = 1;   /* wall-clock length of the crossfade */
+
+  var active = vidA;
+  var standby = vidB;
+  var crossfading = false;
+
+  [vidA, vidB].forEach(function (v) {
+    v.muted = true;
+    v.playbackRate = RATE;
+    v.currentTime = 0;
+  });
+
+  var startPromise = vidA.play();
+  if (startPromise && startPromise.catch) startPromise.catch(function () {});
+
+  function handleTimeUpdate() {
+    if (crossfading) return;
+    if (!active.duration || isNaN(active.duration)) return;
+
+    var mediaThreshold = FADE_REAL_SECONDS * RATE;
+    if (active.duration - active.currentTime <= mediaThreshold) {
+      crossfading = true;
+
+      standby.currentTime = 0;
+      standby.playbackRate = RATE;
+      var playPromise = standby.play();
+      if (playPromise && playPromise.catch) playPromise.catch(function () {});
+
+      standby.classList.add('is-visible');
+      active.classList.remove('is-visible');
+
+      window.setTimeout(function () {
+        active.pause();
+        var finishedActive = active;
+        active = standby;
+        standby = finishedActive;
+        crossfading = false;
+      }, FADE_REAL_SECONDS * 1000 + 50);
+    }
+  }
+
+  vidA.addEventListener('timeupdate', handleTimeUpdate);
+  vidB.addEventListener('timeupdate', handleTimeUpdate);
+})();
+</script>
+
+<script>
 /* ── MOBILE CAROUSEL — only wires up if the mobile template was
    cloned in (elements will simply not exist otherwise). ── */
 (function initMobile() {
@@ -907,40 +1178,6 @@ gtag('config', 'G-KVB4V9TTL4');
   });
   faqMenuToggle.addEventListener('click', () => {
     faqMenuSubList.classList.toggle('open');
-  });
-
-  document.querySelectorAll('.collection-row-chevron').forEach(chevron => {
-    chevron.addEventListener('click', () => {
-      window.location.href = chevron.dataset.page;
-    });
-  });
-
-  document.querySelectorAll('.collection-row').forEach(row => {
-    row.addEventListener('click', (e) => {
-      const variantBox = e.target.closest('.collection-row-variant-box');
-      if (variantBox) {
-        e.stopPropagation();
-        const card = variantBox.closest('.collection-row-card');
-        card.style.backgroundImage = `url('${variantBox.dataset.image}')`;
-        card.querySelectorAll('.collection-row-variant-box').forEach(b => b.classList.remove('active'));
-        variantBox.classList.add('active');
-        return;
-      }
-      const card = e.target.closest('.collection-row-card');
-      if (card) {
-        card.classList.add('collection-row-navigating');
-        const flagKey = row.dataset.flag;
-        if (flagKey) sessionStorage.setItem(flagKey, '1');
-        setTimeout(() => { window.location.href = card.dataset.page; }, 350);
-      }
-    });
-  });
-
-  window.addEventListener('pageshow', (event) => {
-    if (event.persisted) {
-      document.querySelectorAll('.collection-row-card.collection-row-navigating')
-        .forEach(card => card.classList.remove('collection-row-navigating'));
-    }
   });
 
   function render() {
@@ -1004,6 +1241,78 @@ gtag('config', 'G-KVB4V9TTL4');
   viewport.addEventListener('mouseup',    dragEnd);
   viewport.addEventListener('mouseleave', dragEnd);
 })();
+
+function initCollectionRows() {
+  const anyRow = document.querySelector('.collection-row');
+  if (!anyRow) return;
+
+  document.querySelectorAll('.collection-row-chevron').forEach(chevron => {
+    chevron.addEventListener('click', () => {
+      window.location.href = chevron.dataset.page;
+    });
+  });
+
+  document.querySelectorAll('.collection-row').forEach(row => {
+    row.addEventListener('click', (e) => {
+      const variantBox = e.target.closest('.collection-row-variant-box');
+      if (variantBox) {
+        e.stopPropagation();
+        const card = variantBox.closest('.collection-row-card');
+        card.style.backgroundImage = `url('${variantBox.dataset.image}')`;
+        card.querySelectorAll('.collection-row-variant-box').forEach(b => b.classList.remove('active'));
+        variantBox.classList.add('active');
+        return;
+      }
+      const card = e.target.closest('.collection-row-card');
+      if (card && card.dataset.page) {
+        card.classList.add('collection-row-navigating');
+        const flagKey = row.dataset.flag;
+        if (flagKey) sessionStorage.setItem(flagKey, '1');
+        setTimeout(() => { window.location.href = card.dataset.page; }, 350);
+      }
+    });
+  });
+
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+      document.querySelectorAll('.collection-row-card.collection-row-navigating')
+        .forEach(card => card.classList.remove('collection-row-navigating'));
+    }
+  });
+
+  initCollectionRowScrollButtons();
+}
+
+function initCollectionRowScrollButtons() {
+  document.querySelectorAll('.collection-row-wrap').forEach(wrap => {
+    const row = wrap.querySelector('.collection-row');
+    const prevBtn = wrap.querySelector('.collection-row-scroll-btn.prev');
+    const nextBtn = wrap.querySelector('.collection-row-scroll-btn.next');
+    if (!row || !prevBtn || !nextBtn) return; // mobile template: none of this exists
+
+    function updateButtons() {
+      const maxScroll = row.scrollWidth - row.clientWidth;
+      prevBtn.classList.toggle('visible', row.scrollLeft > 4);
+      nextBtn.classList.toggle('visible', row.scrollLeft < maxScroll - 4);
+    }
+
+    function scrollByOneCard(direction) {
+      const card = row.querySelector('.collection-row-card');
+      if (!card) return;
+      const cardWidth = card.getBoundingClientRect().width;
+      const gap = parseFloat(getComputedStyle(row).columnGap || getComputedStyle(row).gap || '12');
+      row.scrollBy({ left: direction * (cardWidth + gap), behavior: 'smooth' });
+    }
+
+    prevBtn.addEventListener('click', (e) => { e.stopPropagation(); scrollByOneCard(-1); });
+    nextBtn.addEventListener('click', (e) => { e.stopPropagation(); scrollByOneCard(1); });
+    row.addEventListener('scroll', updateButtons);
+    window.addEventListener('resize', updateButtons);
+    updateButtons();
+  });
+}
+
+initCollectionRows();
 </script>
 
 <script src="nava-analytics.js"></script>
