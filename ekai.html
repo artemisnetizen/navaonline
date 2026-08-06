@@ -520,11 +520,91 @@ const variants = {
       "Weight": "1.68 grams",
       "Ready in": "18 – 22 days"
     },
-    sizes: ["2.2″", "2.4″", "2.6″", "2.8″", "Custom"],
+    sizes: ["4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "Custom"],
     showSkinTones: false,
     showSizes: true
   }
 };
+
+/* ── PRICING DATA — canonical price/provenance/sizes now live in
+   pricing-data.json; the values above are only the pre-fetch fallback
+   shown if that fetch fails. ── */
+async function loadPricingData() {
+  try {
+    const res = await fetch('pricing-data.json');
+    if (!res.ok) throw new Error(`pricing-data.json fetch failed: ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    console.error('Could not load pricing-data.json, falling back to hardcoded values:', err);
+    return null;
+  }
+}
+function slugify(str) {
+  return str.toLowerCase().trim().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+}
+function formatPriceINR(n) {
+  return '₹ ' + Number(n).toLocaleString('en-IN');
+}
+
+function mergePricingData(pricingJson) {
+  Object.entries(variants).forEach(([key, v]) => {
+    const slug = `${slugify(design.name)}_${slugify(key)}`;
+    const record = pricingJson[slug];
+    if (!record) {
+      console.warn(`No pricing-data.json record for ${slug}, keeping hardcoded fallback values`);
+      return;
+    }
+
+    // Material + weight fields in provenance
+    delete v.provenance['Weight'];
+    delete v.provenance['Gold Weight'];
+    delete v.provenance['Silver Weight'];
+    const newProvenance = {};
+    if (record.metal === 'gold_9k_silver') {
+      newProvenance['Material'] = '9 kt gold, silver';
+      newProvenance['Gold Weight'] = `${record.gold_weight_g} grams`;
+      newProvenance['Silver Weight'] = `${record.silver_weight_g} grams`;
+    } else {
+      newProvenance['Material'] = '9 kt gold';
+      newProvenance['Weight'] = `${record.weight_g} grams`;
+    }
+    // preserve every other existing provenance key (e.g. "Ready in") in
+    // its original relative order, after Material/Weight
+    Object.entries(v.provenance).forEach(([k, val]) => { newProvenance[k] = val; });
+    v.provenance = newProvenance;
+
+    // Price
+    v.price = formatPriceINR(record.legacy_price_inr);
+
+    // Sizes + variant GID(s)
+    if (record.is_sized) {
+      v.sizes = Object.keys(record.sizes);
+      v.sizeVariantGids = record.sizes;   // key: size label → {weight_g, shopify_variant_gid, ...}
+      v.shopifyVariantId = record.legacy_shopify_variant_gid;  // fallback target
+    } else {
+      v.shopifyVariantId = record.shopify_variant_gid;
+    }
+    // Both bare numeric IDs (hardcoded fallback) and full gid://... strings
+    // (from pricing-data.json) reach addToCart() as-is: nava-cart.js's
+    // toVariantGid() normalizes either format before the Storefront API
+    // call, so no conversion is needed here.
+  });
+}
+
+/* Resolves the variant actually being purchased: a sized variant's own
+   selected-size GID if a real one has been created, else the parent's
+   (legacy, non-sized) GID as fallback — real per-size Shopify variants
+   don't exist for ekai_ring yet, so this currently always falls back. */
+function resolveVariantGid(v) {
+  if (v.sizeVariantGids) {
+    const selectedSize = document.querySelector('.szchip.sel')?.dataset.s;
+    const sizeRecord = selectedSize ? v.sizeVariantGids[selectedSize] : null;
+    if (sizeRecord && sizeRecord.shopify_variant_gid) {
+      return sizeRecord.shopify_variant_gid;
+    }
+  }
+  return v.shopifyVariantId;
+}
 
 let activeKey = "earrings";
 
@@ -732,7 +812,7 @@ function buildExhibitNav() {
     addBtn.disabled = true;
     const v = variants[activeKey];
     try {
-      await addToCart(v.shopifyVariantId, 1);
+      await addToCart(resolveVariantGid(v), 1);
       flyToCart(addBtn, 1);
       await updateCartBadge();
       showToast(`${design.name} ${v.label} added to cart`);
@@ -862,7 +942,7 @@ document.getElementById('ctaBtn').addEventListener('click', async () => {
   btn.textContent = 'Adding...';
   const qtyAtClick = currentQty;
   try {
-    await addToCart(v.shopifyVariantId, qtyAtClick);
+    await addToCart(resolveVariantGid(v), qtyAtClick);
     flyToCart(document.getElementById('qtyValue'), qtyAtClick);
     await updateCartBadge();
     showToast(`${design.name} ${v.label} added to cart`);
@@ -877,8 +957,14 @@ document.getElementById('ctaBtn').addEventListener('click', async () => {
   }
 });
 
-/* ── INITIAL RENDER ── earring is the default open variant ── */
-renderVariant(activeKey);
+/* ── INITIAL RENDER ── waits for pricing-data.json so price/weight/
+   sizes reflect the canonical source before first paint; falls back to
+   each variant's original hardcoded values if the fetch fails ── */
+(async function initialRender() {
+  const pricingJson = await loadPricingData();
+  if (pricingJson) mergePricingData(pricingJson);
+  renderVariant(activeKey);
+})();
 </script>
 <script src="nava-analytics.js"></script>
 </body>
