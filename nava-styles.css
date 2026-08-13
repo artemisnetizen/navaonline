@@ -556,14 +556,14 @@ body {
   text-transform: uppercase;
   text-align: left;
   color: var(--text-dim);
-  padding: 7px 4px;
+  padding: 9px 6px;
   border-bottom: 1px solid var(--bg-line);
 }
 .price-breakdown-table td {
   font-size: 0.75rem;
   font-weight: 300;
   color: var(--marshmallow-dim);
-  padding: 8px 4px;
+  padding: 12px 6px;
   border-bottom: 1px solid var(--bg-line);
   white-space: nowrap;
 }

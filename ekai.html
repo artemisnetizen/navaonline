@@ -745,8 +745,8 @@ function showPriceBreakdown(v, triggerBtn) {
   rows.forEach(row => {
     const tr = document.createElement('tr');
     const weight = row.weight != null ? `${Number(row.weight).toFixed(2)} g` : '—';
-    const rate = row.rate != null ? `${formatPriceINR(row.rate)}/g` : '—';
-    const cost = row.cost != null ? formatPriceINR(row.cost) : '—';
+    const rate = row.rate != null ? `${formatPriceINR(Math.round(row.rate))}/g` : '—';
+    const cost = row.cost != null ? formatPriceINR(Math.round(row.cost)) : '—';
     tr.innerHTML = `<td>${row.label}</td><td>${weight}</td><td>${rate}</td><td>${cost}</td>`;
     body.appendChild(tr);
   });
@@ -756,16 +756,16 @@ function showPriceBreakdown(v, triggerBtn) {
   const total = breakdown ? breakdown.total : null;
 
   const makingRow = document.createElement('tr');
-  makingRow.innerHTML = `<td>Making Charges</td><td></td><td></td><td>${typeof makingCharge === 'number' ? formatPriceINR(makingCharge) : '—'}</td>`;
+  makingRow.innerHTML = `<td>Making Charges</td><td></td><td></td><td>${typeof makingCharge === 'number' ? formatPriceINR(Math.round(makingCharge)) : '—'}</td>`;
   body.appendChild(makingRow);
 
   const gstRow = document.createElement('tr');
-  gstRow.innerHTML = `<td>GST (3%)</td><td></td><td></td><td>${gst != null ? formatPriceINR(gst) : '—'}</td>`;
+  gstRow.innerHTML = `<td>GST (3%)</td><td></td><td></td><td>${gst != null ? formatPriceINR(Math.round(gst)) : '—'}</td>`;
   body.appendChild(gstRow);
 
   const totalRow = document.createElement('tr');
   totalRow.className = 'pb-total';
-  totalRow.innerHTML = `<td>Total</td><td></td><td></td><td>${total != null ? formatPriceINR(total) : '—'}</td>`;
+  totalRow.innerHTML = `<td>Total</td><td></td><td></td><td>${total != null ? formatPriceINR(Math.round(total)) : '—'}</td>`;
   body.appendChild(totalRow);
 
   note.style.display = typeof makingCharge === 'number' ? 'none' : '';
