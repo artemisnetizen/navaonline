@@ -640,21 +640,21 @@ function computePriceForSize(v, sizeKey) {
   const silverWeightG = sizeData ? weightSource.silver_weight_g : v.rawSilverWeightG;
 
   if (v.metal === 'gold_9k_silver') {
-    const goldCost = (goldRate != null && goldWeightG != null) ? goldWeightG * goldRate : null;
-    const silverCost = (silverRate != null && silverWeightG != null) ? silverWeightG * silverRate : null;
+    const goldCost = (goldRate != null && goldWeightG != null) ? Math.round(goldWeightG * goldRate) : null;
+    const silverCost = (silverRate != null && silverWeightG != null) ? Math.round(silverWeightG * silverRate) : null;
     rows.push({ label: 'Gold', weight: goldWeightG, rate: goldRate, cost: goldCost });
     rows.push({ label: 'Silver', weight: silverWeightG, rate: silverRate, cost: silverCost });
     if (goldCost != null && silverCost != null) metalTotal = goldCost + silverCost;
     else metalTotal = null;
   } else {
-    const goldCost = (goldRate != null && weightG != null) ? weightG * goldRate : null;
+    const goldCost = (goldRate != null && weightG != null) ? Math.round(weightG * goldRate) : null;
     rows.push({ label: 'Gold', weight: weightG, rate: goldRate, cost: goldCost });
     metalTotal = goldCost;
   }
 
-  const makingCharge = v.rawMakingCharge;
+  const makingCharge = typeof v.rawMakingCharge === 'number' ? Math.round(v.rawMakingCharge) : v.rawMakingCharge;
   const canCalculateTotal = metalTotal != null && typeof makingCharge === 'number';
-  const gst = canCalculateTotal ? 0.03 * (metalTotal + makingCharge) : null;
+  const gst = canCalculateTotal ? Math.round(0.03 * (metalTotal + makingCharge)) : null;
   const total = canCalculateTotal ? metalTotal + makingCharge + gst : null;
 
   return { rows, metalTotal, makingCharge, gst, total };
@@ -746,7 +746,7 @@ function showPriceBreakdown(v, triggerBtn) {
     const tr = document.createElement('tr');
     const weight = row.weight != null ? `${Number(row.weight).toFixed(2)} g` : '—';
     const rate = row.rate != null ? `${formatPriceINR(Math.round(row.rate))}/g` : '—';
-    const cost = row.cost != null ? formatPriceINR(Math.round(row.cost)) : '—';
+    const cost = row.cost != null ? formatPriceINR(row.cost) : '—';
     tr.innerHTML = `<td>${row.label}</td><td>${weight}</td><td>${rate}</td><td>${cost}</td>`;
     body.appendChild(tr);
   });
@@ -756,16 +756,16 @@ function showPriceBreakdown(v, triggerBtn) {
   const total = breakdown ? breakdown.total : null;
 
   const makingRow = document.createElement('tr');
-  makingRow.innerHTML = `<td>Making Charges</td><td></td><td></td><td>${typeof makingCharge === 'number' ? formatPriceINR(Math.round(makingCharge)) : '—'}</td>`;
+  makingRow.innerHTML = `<td>Making Charges</td><td></td><td></td><td>${typeof makingCharge === 'number' ? formatPriceINR(makingCharge) : '—'}</td>`;
   body.appendChild(makingRow);
 
   const gstRow = document.createElement('tr');
-  gstRow.innerHTML = `<td>GST (3%)</td><td></td><td></td><td>${gst != null ? formatPriceINR(Math.round(gst)) : '—'}</td>`;
+  gstRow.innerHTML = `<td>GST (3%)</td><td></td><td></td><td>${gst != null ? formatPriceINR(gst) : '—'}</td>`;
   body.appendChild(gstRow);
 
   const totalRow = document.createElement('tr');
   totalRow.className = 'pb-total';
-  totalRow.innerHTML = `<td>Total</td><td></td><td></td><td>${total != null ? formatPriceINR(Math.round(total)) : '—'}</td>`;
+  totalRow.innerHTML = `<td>Total</td><td></td><td></td><td>${total != null ? formatPriceINR(total) : '—'}</td>`;
   body.appendChild(totalRow);
 
   note.style.display = typeof makingCharge === 'number' ? 'none' : '';
