@@ -1,0 +1,31 @@
+name: Sync Shopify prices on pricing-data.json push
+
+# NOTE: a FUTURE scheduled workflow (once the IBJA daily rate-fetch is
+# added) WILL need `permissions: contents: write` so it can commit the
+# fetched rate back into pricing-data.json before syncing. This workflow
+# never commits anything back to the repo, so it doesn't need that
+# permission and intentionally omits a `permissions:` block.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - pricing-data.json
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Sync Shopify prices
+        run: node scripts/sync-shopify-prices.js
+        env:
+          SHOPIFY_CLIENT_ID: ${{ secrets.SHOPIFY_CLIENT_ID }}
+          SHOPIFY_CLIENT_SECRET: ${{ secrets.SHOPIFY_CLIENT_SECRET }}
