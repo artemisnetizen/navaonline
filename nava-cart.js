@@ -83,6 +83,10 @@ async function createCart(variantId, qty) {
   const data = await storefrontFetch(query, {
     lines: [{ merchandiseId: variantId, quantity: qty }]
   });
+  if (data.cartCreate.userErrors?.length) {
+    console.error('cartCreate userError:', data.cartCreate.userErrors[0].message);
+    throw new Error(data.cartCreate.userErrors[0].message);
+  }
   const cart = data.cartCreate.cart;
   storeCartId(cart.id);
   return cart;
@@ -130,11 +134,28 @@ async function addToCart(variantId, qty) {
       lines: [line]
     });
     if (data.cartLinesAdd.userErrors?.length) {
-      throw new Error(data.cartLinesAdd.userErrors[0].message);
+      const msg = data.cartLinesAdd.userErrors[0].message;
+      console.error('cartLinesAdd userError:', msg);
+      // Only treat "cart not found"-style errors as a stale cart ID worth
+      // retrying with a fresh cart. Merchandise-level errors (out of stock,
+      // not available for sale, etc.) will fail identically on retry, so
+      // surface them instead of masking them behind a doomed second attempt.
+      if (/cart/i.test(msg) && /(not found|does not exist|invalid)/i.test(msg)) {
+        clearStoredCartId();
+        return createCart(variantId, qty);
+      }
+      const classified = new Error(msg);
+      classified.navaCartUserError = true; // already logged + classified above
+      throw classified;
     }
     return data.cartLinesAdd.cart;
   } catch (err) {
-    // Stored cart ID may be stale/expired — start a fresh cart
+    if (err.navaCartUserError) {
+      throw err; // don't mask a merchandise-level error behind a retry
+    }
+    // Genuine network/transport failure (not a Shopify userError) — this is
+    // the actual "stale/expired cart ID" case this catch was meant for.
+    console.error('addToCart transport error, retrying with a fresh cart:', err);
     clearStoredCartId();
     return createCart(variantId, qty);
   }
