@@ -611,6 +611,33 @@ function formatPriceINR(n) {
   return '₹ ' + Number(n).toLocaleString('en-IN');
 }
 
+/* Builds the Material/Weight (or Material/Gold Weight/Silver Weight)
+   provenance fields for a variant. sizeKey selects a sized record's
+   per-size weight from v.sizeVariantGids; pass null/undefined for
+   non-sized variants, which read v.raw*WeightG instead. Called both from
+   mergePricingData() (initial render) and the size-chip click handler
+   (live update on size change), so Weight always reflects the metal
+   actually in the selected size rather than the top-level (sizeless)
+   weight_g. */
+function buildMetalProvenance(v, sizeKey) {
+  const source = sizeKey ? v.sizeVariantGids?.[sizeKey] : v;
+  const weight = source ? (sizeKey ? source.weight_g : v.rawWeightG) : null;
+  const goldWeight = source ? (sizeKey ? source.gold_weight_g : v.rawGoldWeightG) : null;
+  const silverWeight = source ? (sizeKey ? source.silver_weight_g : v.rawSilverWeightG) : null;
+  const fmt = (n) => (n != null ? `${n} grams` : '—');
+
+  const provenance = {};
+  if (v.metal === 'gold_9k_silver') {
+    provenance['Material'] = '9 kt gold, silver';
+    provenance['Gold Weight'] = fmt(goldWeight);
+    provenance['Silver Weight'] = fmt(silverWeight);
+  } else {
+    provenance['Material'] = '9 kt gold';
+    provenance['Weight'] = fmt(weight);
+  }
+  return provenance;
+}
+
 function mergePricingData(pricingJson) {
   Object.entries(variants).forEach(([key, v]) => {
     const slug = `${slugify(design.name)}_${slugify(key)}`;
@@ -619,24 +646,6 @@ function mergePricingData(pricingJson) {
       console.warn(`No pricing-data.json record for ${slug}, keeping hardcoded fallback values`);
       return;
     }
-
-    // Material + weight fields in provenance
-    delete v.provenance['Weight'];
-    delete v.provenance['Gold Weight'];
-    delete v.provenance['Silver Weight'];
-    const newProvenance = {};
-    if (record.metal === 'gold_9k_silver') {
-      newProvenance['Material'] = '9 kt gold, silver';
-      newProvenance['Gold Weight'] = `${record.gold_weight_g} grams`;
-      newProvenance['Silver Weight'] = `${record.silver_weight_g} grams`;
-    } else {
-      newProvenance['Material'] = '9 kt gold';
-      newProvenance['Weight'] = `${record.weight_g} grams`;
-    }
-    // preserve every other existing provenance key (e.g. "Ready in") in
-    // its original relative order, after Material/Weight
-    Object.entries(v.provenance).forEach(([k, val]) => { newProvenance[k] = val; });
-    v.provenance = newProvenance;
 
     // Sizes + variant GID(s)
     if (record.is_sized) {
@@ -674,6 +683,19 @@ function mergePricingData(pricingJson) {
       const breakdown = computePriceForSize(v, null);
       v.price = (breakdown && breakdown.total != null) ? formatPriceINR(breakdown.total) : formatPriceINR(v.legacyPriceInr);
     }
+
+    // Material + weight fields in provenance — computed for the selected
+    // size on sized records (v.selectedSize, set just above) so this
+    // reflects the actual metal in that size rather than the sizeless
+    // top-level weight_g, which sized records don't have.
+    delete v.provenance['Weight'];
+    delete v.provenance['Gold Weight'];
+    delete v.provenance['Silver Weight'];
+    const newProvenance = buildMetalProvenance(v, record.is_sized ? v.selectedSize : null);
+    // preserve every other existing provenance key (e.g. "Ready in") in
+    // its original relative order, after Material/Weight
+    Object.entries(v.provenance).forEach(([k, val]) => { newProvenance[k] = val; });
+    v.provenance = newProvenance;
   });
 }
 
@@ -978,8 +1000,17 @@ function renderVariant(key) {
           this.classList.add('sel');
           v.selectedSize = s;
           const breakdown = computePriceForSize(v, s);
-          v.price = (breakdown.total != null) ? formatPriceINR(breakdown.total) : formatPriceINR(v.legacyPriceInr);
+          v.price = (breakdown && breakdown.total != null) ? formatPriceINR(breakdown.total) : formatPriceINR(v.legacyPriceInr);
           priceEl.textContent = v.price;
+
+          Object.assign(v.provenance, buildMetalProvenance(v, s));
+          panelProv.querySelectorAll('.prow').forEach(row => {
+            const keyEl = row.querySelector('.pk');
+            const valEl = row.querySelector('.pv');
+            if (keyEl && valEl && Object.prototype.hasOwnProperty.call(v.provenance, keyEl.textContent)) {
+              valEl.textContent = v.provenance[keyEl.textContent];
+            }
+          });
         });
       }
       sizeRowEl.appendChild(btn);
