@@ -1,0 +1,28 @@
+name: Daily gold/silver rate fetch and Shopify sync
+
+on:
+  schedule:
+    # 10:30 AM IST daily (IST = UTC+5:30)
+    - cron: '0 5 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-and-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch rates, update pricing-data.json, and sync Shopify prices
+        run: node scripts/update-and-sync-prices.js
+        env:
+          GOLDAPI_KEY: ${{ secrets.GOLDAPI_KEY }}
+          SHOPIFY_CLIENT_ID: ${{ secrets.SHOPIFY_CLIENT_ID }}
+          SHOPIFY_CLIENT_SECRET: ${{ secrets.SHOPIFY_CLIENT_SECRET }}
