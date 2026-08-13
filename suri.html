@@ -588,9 +588,6 @@ function mergePricingData(pricingJson) {
     Object.entries(v.provenance).forEach(([k, val]) => { newProvenance[k] = val; });
     v.provenance = newProvenance;
 
-    // Price
-    v.price = formatPriceINR(record.legacy_price_inr);
-
     // Sizes + variant GID(s)
     if (record.is_sized) {
       v.sizes = Object.keys(record.sizes);
@@ -612,36 +609,61 @@ function mergePricingData(pricingJson) {
     v.rawSilverWeightG = record.metal === 'gold_9k_silver' ? record.silver_weight_g : null;
     v.rawMakingCharge = record.making_charge;  // may be null — do not default to 0
     v.metal = record.metal;  // store this too, needed to pick the breakdown shape
+
+    // Price — computed live from the same formula the popover uses;
+    // legacy_price_inr is kept only as a fallback until the live figure
+    // is calculable.
+    v.legacyPriceInr = record.legacy_price_inr;
+
+    if (record.is_sized) {
+      const nonCustomSizes = Object.keys(record.sizes).filter(k => k !== 'Custom');
+      v.selectedSize = nonCustomSizes[2] || nonCustomSizes[nonCustomSizes.length - 1] || null;
+      const breakdown = v.selectedSize ? computePriceForSize(v, v.selectedSize) : null;
+      v.price = (breakdown && breakdown.total != null) ? formatPriceINR(breakdown.total) : formatPriceINR(v.legacyPriceInr);
+    } else {
+      const breakdown = computePriceForSize(v, null);
+      v.price = (breakdown && breakdown.total != null) ? formatPriceINR(breakdown.total) : formatPriceINR(v.legacyPriceInr);
+    }
   });
 }
 
 /* Computes the gold/silver/making-charge/GST breakdown behind a variant's
-   displayed price. Returns null if pricing-data.json hasn't loaded yet;
+   displayed price, for a given size (or the non-sized variant when sizeKey
+   is null/undefined). Returns null if pricing-data.json hasn't loaded yet;
    otherwise returns rows with any not-yet-known value left as null so the
-   render step can show "—" instead of a misleading 0. */
-function computePriceBreakdown(v) {
+   render step can show "—" instead of a misleading 0. This is the single
+   source of truth for the formula — both the popover and the main price
+   display call this. */
+function computePriceForSize(v, sizeKey) {
   if (!loadedPricingData) return null;
   const goldRate = loadedPricingData.gold_rate_per_g;
   const silverRate = loadedPricingData.silver_rate_per_g;
   const rows = [];
   let metalTotal = 0;
 
+  const sizeData = sizeKey ? v.sizeVariantGids?.[sizeKey] : null;
+  const weightSource = sizeData || v;  // sizeData's own weight_g/gold_weight_g/silver_weight_g, or the non-sized v.raw* fields
+
+  const weightG = sizeData ? weightSource.weight_g : v.rawWeightG;
+  const goldWeightG = sizeData ? weightSource.gold_weight_g : v.rawGoldWeightG;
+  const silverWeightG = sizeData ? weightSource.silver_weight_g : v.rawSilverWeightG;
+
   if (v.metal === 'gold_9k_silver') {
-    const goldCost = (goldRate != null && v.rawGoldWeightG != null) ? v.rawGoldWeightG * goldRate : null;
-    const silverCost = (silverRate != null && v.rawSilverWeightG != null) ? v.rawSilverWeightG * silverRate : null;
-    rows.push({ label: 'Gold', weight: v.rawGoldWeightG, rate: goldRate, cost: goldCost });
-    rows.push({ label: 'Silver', weight: v.rawSilverWeightG, rate: silverRate, cost: silverCost });
+    const goldCost = (goldRate != null && goldWeightG != null) ? Math.round(goldWeightG * goldRate) : null;
+    const silverCost = (silverRate != null && silverWeightG != null) ? Math.round(silverWeightG * silverRate) : null;
+    rows.push({ label: 'Gold', weight: goldWeightG, rate: goldRate, cost: goldCost });
+    rows.push({ label: 'Silver', weight: silverWeightG, rate: silverRate, cost: silverCost });
     if (goldCost != null && silverCost != null) metalTotal = goldCost + silverCost;
     else metalTotal = null;
   } else {
-    const goldCost = (goldRate != null && v.rawWeightG != null) ? v.rawWeightG * goldRate : null;
-    rows.push({ label: 'Gold', weight: v.rawWeightG, rate: goldRate, cost: goldCost });
+    const goldCost = (goldRate != null && weightG != null) ? Math.round(weightG * goldRate) : null;
+    rows.push({ label: 'Gold', weight: weightG, rate: goldRate, cost: goldCost });
     metalTotal = goldCost;
   }
 
-  const makingCharge = v.rawMakingCharge;
+  const makingCharge = typeof v.rawMakingCharge === 'number' ? Math.round(v.rawMakingCharge) : v.rawMakingCharge;
   const canCalculateTotal = metalTotal != null && typeof makingCharge === 'number';
-  const gst = canCalculateTotal ? 0.03 * (metalTotal + makingCharge) : null;
+  const gst = canCalculateTotal ? Math.round(0.03 * (metalTotal + makingCharge)) : null;
   const total = canCalculateTotal ? metalTotal + makingCharge + gst : null;
 
   return { rows, metalTotal, makingCharge, gst, total };
@@ -723,7 +745,7 @@ function buildPriceBreakdownPopup() {
 buildPriceBreakdownPopup();
 
 function showPriceBreakdown(v, triggerBtn) {
-  const breakdown = computePriceBreakdown(v);
+  const breakdown = computePriceForSize(v, v.sizeVariantGids ? v.selectedSize : null);
   const body = document.getElementById('priceBreakdownBody');
   const note = document.getElementById('priceBreakdownNote');
   body.innerHTML = '';
@@ -895,13 +917,21 @@ function renderVariant(key) {
     sizeExpRow.style.display = '';
     v.sizes.forEach((s, i) => {
       const btn = document.createElement('button');
-      btn.className = i === 1 ? 'szchip sel' : 'szchip';
+      const isCustom = s === 'Custom';
+      btn.className = isCustom ? 'szchip disabled' : (s === v.selectedSize ? 'szchip sel' : 'szchip');
+      if (isCustom) btn.disabled = true;
       btn.dataset.s = s;
       btn.textContent = s;
-      btn.addEventListener('click', function () {
-        document.querySelectorAll('.szchip').forEach(x => x.classList.remove('sel'));
-        this.classList.add('sel');
-      });
+      if (!isCustom) {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('.szchip').forEach(x => x.classList.remove('sel'));
+          this.classList.add('sel');
+          v.selectedSize = s;
+          const breakdown = computePriceForSize(v, s);
+          v.price = (breakdown.total != null) ? formatPriceINR(breakdown.total) : formatPriceINR(v.legacyPriceInr);
+          priceEl.textContent = v.price;
+        });
+      }
       sizeRowEl.appendChild(btn);
     });
   } else {
