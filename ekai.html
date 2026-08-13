@@ -210,7 +210,10 @@ gtag('config', 'G-KVB4V9TTL4');
 </div>
 
 <div class="price-block">
-  <div class="price" id="priceDisplay"></div>
+  <div class="price-row">
+    <button class="price-info-btn" type="button" aria-label="View price breakdown">i</button>
+    <div class="price" id="priceDisplay"></div>
+  </div>
   <div class="price-note">Made to order · Free delivery</div>
 </div>
 
@@ -378,7 +381,10 @@ gtag('config', 'G-KVB4V9TTL4');
         </div>
 
         <div class="price-block">
-          <div class="price" id="priceDisplay"></div>
+          <div class="price-row">
+            <button class="price-info-btn" type="button" aria-label="View price breakdown">i</button>
+            <div class="price" id="priceDisplay"></div>
+          </div>
           <div class="price-note">Made to order · Free delivery</div>
         </div>
 
@@ -573,9 +579,6 @@ function mergePricingData(pricingJson) {
     Object.entries(v.provenance).forEach(([k, val]) => { newProvenance[k] = val; });
     v.provenance = newProvenance;
 
-    // Price
-    v.price = formatPriceINR(record.legacy_price_inr);
-
     // Sizes + variant GID(s)
     if (record.is_sized) {
       v.sizes = Object.keys(record.sizes);
@@ -588,7 +591,73 @@ function mergePricingData(pricingJson) {
     // (from pricing-data.json) reach addToCart() as-is: nava-cart.js's
     // toVariantGid() normalizes either format before the Storefront API
     // call, so no conversion is needed here.
+
+    // Raw numeric fields for the price-breakdown popup — kept separate from
+    // the formatted provenance strings above since these feed calculation,
+    // not display.
+    v.rawWeightG = record.metal === 'gold_9k_silver' ? null : record.weight_g;
+    v.rawGoldWeightG = record.metal === 'gold_9k_silver' ? record.gold_weight_g : null;
+    v.rawSilverWeightG = record.metal === 'gold_9k_silver' ? record.silver_weight_g : null;
+    v.rawMakingCharge = record.making_charge;  // may be null — do not default to 0
+    v.metal = record.metal;  // store this too, needed to pick the breakdown shape
+
+    // Price — computed live from the same formula the popover uses;
+    // legacy_price_inr is kept only as a fallback until the live figure
+    // is calculable.
+    v.legacyPriceInr = record.legacy_price_inr;
+
+    if (record.is_sized) {
+      const nonCustomSizes = Object.keys(record.sizes).filter(k => k !== 'Custom');
+      v.selectedSize = nonCustomSizes[2] || nonCustomSizes[nonCustomSizes.length - 1] || null;
+      const breakdown = v.selectedSize ? computePriceForSize(v, v.selectedSize) : null;
+      v.price = (breakdown && breakdown.total != null) ? formatPriceINR(breakdown.total) : formatPriceINR(v.legacyPriceInr);
+    } else {
+      const breakdown = computePriceForSize(v, null);
+      v.price = (breakdown && breakdown.total != null) ? formatPriceINR(breakdown.total) : formatPriceINR(v.legacyPriceInr);
+    }
   });
+}
+
+/* Computes the gold/silver/making-charge/GST breakdown behind a variant's
+   displayed price, for a given size (or the non-sized variant when sizeKey
+   is null/undefined). Returns null if pricing-data.json hasn't loaded yet;
+   otherwise returns rows with any not-yet-known value left as null so the
+   render step can show "—" instead of a misleading 0. This is the single
+   source of truth for the formula — both the popover and the main price
+   display call this. */
+function computePriceForSize(v, sizeKey) {
+  if (!loadedPricingData) return null;
+  const goldRate = loadedPricingData.gold_rate_per_g;
+  const silverRate = loadedPricingData.silver_rate_per_g;
+  const rows = [];
+  let metalTotal = 0;
+
+  const sizeData = sizeKey ? v.sizeVariantGids?.[sizeKey] : null;
+  const weightSource = sizeData || v;  // sizeData's own weight_g/gold_weight_g/silver_weight_g, or the non-sized v.raw* fields
+
+  const weightG = sizeData ? weightSource.weight_g : v.rawWeightG;
+  const goldWeightG = sizeData ? weightSource.gold_weight_g : v.rawGoldWeightG;
+  const silverWeightG = sizeData ? weightSource.silver_weight_g : v.rawSilverWeightG;
+
+  if (v.metal === 'gold_9k_silver') {
+    const goldCost = (goldRate != null && goldWeightG != null) ? goldWeightG * goldRate : null;
+    const silverCost = (silverRate != null && silverWeightG != null) ? silverWeightG * silverRate : null;
+    rows.push({ label: 'Gold', weight: goldWeightG, rate: goldRate, cost: goldCost });
+    rows.push({ label: 'Silver', weight: silverWeightG, rate: silverRate, cost: silverCost });
+    if (goldCost != null && silverCost != null) metalTotal = goldCost + silverCost;
+    else metalTotal = null;
+  } else {
+    const goldCost = (goldRate != null && weightG != null) ? weightG * goldRate : null;
+    rows.push({ label: 'Gold', weight: weightG, rate: goldRate, cost: goldCost });
+    metalTotal = goldCost;
+  }
+
+  const makingCharge = v.rawMakingCharge;
+  const canCalculateTotal = metalTotal != null && typeof makingCharge === 'number';
+  const gst = canCalculateTotal ? 0.03 * (metalTotal + makingCharge) : null;
+  const total = canCalculateTotal ? metalTotal + makingCharge + gst : null;
+
+  return { rows, metalTotal, makingCharge, gst, total };
 }
 
 /* Resolves the variant actually being purchased: a sized variant's own
@@ -606,7 +675,141 @@ function resolveVariantGid(v) {
   return v.shopifyVariantId;
 }
 
+/* ── PRICE BREAKDOWN POPOVER — built once and appended directly to
+   document.body, since it needs to live outside the mobile/desktop
+   templates the device router clones in above. The modal and connector
+   are siblings of the overlay (not descendants of it): the overlay is
+   position:fixed for the dimming, which would otherwise become their
+   containing block and force their page-relative top/left math to render
+   viewport-pinned instead of scrolling with the page. ── */
+function buildPriceBreakdownPopup() {
+  const overlay = document.createElement('div');
+  overlay.className = 'price-breakdown-overlay';
+  overlay.id = 'priceBreakdownOverlay';
+
+  const modal = document.createElement('div');
+  modal.className = 'price-breakdown-modal';
+
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'price-breakdown-close';
+  closeBtn.type = 'button';
+  closeBtn.setAttribute('aria-label', 'Close');
+  closeBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>`;
+
+  const heading = document.createElement('div');
+  heading.className = 'price-breakdown-heading';
+  heading.textContent = 'Price Breakdown';
+
+  const table = document.createElement('table');
+  table.className = 'price-breakdown-table';
+  table.innerHTML = `<thead><tr><th>Item</th><th>Weight</th><th>Rate</th><th>Cost</th></tr></thead><tbody id="priceBreakdownBody"></tbody>`;
+
+  const note = document.createElement('div');
+  note.className = 'price-breakdown-note';
+  note.id = 'priceBreakdownNote';
+  note.style.display = 'none';
+  note.textContent = 'Making charges and totals pending';
+
+  modal.appendChild(closeBtn);
+  modal.appendChild(heading);
+  modal.appendChild(table);
+  modal.appendChild(note);
+
+  const connector = document.createElement('div');
+  connector.className = 'price-breakdown-connector';
+  const beadTop = document.createElement('div');
+  beadTop.className = 'price-breakdown-bead top';
+  const beadBottom = document.createElement('div');
+  beadBottom.className = 'price-breakdown-bead bottom';
+  connector.appendChild(beadTop);
+  connector.appendChild(beadBottom);
+
+  document.body.appendChild(overlay);
+  document.body.appendChild(modal);
+  document.body.appendChild(connector);
+
+  closeBtn.addEventListener('click', hidePriceBreakdown);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') hidePriceBreakdown();
+  });
+}
+buildPriceBreakdownPopup();
+
+function showPriceBreakdown(v, triggerBtn) {
+  const breakdown = computePriceForSize(v, v.sizeVariantGids ? v.selectedSize : null);
+  const body = document.getElementById('priceBreakdownBody');
+  const note = document.getElementById('priceBreakdownNote');
+  body.innerHTML = '';
+
+  const rows = breakdown ? breakdown.rows : [];
+  rows.forEach(row => {
+    const tr = document.createElement('tr');
+    const weight = row.weight != null ? `${Number(row.weight).toFixed(2)} g` : '—';
+    const rate = row.rate != null ? `${formatPriceINR(row.rate)}/g` : '—';
+    const cost = row.cost != null ? formatPriceINR(row.cost) : '—';
+    tr.innerHTML = `<td>${row.label}</td><td>${weight}</td><td>${rate}</td><td>${cost}</td>`;
+    body.appendChild(tr);
+  });
+
+  const makingCharge = breakdown ? breakdown.makingCharge : null;
+  const gst = breakdown ? breakdown.gst : null;
+  const total = breakdown ? breakdown.total : null;
+
+  const makingRow = document.createElement('tr');
+  makingRow.innerHTML = `<td>Making Charges</td><td></td><td></td><td>${typeof makingCharge === 'number' ? formatPriceINR(makingCharge) : '—'}</td>`;
+  body.appendChild(makingRow);
+
+  const gstRow = document.createElement('tr');
+  gstRow.innerHTML = `<td>GST (3%)</td><td></td><td></td><td>${gst != null ? formatPriceINR(gst) : '—'}</td>`;
+  body.appendChild(gstRow);
+
+  const totalRow = document.createElement('tr');
+  totalRow.className = 'pb-total';
+  totalRow.innerHTML = `<td>Total</td><td></td><td></td><td>${total != null ? formatPriceINR(total) : '—'}</td>`;
+  body.appendChild(totalRow);
+
+  note.style.display = typeof makingCharge === 'number' ? 'none' : '';
+
+  const overlay = document.getElementById('priceBreakdownOverlay');
+  const modal = document.querySelector('.price-breakdown-modal');
+  const connector = document.querySelector('.price-breakdown-connector');
+  overlay.classList.add('open');
+  modal.classList.add('open');
+  connector.classList.add('open');
+
+  const btnRect = triggerBtn.getBoundingClientRect();
+  const scrollY = window.scrollY;
+  const scrollX = window.scrollX;
+  const connectorHeight = 26; // matches the mockup's line length
+  const gap = 4; // small breathing room between bead and popover/button
+
+  // Anchor point: horizontal center of the "i" button
+  const anchorX = btnRect.left + scrollX + btnRect.width / 2;
+  const anchorTopY = btnRect.top + scrollY - gap - connectorHeight;
+
+  connector.style.left = `${anchorX}px`;
+  connector.style.top = `${anchorTopY}px`;
+  connector.style.height = `${connectorHeight}px`;
+
+  // Position modal so its bottom edge sits just above the connector's top
+  modal.style.top = `${anchorTopY - modal.offsetHeight}px`;
+  let modalLeft = anchorX - modal.offsetWidth / 2;
+  const viewportMargin = 16;
+  modalLeft = Math.max(viewportMargin, Math.min(modalLeft, window.innerWidth - modal.offsetWidth - viewportMargin));
+  modal.style.left = `${modalLeft}px`;
+}
+
+function hidePriceBreakdown() {
+  const overlay = document.getElementById('priceBreakdownOverlay');
+  const modal = document.querySelector('.price-breakdown-modal');
+  const connector = document.querySelector('.price-breakdown-connector');
+  if (overlay) overlay.classList.remove('open');
+  if (modal) modal.classList.remove('open');
+  if (connector) connector.classList.remove('open');
+}
+
 let activeKey = "earrings";
+let loadedPricingData = null;
 
 localStorage.setItem('nava_last_piece', window.location.pathname.split('/').pop());
 
@@ -705,13 +908,21 @@ function renderVariant(key) {
     sizeExpRow.style.display = '';
     v.sizes.forEach((s, i) => {
       const btn = document.createElement('button');
-      btn.className = i === 1 ? 'szchip sel' : 'szchip';
+      const isCustom = s === 'Custom';
+      btn.className = isCustom ? 'szchip disabled' : (s === v.selectedSize ? 'szchip sel' : 'szchip');
+      if (isCustom) btn.disabled = true;
       btn.dataset.s = s;
       btn.textContent = s;
-      btn.addEventListener('click', function () {
-        document.querySelectorAll('.szchip').forEach(x => x.classList.remove('sel'));
-        this.classList.add('sel');
-      });
+      if (!isCustom) {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('.szchip').forEach(x => x.classList.remove('sel'));
+          this.classList.add('sel');
+          v.selectedSize = s;
+          const breakdown = computePriceForSize(v, s);
+          v.price = (breakdown.total != null) ? formatPriceINR(breakdown.total) : formatPriceINR(v.legacyPriceInr);
+          priceEl.textContent = v.price;
+        });
+      }
       sizeRowEl.appendChild(btn);
     });
   } else {
@@ -957,11 +1168,17 @@ document.getElementById('ctaBtn').addEventListener('click', async () => {
   }
 });
 
+/* ── PRICE BREAKDOWN — "i" button next to the price ── */
+document.querySelectorAll('.price-info-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => showPriceBreakdown(variants[activeKey], e.currentTarget));
+});
+
 /* ── INITIAL RENDER ── waits for pricing-data.json so price/weight/
    sizes reflect the canonical source before first paint; falls back to
    each variant's original hardcoded values if the fetch fails ── */
 (async function initialRender() {
   const pricingJson = await loadPricingData();
+  loadedPricingData = pricingJson;
   if (pricingJson) mergePricingData(pricingJson);
   renderVariant(activeKey);
 })();

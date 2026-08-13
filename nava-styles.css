@@ -378,6 +378,11 @@ body {
 }
 .szchip:hover { border-color: var(--olive-dim); color: var(--marshmallow-muted); }
 .szchip.sel { border-color: var(--olive); color: var(--olive-light); }
+.szchip.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
 .sz-note {
   font-family: var(--highlight);
   font-size: 0.88rem;
@@ -389,19 +394,25 @@ body {
 
 /* ── PRICE ── */
 .price-block {
-  padding: 24px 24px 0;
+  padding: 24px 24px 20px;
   display: flex;
-  align-items: baseline;
-  gap: 12px;
+  flex-direction: column;
   opacity: 0;
   transform: translateY(12px);
   animation: fadeUp 0.6s 0.4s ease forwards;
+}
+.price-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 .price {
   font-family: var(--heading);
   font-size: 1.6rem;
   font-weight: 400;
   letter-spacing: 0.06em;
+  white-space: nowrap;
+  flex-shrink: 0;
   color: var(--marshmallow);
 }
 .price-note {
@@ -410,6 +421,168 @@ body {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--text-dim);
+  margin: 8px 0 0 28px;
+}
+.price-info-btn {
+  align-self: center;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--olive);
+  background: none;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0;
+  font-family: var(--body);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--olive-light);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+.price-info-btn:hover {
+  border-color: var(--olive-light);
+  background: rgba(121,120,66,0.14);
+  color: var(--marshmallow);
+}
+
+/* ── PRICE BREAKDOWN POPOVER ── */
+.price-breakdown-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background: rgba(30,14,23,0.72);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.price-breakdown-overlay.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+/* .price-breakdown-modal and .price-breakdown-connector are appended
+   directly to <body>, as siblings of the (position:fixed) overlay rather
+   than descendants of it — a fixed ancestor would become their containing
+   block and force their JS-computed, scroll-inclusive top/left values to
+   render viewport-pinned instead of page-relative, breaking "scrolls with
+   the page". Living outside it, with no positioned ancestor of their own,
+   they use the initial containing block, which does scroll with the page. */
+.price-breakdown-modal {
+  position: absolute;
+  z-index: 401;
+  width: 100%;
+  max-width: 345px;
+  max-height: 70vh;
+  overflow-y: auto;
+  background: var(--aubergine-dim);
+  border: 1px solid var(--olive);
+  border-radius: 6px;
+  padding: 17px 19px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.price-breakdown-modal.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+.price-breakdown-heading {
+  font-family: var(--heading);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--marshmallow);
+  margin-bottom: 12px;
+  padding-right: 20px;
+}
+.price-breakdown-close {
+  position: absolute;
+  top: 10px; right: 10px;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(2,2,2,0.25);
+  border: 1px solid rgba(240,237,228,0.35);
+  color: var(--marshmallow);
+  cursor: pointer;
+  padding: 0;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.price-breakdown-close:hover {
+  border-color: var(--olive);
+  background: rgba(121,120,66,0.14);
+}
+.price-breakdown-close svg { width: 11px; height: 11px; }
+.price-breakdown-connector {
+  position: absolute;
+  z-index: 401;
+  width: 1px;
+  background: var(--olive);
+  transform: translateX(-50%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.price-breakdown-connector.open {
+  opacity: 1;
+  visibility: visible;
+}
+.price-breakdown-bead {
+  position: absolute;
+  left: 50%;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--olive);
+  transform: translate(-50%, -50%);
+}
+.price-breakdown-bead.top { top: 0; }
+.price-breakdown-bead.bottom { top: 100%; }
+.price-breakdown-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--body);
+}
+.price-breakdown-table th {
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--text-dim);
+  padding: 7px 4px;
+  border-bottom: 1px solid var(--bg-line);
+}
+.price-breakdown-table td {
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: var(--marshmallow-dim);
+  padding: 8px 4px;
+  border-bottom: 1px solid var(--bg-line);
+  white-space: nowrap;
+}
+.price-breakdown-table th:not(:first-child),
+.price-breakdown-table td:not(:first-child) {
+  text-align: right;
+}
+.price-breakdown-table tr.pb-total td {
+  border-top: 1px solid var(--olive);
+  font-weight: 500;
+  color: var(--marshmallow);
+}
+.price-breakdown-note {
+  font-family: var(--highlight);
+  font-style: italic;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-top: 12px;
+  line-height: 1.4;
 }
 
 /* ── CTA ── */
@@ -943,7 +1116,7 @@ html.nava-desktop body {
   background: rgba(0,0,0,0.14);
 }
 .desktop-shell .price-block {
-  margin: 24px 0 16px;
+  margin: 24px 0 0;
 }
 .desktop-hero-stage::before,
 .desktop-hero-stage::after {
