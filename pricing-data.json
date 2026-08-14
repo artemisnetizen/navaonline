@@ -1,6 +1,6 @@
 {
-  "gold_rate_per_g": 5600,
-  "silver_rate_per_g": 7925,
+  "gold_rate_per_g": 4982.0391,
+  "silver_rate_per_g": 196.7143,
   "suri_hanging_earrings": {
     "design_name": "Suri",
     "source_file": "suri.html",
@@ -26,17 +26,83 @@
     "legacy_price_inr": 14899,
     "legacy_shopify_variant_gid": "gid://shopify/ProductVariant/49695701598450",
     "sizes": {
-      "4": { "weight_g": 1.55, "gold_weight_g": 1.55, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917584900338", "manual_override": null },
-      "5": { "weight_g": 1.6, "gold_weight_g": 1.6, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917584933106", "manual_override": null },
-      "6": { "weight_g": 1.65, "gold_weight_g": 1.65, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917584965874", "manual_override": null },
-      "7": { "weight_g": 1.7, "gold_weight_g": 1.7, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917584998642", "manual_override": null },
-      "8": { "weight_g": 1.75, "gold_weight_g": 1.75, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917585031410", "manual_override": null },
-      "9": { "weight_g": 1.8, "gold_weight_g": 1.8, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917585064178", "manual_override": null },
-      "10": { "weight_g": 1.85, "gold_weight_g": 1.85, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917585096946", "manual_override": null },
-      "11": { "weight_g": 1.9, "gold_weight_g": 1.9, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917585129714", "manual_override": null },
-      "12": { "weight_g": 1.95, "gold_weight_g": 1.95, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917585162482", "manual_override": null },
-      "13": { "weight_g": 2, "gold_weight_g": 2, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917585195250", "manual_override": null },
-      "Custom": { "weight_g": null, "gold_weight_g": null, "silver_weight_g": null, "shopify_variant_gid": null, "manual_override": null }
+      "4": {
+        "weight_g": 1.55,
+        "gold_weight_g": 1.55,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917584900338",
+        "manual_override": null
+      },
+      "5": {
+        "weight_g": 1.6,
+        "gold_weight_g": 1.6,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917584933106",
+        "manual_override": null
+      },
+      "6": {
+        "weight_g": 1.65,
+        "gold_weight_g": 1.65,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917584965874",
+        "manual_override": null
+      },
+      "7": {
+        "weight_g": 1.7,
+        "gold_weight_g": 1.7,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917584998642",
+        "manual_override": null
+      },
+      "8": {
+        "weight_g": 1.75,
+        "gold_weight_g": 1.75,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917585031410",
+        "manual_override": null
+      },
+      "9": {
+        "weight_g": 1.8,
+        "gold_weight_g": 1.8,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917585064178",
+        "manual_override": null
+      },
+      "10": {
+        "weight_g": 1.85,
+        "gold_weight_g": 1.85,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917585096946",
+        "manual_override": null
+      },
+      "11": {
+        "weight_g": 1.9,
+        "gold_weight_g": 1.9,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917585129714",
+        "manual_override": null
+      },
+      "12": {
+        "weight_g": 1.95,
+        "gold_weight_g": 1.95,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917585162482",
+        "manual_override": null
+      },
+      "13": {
+        "weight_g": 2,
+        "gold_weight_g": 2,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917585195250",
+        "manual_override": null
+      },
+      "Custom": {
+        "weight_g": null,
+        "gold_weight_g": null,
+        "silver_weight_g": null,
+        "shopify_variant_gid": null,
+        "manual_override": null
+      }
     }
   },
   "niva_earrings": {
@@ -64,15 +130,69 @@
     "legacy_price_inr": 188999,
     "legacy_shopify_variant_gid": "gid://shopify/ProductVariant/49695703793906",
     "sizes": {
-      "2-2": { "weight_g": 17, "gold_weight_g": 17, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917586374898", "manual_override": null },
-      "2-4": { "weight_g": 18.5, "gold_weight_g": 18.5, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917586407666", "manual_override": null },
-      "2-6": { "weight_g": 20.5, "gold_weight_g": 20.5, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917586440434", "manual_override": null },
-      "2-8": { "weight_g": 22, "gold_weight_g": 22, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917586473202", "manual_override": null },
-      "2-10": { "weight_g": 23.5, "gold_weight_g": 23.5, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917586505970", "manual_override": null },
-      "2-12": { "weight_g": 25, "gold_weight_g": 25, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917586538738", "manual_override": null },
-      "2-14": { "weight_g": 26.5, "gold_weight_g": 26.5, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917586571506", "manual_override": null },
-      "3": { "weight_g": 28, "gold_weight_g": 28, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917586604274", "manual_override": null },
-      "Custom": { "weight_g": null, "gold_weight_g": null, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917584900338", "manual_override": null }
+      "3": {
+        "weight_g": 28,
+        "gold_weight_g": 28,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917586604274",
+        "manual_override": null
+      },
+      "2-2": {
+        "weight_g": 17,
+        "gold_weight_g": 17,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917586374898",
+        "manual_override": null
+      },
+      "2-4": {
+        "weight_g": 18.5,
+        "gold_weight_g": 18.5,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917586407666",
+        "manual_override": null
+      },
+      "2-6": {
+        "weight_g": 20.5,
+        "gold_weight_g": 20.5,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917586440434",
+        "manual_override": null
+      },
+      "2-8": {
+        "weight_g": 22,
+        "gold_weight_g": 22,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917586473202",
+        "manual_override": null
+      },
+      "2-10": {
+        "weight_g": 23.5,
+        "gold_weight_g": 23.5,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917586505970",
+        "manual_override": null
+      },
+      "2-12": {
+        "weight_g": 25,
+        "gold_weight_g": 25,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917586538738",
+        "manual_override": null
+      },
+      "2-14": {
+        "weight_g": 26.5,
+        "gold_weight_g": 26.5,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917586571506",
+        "manual_override": null
+      },
+      "Custom": {
+        "weight_g": null,
+        "gold_weight_g": null,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917584900338",
+        "manual_override": null
+      }
     }
   },
   "vara_hoops": {
@@ -139,17 +259,83 @@
     "legacy_price_inr": 13199,
     "legacy_shopify_variant_gid": "gid://shopify/ProductVariant/49695723258098",
     "sizes": {
-      "4": { "weight_g": 1.35, "gold_weight_g": 1.35, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917577167090", "manual_override": null },
-      "5": { "weight_g": 1.4, "gold_weight_g": 1.4, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917577199858", "manual_override": null },
-      "6": { "weight_g": 1.45, "gold_weight_g": 1.45, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917577232626", "manual_override": null },
-      "7": { "weight_g": 1.5, "gold_weight_g": 1.5, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917577265394", "manual_override": null },
-      "8": { "weight_g": 1.55, "gold_weight_g": 1.55, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917577298162", "manual_override": null },
-      "9": { "weight_g": 1.65, "gold_weight_g": 1.65, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917577330930", "manual_override": null },
-      "10": { "weight_g": 1.75, "gold_weight_g": 1.75, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917577363698", "manual_override": null },
-      "11": { "weight_g": 1.85, "gold_weight_g": 1.85, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917577396466", "manual_override": null },
-      "12": { "weight_g": 1.95, "gold_weight_g": 1.95, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917577429234", "manual_override": null },
-      "13": { "weight_g": 2.05, "gold_weight_g": 2.05, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917577462002", "manual_override": null },
-      "Custom": { "weight_g": null, "gold_weight_g": null, "silver_weight_g": null, "shopify_variant_gid": null, "manual_override": null }
+      "4": {
+        "weight_g": 1.35,
+        "gold_weight_g": 1.35,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917577167090",
+        "manual_override": null
+      },
+      "5": {
+        "weight_g": 1.4,
+        "gold_weight_g": 1.4,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917577199858",
+        "manual_override": null
+      },
+      "6": {
+        "weight_g": 1.45,
+        "gold_weight_g": 1.45,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917577232626",
+        "manual_override": null
+      },
+      "7": {
+        "weight_g": 1.5,
+        "gold_weight_g": 1.5,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917577265394",
+        "manual_override": null
+      },
+      "8": {
+        "weight_g": 1.55,
+        "gold_weight_g": 1.55,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917577298162",
+        "manual_override": null
+      },
+      "9": {
+        "weight_g": 1.65,
+        "gold_weight_g": 1.65,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917577330930",
+        "manual_override": null
+      },
+      "10": {
+        "weight_g": 1.75,
+        "gold_weight_g": 1.75,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917577363698",
+        "manual_override": null
+      },
+      "11": {
+        "weight_g": 1.85,
+        "gold_weight_g": 1.85,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917577396466",
+        "manual_override": null
+      },
+      "12": {
+        "weight_g": 1.95,
+        "gold_weight_g": 1.95,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917577429234",
+        "manual_override": null
+      },
+      "13": {
+        "weight_g": 2.05,
+        "gold_weight_g": 2.05,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917577462002",
+        "manual_override": null
+      },
+      "Custom": {
+        "weight_g": null,
+        "gold_weight_g": null,
+        "silver_weight_g": null,
+        "shopify_variant_gid": null,
+        "manual_override": null
+      }
     }
   },
   "sama_pendant": {
@@ -191,17 +377,83 @@
     "legacy_price_inr": 17499,
     "legacy_shopify_variant_gid": "gid://shopify/ProductVariant/49834641064178",
     "sizes": {
-      "4": { "weight_g": 1.78, "gold_weight_g": 1.78, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917581689074", "manual_override": null },
-      "5": { "weight_g": 1.85, "gold_weight_g": 1.85, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917581721842", "manual_override": null },
-      "6": { "weight_g": 1.95, "gold_weight_g": 1.95, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917581754610", "manual_override": null },
-      "7": { "weight_g": 2.03, "gold_weight_g": 2.03, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917581787378", "manual_override": null },
-      "8": { "weight_g": 2.15, "gold_weight_g": 2.15, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917581820146", "manual_override": null },
-      "9": { "weight_g": 2.25, "gold_weight_g": 2.25, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917581852914", "manual_override": null },
-      "10": { "weight_g": 2.3, "gold_weight_g": 2.3, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917581885682", "manual_override": null },
-      "11": { "weight_g": 2.35, "gold_weight_g": 2.35, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917581918450", "manual_override": null },
-      "12": { "weight_g": 2.42, "gold_weight_g": 2.42, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917581951218", "manual_override": null },
-      "13": { "weight_g": 2.5, "gold_weight_g": 2.5, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917581983986", "manual_override": null },
-      "Custom": { "weight_g": null, "gold_weight_g": null, "silver_weight_g": null, "shopify_variant_gid": null, "manual_override": null }
+      "4": {
+        "weight_g": 1.78,
+        "gold_weight_g": 1.78,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917581689074",
+        "manual_override": null
+      },
+      "5": {
+        "weight_g": 1.85,
+        "gold_weight_g": 1.85,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917581721842",
+        "manual_override": null
+      },
+      "6": {
+        "weight_g": 1.95,
+        "gold_weight_g": 1.95,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917581754610",
+        "manual_override": null
+      },
+      "7": {
+        "weight_g": 2.03,
+        "gold_weight_g": 2.03,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917581787378",
+        "manual_override": null
+      },
+      "8": {
+        "weight_g": 2.15,
+        "gold_weight_g": 2.15,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917581820146",
+        "manual_override": null
+      },
+      "9": {
+        "weight_g": 2.25,
+        "gold_weight_g": 2.25,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917581852914",
+        "manual_override": null
+      },
+      "10": {
+        "weight_g": 2.3,
+        "gold_weight_g": 2.3,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917581885682",
+        "manual_override": null
+      },
+      "11": {
+        "weight_g": 2.35,
+        "gold_weight_g": 2.35,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917581918450",
+        "manual_override": null
+      },
+      "12": {
+        "weight_g": 2.42,
+        "gold_weight_g": 2.42,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917581951218",
+        "manual_override": null
+      },
+      "13": {
+        "weight_g": 2.5,
+        "gold_weight_g": 2.5,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917581983986",
+        "manual_override": null
+      },
+      "Custom": {
+        "weight_g": null,
+        "gold_weight_g": null,
+        "silver_weight_g": null,
+        "shopify_variant_gid": null,
+        "manual_override": null
+      }
     }
   },
   "imai_pendant": {
@@ -270,17 +522,83 @@
     "legacy_price_inr": 15099,
     "legacy_shopify_variant_gid": "gid://shopify/ProductVariant/49834654302450",
     "sizes": {
-      "4": { "weight_g": 1.45, "gold_weight_g": 1.45, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917579821298", "manual_override": null },
-      "5": { "weight_g": 1.5, "gold_weight_g": 1.5, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917579854066", "manual_override": null },
-      "6": { "weight_g": 1.6, "gold_weight_g": 1.6, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917579886834", "manual_override": null },
-      "7": { "weight_g": 1.68, "gold_weight_g": 1.68, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917579919602", "manual_override": null },
-      "8": { "weight_g": 1.78, "gold_weight_g": 1.78, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917579952370", "manual_override": null },
-      "9": { "weight_g": 1.9, "gold_weight_g": 1.9, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917579985138", "manual_override": null },
-      "10": { "weight_g": 1.98, "gold_weight_g": 1.98, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917580017906", "manual_override": null },
-      "11": { "weight_g": 2.08, "gold_weight_g": 2.08, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917580050674", "manual_override": null },
-      "12": { "weight_g": 2.2, "gold_weight_g": 2.2, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917580083442", "manual_override": null },
-      "13": { "weight_g": 2.3, "gold_weight_g": 2.3, "silver_weight_g": null, "shopify_variant_gid": "gid://shopify/ProductVariant/49917580116210", "manual_override": null },
-      "Custom": { "weight_g": null, "gold_weight_g": null, "silver_weight_g": null, "shopify_variant_gid": null, "manual_override": null }
+      "4": {
+        "weight_g": 1.45,
+        "gold_weight_g": 1.45,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917579821298",
+        "manual_override": null
+      },
+      "5": {
+        "weight_g": 1.5,
+        "gold_weight_g": 1.5,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917579854066",
+        "manual_override": null
+      },
+      "6": {
+        "weight_g": 1.6,
+        "gold_weight_g": 1.6,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917579886834",
+        "manual_override": null
+      },
+      "7": {
+        "weight_g": 1.68,
+        "gold_weight_g": 1.68,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917579919602",
+        "manual_override": null
+      },
+      "8": {
+        "weight_g": 1.78,
+        "gold_weight_g": 1.78,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917579952370",
+        "manual_override": null
+      },
+      "9": {
+        "weight_g": 1.9,
+        "gold_weight_g": 1.9,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917579985138",
+        "manual_override": null
+      },
+      "10": {
+        "weight_g": 1.98,
+        "gold_weight_g": 1.98,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917580017906",
+        "manual_override": null
+      },
+      "11": {
+        "weight_g": 2.08,
+        "gold_weight_g": 2.08,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917580050674",
+        "manual_override": null
+      },
+      "12": {
+        "weight_g": 2.2,
+        "gold_weight_g": 2.2,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917580083442",
+        "manual_override": null
+      },
+      "13": {
+        "weight_g": 2.3,
+        "gold_weight_g": 2.3,
+        "silver_weight_g": null,
+        "shopify_variant_gid": "gid://shopify/ProductVariant/49917580116210",
+        "manual_override": null
+      },
+      "Custom": {
+        "weight_g": null,
+        "gold_weight_g": null,
+        "silver_weight_g": null,
+        "shopify_variant_gid": null,
+        "manual_override": null
+      }
     }
   },
   "agam_rectangle_studs": {
