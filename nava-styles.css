@@ -549,6 +549,7 @@ body {
   width: 100%;
   border-collapse: collapse;
   font-family: var(--body);
+  font-variant-numeric: tabular-nums;
 }
 .price-breakdown-table th {
   font-size: 0.6rem;
@@ -571,6 +572,17 @@ body {
 .price-breakdown-table td:not(:first-child) {
   text-align: right;
 }
+/* Fixed minimum widths on the numeric columns so WEIGHT/RATE/COST sit at
+   the same horizontal position row-to-row regardless of that row's own
+   value length (a "12 g" row and a "123.45 g" row still share the same
+   column edge) — table-layout stays auto so a value can still widen the
+   column past this floor if it ever needs to. */
+.price-breakdown-table th:nth-child(2),
+.price-breakdown-table td:nth-child(2) { min-width: 54px; }
+.price-breakdown-table th:nth-child(3),
+.price-breakdown-table td:nth-child(3) { min-width: 78px; }
+.price-breakdown-table th:nth-child(4),
+.price-breakdown-table td:nth-child(4) { min-width: 66px; }
 .price-breakdown-table tr.pb-total td {
   border-top: 1px solid var(--olive);
   font-weight: 500;
