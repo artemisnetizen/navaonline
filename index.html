@@ -171,6 +171,35 @@ gtag('config', 'G-KVB4V9TTL4');
   /* ── MOBILE HAMBURGER MENU (scoped to this page only, for testing) ── */
   .nav-right-controls { display: flex; align-items: center; gap: 18px; }
 
+  /* ── HALLMARK BADGE — mirrors nava-styles.css .hallmark-badge* rules;
+     duplicated here since this page has no stylesheet and no CSS vars. ── */
+  .hallmark-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #F0EDE4;
+    border-radius: 6px;
+    padding: 4px 10px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .hallmark-badge:hover { opacity: 0.85; }
+  .hallmark-badge-img { height: 22px; width: auto; display: block; }
+  .hallmark-badge-divider { width: 1px; height: 16px; background: #36192B; opacity: 0.25; }
+  .hallmark-badge-text {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #36192B;
+    white-space: nowrap;
+  }
+  @media (max-width: 767px) {
+    .hallmark-badge { gap: 6px; padding: 3px 8px; }
+    .hallmark-badge-img { height: 16px; }
+    .hallmark-badge-text { font-size: 0.55rem; letter-spacing: 0.08em; }
+  }
+
   .hamburger-btn {
     width: 22px; height: 16px; position: relative;
     background: none; border: none; padding: 0; cursor: pointer;
@@ -550,6 +579,10 @@ gtag('config', 'G-KVB4V9TTL4');
       <nav style="display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:0.5px solid rgba(240,237,228,0.1);flex:0 0 auto;">
         <a href="#"><img src="logo.png" alt="Nava" style="height:36px;width:auto;"></a>
         <div class="nav-right-controls">
+          <a href="hallmarks.html" class="hallmark-badge">
+            <img src="bis_hallmark.png" alt="BIS Hallmarked" class="hallmark-badge-img">
+            <span class="hallmark-badge-text">925</span>
+          </a>
           <button class="hamburger-btn" id="hamburgerBtn" type="button" aria-label="Open menu">
             <span></span><span></span><span></span>
           </button>
@@ -777,6 +810,7 @@ gtag('config', 'G-KVB4V9TTL4');
           <div class="exp-footer-heading">Who we are</div>
           <a class="exp-footer-link" href="about.html">About Nava</a>
           <a class="exp-footer-link" href="gold.html">About 9K Gold</a>
+          <a class="exp-footer-link" href="hallmarks.html">Hallmarking</a>
         </div>
         <div>
           <div class="exp-footer-heading">Get In Touch</div>
@@ -824,6 +858,11 @@ gtag('config', 'G-KVB4V9TTL4');
         <img src="logo.png" alt="Nava" style="height:36px;width:auto;">
       </a>
       <div class="desktop-nav-right">
+        <a href="hallmarks.html" class="hallmark-badge">
+          <img src="bis_hallmark.png" alt="BIS Hallmarked" class="hallmark-badge-img">
+          <span class="hallmark-badge-divider"></span>
+          <span class="hallmark-badge-text">925 Sterling</span>
+        </a>
         <div class="nav-collections" tabindex="0">
           <span class="nav-collections-trigger">Collections
             <svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 1L4 4.5L7 1" stroke="rgba(240,237,228,0.6)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1035,6 +1074,7 @@ gtag('config', 'G-KVB4V9TTL4');
           <div class="exp-footer-heading">Who we are</div>
           <a class="exp-footer-link" href="about.html">About Nava</a>
           <a class="exp-footer-link" href="gold.html">About 9K Gold</a>
+          <a class="exp-footer-link" href="hallmarks.html">Hallmarking</a>
         </div>
         <div>
           <div class="exp-footer-heading">Gold Guide</div>
@@ -1098,7 +1138,7 @@ gtag('config', 'G-KVB4V9TTL4');
 
   var vidA = wrap.querySelector('.desktop-hero-video-a');
   var vidB = wrap.querySelector('.desktop-hero-video-b');
-  var RATE = 0.2;              /* 5x slower than native speed */
+  var RATE = 0.6;              /* 5x slower than native speed */
   var FADE_REAL_SECONDS = 1;   /* wall-clock length of the crossfade */
 
   var active = vidA;

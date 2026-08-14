@@ -88,6 +88,45 @@ body {
 }
 .nav-link:hover { color: var(--marshmallow); }
 
+/* ── HALLMARK BADGE — BIS + 925 Sterling, site-wide nav ── */
+.hallmark-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--marshmallow);
+  border-radius: 6px;
+  padding: 4px 10px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.hallmark-badge:hover { opacity: 0.85; }
+.hallmark-badge-img {
+  height: 22px;
+  width: auto;
+  display: block;
+}
+.hallmark-badge-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--aubergine);
+  opacity: 0.25;
+}
+.hallmark-badge-text {
+  font-family: var(--heading);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--aubergine);
+  white-space: nowrap;
+}
+
+/* Mobile: slightly smaller, tighter padding, no divider gap waste */
+@media (max-width: 767px) {
+  .hallmark-badge { gap: 6px; padding: 3px 8px; }
+  .hallmark-badge-img { height: 16px; }
+  .hallmark-badge-text { font-size: 0.55rem; letter-spacing: 0.08em; }
+}
+
 /* ── NAV COLLECTIONS DROPDOWN ── */
 .nav-collections { position: relative; }
 .nav-collections-trigger {
