@@ -23,19 +23,43 @@ async function main() {
     sync: null
   };
 
-  // 1. Fetch rates
+  // 1. Load existing data first so an insufficient-sources metal can fall
+  // back to yesterday's rate instead of writing an invented value.
+  const pricingData = loadPricingData(PRICING_DATA_PATH);
+  const previousGoldRate = pricingData.gold_rate_per_g;
+  const previousSilverRate = pricingData.silver_rate_per_g;
+
+  // 2. Fetch rates (multi-source domestic average; gold and silver are each
+  // either a fresh average or null if fewer than the minimum sources
+  // survived outlier exclusion for that metal)
   let rate;
   try {
-    rate = await fetchGoldSilverRate(process.env.GOLDAPI_KEY);
+    rate = await fetchGoldSilverRate();
   } catch (err) {
     console.error(`\nFatal: rate fetch failed: ${err.message}`);
     process.exit(1);
   }
-  summary.rate = { goldRatePerGram: rate.goldRatePerGram, silverRatePerGram: rate.silverRatePerGram };
-  console.log(`\nFetched rates: gold=${rate.goldRatePerGram} INR/g, silver=${rate.silverRatePerGram} INR/g`);
 
-  // 2. Validate
-  const validation = validateRate(rate.goldRatePerGram, rate.silverRatePerGram);
+  const goldUpdated = rate.goldRatePerGram !== null;
+  const silverUpdated = rate.silverRatePerGram !== null;
+  const goldRatePerGram = goldUpdated ? rate.goldRatePerGram : previousGoldRate;
+  const silverRatePerGram = silverUpdated ? rate.silverRatePerGram : previousSilverRate;
+
+  summary.rate = { goldRatePerGram, silverRatePerGram, goldUpdated, silverUpdated };
+  console.log(
+    goldUpdated
+      ? `\nGold rate updated: ${goldRatePerGram} INR/g`
+      : `\nGold rate NOT updated (fewer than minimum valid sources this run) — keeping previous rate ${previousGoldRate} INR/g`
+  );
+  console.log(
+    silverUpdated
+      ? `Silver rate updated: ${silverRatePerGram} INR/g`
+      : `Silver rate NOT updated (fewer than minimum valid sources this run) — keeping previous rate ${previousSilverRate} INR/g`
+  );
+
+  // 3. Validate the final values (fresh or carried over) — same static
+  // bounds check as before, now the last safety net after acquisition.
+  const validation = validateRate(goldRatePerGram, silverRatePerGram);
   summary.validation = validation;
   if (!validation.valid) {
     console.error(`\nFatal: rate validation failed: ${validation.reason}`);
@@ -43,14 +67,13 @@ async function main() {
   }
   console.log('Validation: OK');
 
-  // 3. Write pricing-data.json
-  const pricingData = loadPricingData(PRICING_DATA_PATH);
-  pricingData.gold_rate_per_g = rate.goldRatePerGram;
-  pricingData.silver_rate_per_g = rate.silverRatePerGram;
+  // 4. Write pricing-data.json
+  pricingData.gold_rate_per_g = goldRatePerGram;
+  pricingData.silver_rate_per_g = silverRatePerGram;
   fs.writeFileSync(PRICING_DATA_PATH, JSON.stringify(pricingData, null, 2) + '\n');
-  console.log(`\nWrote gold_rate_per_g=${rate.goldRatePerGram}, silver_rate_per_g=${rate.silverRatePerGram} to ${PRICING_DATA_PATH}`);
+  console.log(`\nWrote gold_rate_per_g=${goldRatePerGram}, silver_rate_per_g=${silverRatePerGram} to ${PRICING_DATA_PATH}`);
 
-  // 4. Commit and push
+  // 5. Commit and push
   try {
     git(['config', 'user.name', 'Nava Pricing Bot']);
     git(['config', 'user.email', 'nava-pricing-bot@users.noreply.github.com']);
@@ -67,7 +90,7 @@ async function main() {
     process.exit(1);
   }
 
-  // 5. Sync to Shopify, reusing the existing push-triggered workflow's functions
+  // 6. Sync to Shopify, reusing the existing push-triggered workflow's functions
   const freshPricingData = loadPricingData(PRICING_DATA_PATH);
   const { updates, skipped } = computeUpdates(freshPricingData);
 

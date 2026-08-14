@@ -1,14 +1,14 @@
 /*
- * FUTURE EXTENSION (not yet built): an automated daily rate-fetch will
- * call IBJA's Rates API (primary) / GoldAPI.io (fallback), write the
- * fetched gold_rate_per_g/silver_rate_per_g into pricing-data.json,
- * commit + push that change, THEN call loadPricingData() →
- * computeUpdates() → applyUpdatesToShopify() from within that SAME
- * workflow run — GitHub Actions won't let a bot's own commit re-trigger
- * this push-based workflow, so the fetch-and-sync logic must live in one
- * combined scheduled workflow, not two chained ones. This file's three
- * exported functions are designed to be reused as-is by that future
- * workflow without modification.
+ * The daily-rate-sync.yml scheduled workflow (scripts/update-and-sync-prices.js)
+ * averages gold/silver rates across multiple Indian domestic sources (see
+ * scripts/fetch-rate.js — no GoldAPI.io or other international-spot source
+ * is used), writes the result into pricing-data.json, commits + pushes that
+ * change, THEN calls loadPricingData() → computeUpdates() →
+ * applyUpdatesToShopify() from within that SAME workflow run — GitHub
+ * Actions won't let a bot's own commit re-trigger this push-based workflow,
+ * so the fetch-and-sync logic lives in one combined scheduled workflow, not
+ * two chained ones. This file's three exported functions are reused as-is
+ * by that scheduled workflow.
  */
 
 const fs = require('fs');

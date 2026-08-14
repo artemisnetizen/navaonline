@@ -24,6 +24,5 @@ jobs:
       - name: Fetch rates, update pricing-data.json, and sync Shopify prices
         run: node scripts/update-and-sync-prices.js
         env:
-          GOLDAPI_KEY: ${{ secrets.GOLDAPI_KEY }}
           SHOPIFY_CLIENT_ID: ${{ secrets.SHOPIFY_CLIENT_ID }}
           SHOPIFY_CLIENT_SECRET: ${{ secrets.SHOPIFY_CLIENT_SECRET }}
