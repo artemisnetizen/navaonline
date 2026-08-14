@@ -4,6 +4,7 @@ on:
   schedule:
     # 10:30 AM IST daily (IST = UTC+5:30)
     - cron: '0 5 * * *'
+  workflow_dispatch:
 
 permissions:
   contents: write
