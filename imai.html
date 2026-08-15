@@ -67,6 +67,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="nava-styles.css">
+<style>
+  /* ── Allow the page to scroll past the fixed-height hero+panel row
+     to reveal the footer below, without shrinking the hero/panel to
+     fit (see .desktop-shell in nava-styles.css for the matching
+     flex sticky-footer change). ── */
+  html.nava-desktop,
+  html.nava-desktop body {
+    height: auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+</style>
 <script src="nava-cart.js"></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-KVB4V9TTL4"></script>
@@ -247,10 +259,47 @@ gtag('config', 'G-KVB4V9TTL4');
   </div>
 </div>
 
-<footer style="display:flex;justify-content:center;gap:28px;padding:14px 24px;background:rgba(54,25,43,0.92);backdrop-filter:blur(10px);border-top:1px solid rgba(240,237,228,0.12);">
-  <a href="privacy.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Privacy Policy</a>
-  <a href="terms.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Terms of Service</a>
-  <a href="contact.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Contact</a>
+<footer class="exp-footer exp-footer-mobile">
+  <div class="exp-footer-mobile-grid">
+    <div>
+      <div class="exp-footer-heading">Who we are</div>
+      <a class="exp-footer-link" href="about.html">About Nava</a>
+      <a class="exp-footer-link" href="gold.html">About 9K Gold</a>
+      <a class="exp-footer-link" href="hallmarks.html">Hallmarking</a>
+    </div>
+    <div>
+      <div class="exp-footer-heading">Get In Touch</div>
+      <a class="exp-footer-link" href="contact.html">Contact Us</a>
+      <a class="exp-footer-link" href="https://in.pinterest.com/NavaOnlineIndia/" target="_blank" rel="noopener">Pinterest</a>
+      <a class="exp-footer-link" href="https://www.instagram.com/navaonline.in/" target="_blank" rel="noopener">Instagram</a>
+      <a class="exp-footer-link" href="https://wa.me/917356774555" target="_blank" rel="noopener">Whatsapp</a>
+    </div>
+    <div>
+      <div class="exp-footer-heading">Gold Guide</div>
+      <a class="exp-footer-link" href="gold-karats.html">About Carats</a>
+      <a class="exp-footer-link" href="gold-maintenance.html">Gold Maintenance</a>
+      <a class="exp-footer-link" href="gold-prices.html">Gold Prices</a>
+      <a class="exp-footer-link" href="#">Gold Sourcing</a>
+      <a class="exp-footer-link" href="gold-jewellery-types.html">Types of Gold Jewellery</a>
+    </div>
+    <div>
+      <div class="exp-footer-heading">Gold Standard Service</div>
+      <a class="exp-footer-link" href="faq.html#pieces">Pieces</a>
+      <a class="exp-footer-link" href="faq.html#ordering">Ordering</a>
+      <a class="exp-footer-link" href="faq.html#delivery">Production &amp; Delivery</a>
+      <a class="exp-footer-link" href="faq.html#returns">Returns &amp; Exchanges</a>
+      <a class="exp-footer-link" href="contact.html">Contact Us</a>
+    </div>
+  </div>
+  <div class="exp-footer-mobile-address">
+    <div class="exp-footer-heading">Corporate Address</div>
+    <div class="exp-footer-address">Corp No 3118<br>Kaloor-Kadavanthra Road<br>Kochi-682020<br>Kerala, India</div>
+  </div>
+  <div class="exp-footer-legal-mobile">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <span>© 2026 Nava Lifestyle Pvt Ltd.<br>All Rights Reserved</span>
+  </div>
 </footer>
 
 </template>
@@ -425,13 +474,50 @@ gtag('config', 'G-KVB4V9TTL4');
     </div>
   </div>
 
-  <footer style="display:flex;justify-content:center;gap:28px;padding:14px 24px;background:rgba(54,25,43,0.92);backdrop-filter:blur(10px);border-top:1px solid rgba(240,237,228,0.12);">
-    <a href="privacy.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Privacy Policy</a>
-    <a href="terms.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Terms of Service</a>
-    <a href="contact.html" style="font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,228,0.5);text-decoration:none;">Contact</a>
-  </footer>
-
 </div>
+
+<footer class="exp-footer">
+  <div class="exp-footer-desktop-cols">
+    <div>
+      <div class="exp-footer-heading">Who we are</div>
+      <a class="exp-footer-link" href="about.html">About Nava</a>
+      <a class="exp-footer-link" href="gold.html">About 9K Gold</a>
+      <a class="exp-footer-link" href="hallmarks.html">Hallmarking</a>
+    </div>
+    <div>
+      <div class="exp-footer-heading">Gold Guide</div>
+      <a class="exp-footer-link" href="gold-karats.html">About Carats</a>
+      <a class="exp-footer-link" href="gold-maintenance.html">Gold Maintenance</a>
+      <a class="exp-footer-link" href="gold-prices.html">Gold Prices</a>
+      <a class="exp-footer-link" href="#">Gold Sourcing</a>
+      <a class="exp-footer-link" href="gold-jewellery-types.html">Types of Gold Jewellery</a>
+    </div>
+    <div>
+      <div class="exp-footer-heading">Gold Standard Service</div>
+      <a class="exp-footer-link" href="faq.html#pieces">Pieces</a>
+      <a class="exp-footer-link" href="faq.html#ordering">Ordering</a>
+      <a class="exp-footer-link" href="faq.html#delivery">Production &amp; Delivery</a>
+      <a class="exp-footer-link" href="faq.html#returns">Returns &amp; Exchanges</a>
+      <a class="exp-footer-link" href="contact.html">Contact Us</a>
+    </div>
+    <div>
+      <div class="exp-footer-heading">Get In Touch</div>
+      <a class="exp-footer-link" href="contact.html">Contact Us</a>
+      <a class="exp-footer-link" href="https://in.pinterest.com/NavaOnlineIndia/" target="_blank" rel="noopener">Pinterest</a>
+      <a class="exp-footer-link" href="https://www.instagram.com/navaonline.in/" target="_blank" rel="noopener">Instagram</a>
+      <a class="exp-footer-link" href="https://wa.me/917356774555" target="_blank" rel="noopener">Whatsapp</a>
+    </div>
+    <div>
+      <div class="exp-footer-heading">Corporate Address</div>
+      <div class="exp-footer-address">Corp No 3118<br>Kaloor-Kadavanthra Road<br>Kochi-682020<br>Kerala, India</div>
+    </div>
+  </div>
+  <div class="exp-footer-legal">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <span>© 2026 Nava Lifestyle Pvt Ltd. All Rights Reserved</span>
+  </div>
+</footer>
 
 </template>
 
@@ -897,12 +983,17 @@ let totalSlides = 0;
 let startX     = 0;
 let dragDx     = 0;
 let isDragging = false;
+let heroWidth  = 0;   // measured px width of .hero, recalculated on render + resize
+
+function measureHeroWidth() {
+  heroWidth = heroEl.getBoundingClientRect().width;
+}
 
 function setSlide(idx, animate) {
   if (!totalSlides) return;
   if (animate === false) track.classList.add('no-transition');
   current = (idx + totalSlides) % totalSlides;
-  track.style.transform = `translateX(-${current * (100 / totalSlides)}%)`;
+  track.style.transform = `translateX(-${Math.round(current * heroWidth)}px)`;
   if (animate === false) requestAnimationFrame(() => track.classList.remove('no-transition'));
   document.querySelectorAll('.hthumb').forEach((t, i) => t.classList.toggle('on', i === current));
 }
@@ -918,11 +1009,12 @@ function renderVariant(key) {
   track.innerHTML = '';
   thumbsEl.innerHTML = '';
   totalSlides = v.images.length;
-  track.style.width = `${totalSlides * 100}%`;
+  measureHeroWidth();
+  track.style.width = `${Math.round(totalSlides * heroWidth)}px`;
   v.images.forEach(src => {
     const slide = document.createElement('div');
     slide.className = 'hero-slide';
-    slide.style.width = `${100 / totalSlides}%`;
+    slide.style.width = `${Math.round(heroWidth)}px`;
     const img = document.createElement('img');
     img.src = `${v.imageFolder}/${src}`;
     img.alt = `${design.name} ${v.label}`;
@@ -1053,6 +1145,16 @@ heroEl.addEventListener('mousedown',  e => dragStart(e.clientX));
 heroEl.addEventListener('mousemove',  e => dragMove(e.clientX));
 heroEl.addEventListener('mouseup',    dragEnd);
 heroEl.addEventListener('mouseleave', dragEnd);
+
+window.addEventListener('resize', () => {
+  if (!totalSlides) return;
+  measureHeroWidth();
+  track.style.width = `${Math.round(totalSlides * heroWidth)}px`;
+  document.querySelectorAll('.hero-slide').forEach(slide => {
+    slide.style.width = `${Math.round(heroWidth)}px`;
+  });
+  setSlide(current, false);
+});
 
 /* ── EXHIBIT NAV ── Vaan occupies exactly one slot regardless of
    which variant box is active; Next/Prev skip straight to the next
