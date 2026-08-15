@@ -4,8 +4,13 @@ const { execFileSync } = require('child_process');
 
 const { fetchGoldSilverRate, validateRate } = require('./fetch-rate');
 const { loadPricingData, computeUpdates, computeTodayPrices, applyUpdatesToShopify } = require('./sync-shopify-prices');
+const { bakeHtmlFallback } = require('./bake-html-fallback');
 
 const PRICING_DATA_PATH = path.join(__dirname, '..', 'pricing-data.json');
+const PRODUCT_HTML_FILES = [
+  'suri.html', 'niva.html', 'vara.html', 'rani.html', 'abha.html', 'sama.html',
+  'imai.html', 'minn.html', 'uyir.html', 'ekai.html', 'agam.html'
+];
 
 function git(args) {
   return execFileSync('git', args, { cwd: path.join(__dirname, '..'), encoding: 'utf8' });
@@ -19,6 +24,7 @@ async function main() {
   const summary = {
     rate: null,
     validation: null,
+    bake: null,
     commit: null,
     sync: null
   };
@@ -79,11 +85,19 @@ async function main() {
   fs.writeFileSync(PRICING_DATA_PATH, JSON.stringify(pricingData, null, 2) + '\n');
   console.log(`\nWrote gold_rate_per_g=${goldRatePerGram}, silver_rate_per_g=${silverRatePerGram} to ${PRICING_DATA_PATH}`);
 
+  // 5b. Bake the same data into every product page's own HTML, so the
+  // front-end never needs to fetch pricing-data.json — this is now the
+  // ONLY thing keeping product pages' displayed prices current.
+  const bakeResult = bakeHtmlFallback(pricingData, PRODUCT_HTML_FILES, path.join(__dirname, '..'));
+  summary.bake = { updatedFiles: bakeResult.updatedFiles.length, warnings: bakeResult.warnings.length };
+  console.log(`\nbakeHtmlFallback: ${bakeResult.updatedFiles.length} file(s) updated, ${bakeResult.warnings.length} warning(s)`);
+  bakeResult.warnings.forEach(w => console.log(`  - ${w.key}: ${w.reason}`));
+
   // 6. Commit and push
   try {
     git(['config', 'user.name', 'Nava Pricing Bot']);
     git(['config', 'user.email', 'nava-pricing-bot@users.noreply.github.com']);
-    git(['add', 'pricing-data.json']);
+    git(['add', 'pricing-data.json', ...bakeResult.updatedFiles]);
     git(['commit', '-m', `Auto-update gold/silver rates: ${todayIso()}`]);
     git(['push']);
     summary.commit = 'succeeded';
