@@ -82,6 +82,69 @@ function findObjectEnd(text, startIndex) {
   return -1;
 }
 
+/* Mirrors buildMetalProvenance()'s field selection (see e.g. vara.html's
+   inline script): only the weight-related keys, never `Material` — that's
+   left untouched wherever this is spliced back into an existing
+   `provenance: {...}` block. */
+function buildProvenanceFields(metal, weightG, goldWeightG, silverWeightG) {
+  const fmt = (n) => (n != null ? `${n} grams` : '—');
+  if (metal === 'gold_9k_silver') {
+    return { 'Gold Weight': fmt(goldWeightG), 'Silver Weight': fmt(silverWeightG) };
+  }
+  return { 'Weight': fmt(weightG) };
+}
+
+/* Re-splices weightFields (from buildProvenanceFields) into an existing
+   `provenance: {...}` block's text, replacing only the Weight/Gold
+   Weight/Silver Weight line(s) and leaving Material/Ready in/anything
+   else untouched, in their original order and position. Returns null
+   (caller should warn + skip) if the block's lines don't parse as plain
+   `"Key": "value"` pairs, since that means this block has some shape we
+   haven't seen in any sampled file and it's not safe to guess. */
+function rebuildProvenanceBlock(fullText, weightFields) {
+  const wrapperMatch = fullText.match(/^provenance:\s*\{([\s\S]*)\}$/);
+  if (!wrapperMatch) return null;
+  const inner = wrapperMatch[1];
+
+  const lineRe = /^(\s*)"([^"]+)":\s*"([^"]*)"\s*(,)?\s*$/;
+  const parsed = [];
+  for (const line of inner.split('\n')) {
+    if (line.trim() === '') continue;
+    const lm = line.match(lineRe);
+    if (!lm) return null;
+    parsed.push({ indent: lm[1], key: lm[2], value: lm[3] });
+  }
+  if (parsed.length === 0) return null;
+
+  const weightKeys = new Set(['Weight', 'Gold Weight', 'Silver Weight']);
+  const firstWeightIdx = parsed.findIndex(p => weightKeys.has(p.key));
+  const materialIdx = parsed.findIndex(p => p.key === 'Material');
+  const kept = parsed.filter(p => !weightKeys.has(p.key));
+
+  let insertIdx;
+  if (firstWeightIdx !== -1) {
+    insertIdx = parsed.slice(0, firstWeightIdx).filter(p => !weightKeys.has(p.key)).length;
+  } else if (materialIdx !== -1) {
+    insertIdx = parsed.slice(0, materialIdx + 1).filter(p => !weightKeys.has(p.key)).length;
+  } else {
+    insertIdx = kept.length;
+  }
+
+  const indent = parsed[0].indent;
+  const newEntries = Object.entries(weightFields).map(([key, value]) => ({ indent, key, value }));
+  const finalEntries = [...kept.slice(0, insertIdx), ...newEntries, ...kept.slice(insertIdx)];
+
+  const closeIndentMatch = inner.match(/\n([ \t]*)$/);
+  const closeIndent = closeIndentMatch ? closeIndentMatch[1] : '';
+
+  const lines = finalEntries.map((e, i) => {
+    const comma = i < finalEntries.length - 1 ? ',' : '';
+    return `${e.indent}"${e.key}": "${e.value}"${comma}`;
+  });
+
+  return `provenance: {\n${lines.join('\n')}\n${closeIndent}}`;
+}
+
 /* Extracts a flat `sizes: ["a", "b", ...]` array literal's string
    items from a block of HTML text, in the HTML's own written order. */
 function extractSizesArray(blockText) {
@@ -161,6 +224,9 @@ function bakeHtmlFallback(pricingData, targetFiles, htmlDir) {
 
       let fieldLines;
       let priceStr;
+      let provenanceWeightG;
+      let provenanceGoldWeightG;
+      let provenanceSilverWeightG;
 
       if (!record.is_sized) {
         if (record.making_charge == null) {
@@ -181,6 +247,9 @@ function bakeHtmlFallback(pricingData, targetFiles, htmlDir) {
         const rawWeightG = record.metal === 'gold_9k_silver' ? null : record.weight_g;
         const rawGoldWeightG = record.metal === 'gold_9k_silver' ? record.gold_weight_g : null;
         const rawSilverWeightG = record.metal === 'gold_9k_silver' ? record.silver_weight_g : null;
+        provenanceWeightG = rawWeightG;
+        provenanceGoldWeightG = rawGoldWeightG;
+        provenanceSilverWeightG = rawSilverWeightG;
 
         fieldLines = [
           `${baseIndent}rawWeightG: ${jsVal(rawWeightG)}`,
@@ -220,6 +289,9 @@ function bakeHtmlFallback(pricingData, targetFiles, htmlDir) {
         }
         const computedPrice = computePriceFromMetalTotal(metalTotal, record.making_charge);
         priceStr = `₹ ${computedPrice.toLocaleString('en-IN')}`;
+        provenanceWeightG = sizeEntry.weight_g;
+        provenanceGoldWeightG = sizeEntry.gold_weight_g;
+        provenanceSilverWeightG = sizeEntry.silver_weight_g;
 
         const nestedIndent = baseIndent + '  ';
         const sizeLines = Object.entries(record.sizes || {}).map(([size, entry]) => {
@@ -243,12 +315,33 @@ function bakeHtmlFallback(pricingData, targetFiles, htmlDir) {
         continue;
       }
 
-      // Replace everything between the end of "showSizes: true/false" and
-      // the object's own closing "}" (whether empty on a first run, or
-      // already holding a previous run's baked fields) so re-running is
-      // idempotent instead of appending a second copy.
+      // Recompute provenance's weight-related line(s) to match whichever
+      // weight data actually drove priceStr above (defaultSize's own
+      // sizeEntry for sized records, record.weight_g/etc otherwise), so
+      // the provenance row can't silently disagree with the baked price
+      // the way it did on vara.html's bangle.
+      let newBlockText = blockText;
+      const provMatch = blockText.match(/provenance:\s*\{[\s\S]*?\}/);
+      if (!provMatch) {
+        warnings.push({ key: labelKey, reason: 'provenance: {...} block not found within variant block; skipped provenance sync' });
+      } else {
+        const weightFields = buildProvenanceFields(
+          record.metal, provenanceWeightG, provenanceGoldWeightG, provenanceSilverWeightG
+        );
+        const rebuilt = rebuildProvenanceBlock(provMatch[0], weightFields);
+        if (rebuilt === null) {
+          warnings.push({ key: labelKey, reason: 'provenance: {...} block did not match expected "Key": "value" line format; skipped provenance sync for this record' });
+        } else {
+          newBlockText = blockText.slice(0, provMatch.index) + rebuilt + blockText.slice(provMatch.index + provMatch[0].length);
+        }
+      }
+
+      // Replace everything from the start of the variant block through the
+      // object's own closing "}" (whether empty on a first run, or already
+      // holding a previous run's baked fields) so re-running is idempotent
+      // instead of appending a second copy.
       const newTail = ',\n' + fieldLines.join(',\n') + '\n' + closingIndent;
-      let newHtml = html.slice(0, afterShowSizes) + newTail + html.slice(closeBraceIndex);
+      let newHtml = html.slice(0, blockStart) + newBlockText + newTail + html.slice(closeBraceIndex);
       newHtml = newHtml.replace(pricePattern, `price: "${priceStr}"`);
 
       if (newHtml !== html) {
