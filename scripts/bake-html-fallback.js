@@ -22,6 +22,37 @@ function jsVal(v) {
   return (v === null || v === undefined) ? 'null' : v;
 }
 
+function roundRate(v) {
+  return Math.round(v * 100) / 100;
+}
+
+/* Inserts (or, on re-runs, updates in place) the page-level
+   TODAY_GOLD_RATE_PER_G / TODAY_SILVER_RATE_PER_G consts that
+   computePriceForSize() needs alongside the per-variant weight/making-charge
+   fields already baked above. Anchored on `const variants = {`, which
+   appears exactly once per product page. */
+function bakeRateConsts(html, goldRate, silverRate, fileName, warnings) {
+  const goldLine = `const TODAY_GOLD_RATE_PER_G = ${roundRate(goldRate)};`;
+  const silverLine = `const TODAY_SILVER_RATE_PER_G = ${roundRate(silverRate)};`;
+
+  const existingGoldPattern = /const TODAY_GOLD_RATE_PER_G\s*=\s*[\d.]+\s*;/;
+  const existingSilverPattern = /const TODAY_SILVER_RATE_PER_G\s*=\s*[\d.]+\s*;/;
+
+  if (existingGoldPattern.test(html)) {
+    return html
+      .replace(existingGoldPattern, goldLine)
+      .replace(existingSilverPattern, silverLine);
+  }
+
+  const anchorPattern = /const variants = \{/;
+  if (!anchorPattern.test(html)) {
+    warnings.push({ key: fileName, reason: 'no "const variants = {" anchor found; skipped inserting rate consts' });
+    return html;
+  }
+
+  return html.replace(anchorPattern, `${goldLine}\n${silverLine}\n\nconst variants = {`);
+}
+
 /* Finds the index of the `}` that closes the object literal starting
    just before `startIndex` (i.e. we're already one level inside it).
    Tracks brace depth while skipping over string literals so braces
@@ -225,6 +256,10 @@ function bakeHtmlFallback(pricingData, targetFiles, htmlDir) {
         changed = true;
       }
     }
+
+    const beforeRateBake = html;
+    html = bakeRateConsts(html, goldRate, silverRate, fileName, warnings);
+    if (html !== beforeRateBake) changed = true;
 
     if (changed) {
       fs.writeFileSync(filePath, html, 'utf8');
