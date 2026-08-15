@@ -580,13 +580,16 @@ const design = {
    provenance, sizes, and Shopify variant ID. "earring" is placeholder
    data pending real photography/copy/pricing; "ring" carries the real
    data this page previously shipped with. ── */
+const TODAY_GOLD_RATE_PER_G = 5779;
+const TODAY_SILVER_RATE_PER_G = 223.43;
+
 const variants = {
   earrings: {
     label: "Earrings",
     collection: "Aadhi · Earrings",
     imageFolder: "minn",
     images: ["minn_1.jpg", "minn_2.jpg"],
-    price: "₹ 13,099",
+    price: "₹ 11,830",
     shopifyVariantId: 49834643685618,
     story: "A geometric square stud defined by faceted surfaces and crisp angles. Architectural yet effortless, it brings subtle structure to everyday wear",
     provenance: {
@@ -597,7 +600,12 @@ const variants = {
     },
     sizes: [],
     showSkinTones: false,
-    showSizes: false
+    showSizes: false,
+    rawWeightG: null,
+    rawGoldWeightG: 1.44,
+    rawSilverWeightG: 0.28,
+    rawMakingCharge: 3100,
+    metal: "gold_9k_silver"
   }
 };
 

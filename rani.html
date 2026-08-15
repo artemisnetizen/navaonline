@@ -580,13 +580,16 @@ const design = {
    provenance, sizes, and Shopify variant ID. "earring" is placeholder
    data pending real photography/copy/pricing; "ring" carries the real
    data this page previously shipped with. ── */
+const TODAY_GOLD_RATE_PER_G = 5779;
+const TODAY_SILVER_RATE_PER_G = 223.43;
+
 const variants = {
   nosepin: {
     label: "Nosepin",
     collection: "Origami · Nosepins",
     imageFolder: "Rani_Nosepin",
     images: ["rani_nosepin_1.webp", "rani_nosepin_2.webp"],
-    price: "₹ 2,599",
+    price: "₹ 2,408",
     shopifyVariantId: 49695692456178,
     story: "From triangular facets to a sphere: I wanted a traditional design made minimal and the Rani nose-pin fit the bill perfectly. Reminiscent of our grandmothers’ nose-studs, but made for women today",
     provenance: {
@@ -596,7 +599,12 @@ const variants = {
     },
     sizes: [],
     showSkinTones: false,
-    showSizes: false
+    showSizes: false,
+    rawWeightG: 0.25,
+    rawGoldWeightG: null,
+    rawSilverWeightG: null,
+    rawMakingCharge: 893,
+    metal: "gold_9k"
   }
 };
 

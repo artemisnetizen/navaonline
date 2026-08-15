@@ -603,13 +603,16 @@ const design = {
    provenance, sizes, and Shopify variant ID. "earring" is placeholder
    data pending real photography/copy/pricing; "ring" carries the real
    data this page previously shipped with. ── */
+const TODAY_GOLD_RATE_PER_G = 5779;
+const TODAY_SILVER_RATE_PER_G = 223.43;
+
 const variants = {
   "rectangle studs": {
     label: "Rectangle",
     collection: "Aadhi · Studs",
     imageFolder: "agam",
     images: ["agamr_1.jpg", "agamr_2.jpg"],
-    price: "₹ 12,999",
+    price: "₹ 11,520",
     shopifyVariantId: 49834657939698,
     story: "A series of stepped facets creates an architectural silhouette, bringing depth, dimension, and movement to a compact everyday stud",
     provenance: {
@@ -619,14 +622,19 @@ const variants = {
     },
     sizes: [],
     showSkinTones: false,
-    showSizes: false
+    showSizes: false,
+    rawWeightG: 1.38,
+    rawGoldWeightG: null,
+    rawSilverWeightG: null,
+    rawMakingCharge: 3209,
+    metal: "gold_9k"
   },
   "star studs": {
     label: "Star",
     collection: "Aadhi · Studs",
     imageFolder: "agam",
     images: ["agams_1.jpg", "agams_2.jpg"],
-    price: "₹ 6,699",
+    price: "₹ 5,756",
     shopifyVariantId: 49834658431218,
     story: "A four-point star formed from intersecting folded surfaces, creating a crisp, dimensional silhouette. Small in scale yet striking in detail, it brings a modern edge to a familiar motif",
     provenance: {
@@ -636,14 +644,19 @@ const variants = {
     },
     sizes: [],
     showSkinTones: false,
-    showSizes: false
+    showSizes: false,
+    rawWeightG: 0.65,
+    rawGoldWeightG: null,
+    rawSilverWeightG: null,
+    rawMakingCharge: 1832,
+    metal: "gold_9k"
   },
   "ear cuffs": {
     label: "Earcuffs",
     collection: "Aadhi · Studs",
     imageFolder: "agam",
     images: ["agame_1.jpg", "agame_2.jpg"],
-    price: "₹ 7,599",
+    price: "₹ 6,864",
     shopifyVariantId: 49834658791666,
     story: "A rhythmic arrangement of folded facets wraps around the ear, creating a look that feels both modern and effortless",
     provenance: {
@@ -653,7 +666,12 @@ const variants = {
     },
     sizes: [],
     showSkinTones: false,
-    showSizes: false
+    showSizes: false,
+    rawWeightG: 0.8,
+    rawGoldWeightG: null,
+    rawSilverWeightG: null,
+    rawMakingCharge: 2041,
+    metal: "gold_9k"
   },
 };
 

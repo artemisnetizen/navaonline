@@ -603,13 +603,16 @@ const design = {
    provenance, sizes, and Shopify variant ID. "earring" is placeholder
    data pending real photography/copy/pricing; "ring" carries the real
    data this page previously shipped with. ── */
+const TODAY_GOLD_RATE_PER_G = 5779;
+const TODAY_SILVER_RATE_PER_G = 223.43;
+
 const variants = {
   "large earrings": {
     label: "Large earrings",
     collection: "Aadhi · Earrings",
     imageFolder: "imai_large_earrings",
     images: ["ile_1.jpg", "ile_2.jpg"],
-    price: "₹ 24,999",
+    price: "₹ 23,507",
     shopifyVariantId: 49834629726450,
     story: "A sculptural, gold circle with folded curves around an open centre, our take on the camera lens. Subtle ridges catch the light from different angles, giving the piece depth and texture while keeping the overall look minimal. A contemporary, understated design for everyday wear",
     provenance: {
@@ -620,14 +623,19 @@ const variants = {
     },
     sizes: [],
     showSkinTones: false,
-    showSizes: false
+    showSizes: false,
+    rawWeightG: null,
+    rawGoldWeightG: 2.92,
+    rawSilverWeightG: 0.28,
+    rawMakingCharge: 5884,
+    metal: "gold_9k_silver"
   },
   ring: {
     label: "Ring",
     collection: "Aadhi · Rings",
     imageFolder: "imai_ring",
     images: ["imai_ring_1.jpg", "imai_ring_2.jpg"],
-    price: "₹ 17,499",
+    price: "₹ 16,023",
     shopifyVariantId: 49834641064178,
     story: "A sculptural, gold circle with folded curves around an open centre, our take on the camera lens. Subtle ridges catch the light from different angles, giving the piece depth and texture while keeping the overall look minimal. A contemporary, understated design for everyday wear",
     provenance: {
@@ -637,14 +645,30 @@ const variants = {
     },
     sizes: ["4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "Custom"],
     showSkinTones: false,
-    showSizes: true
+    showSizes: true,
+    defaultSize: "6",
+    rawMakingCharge: 4287,
+    metal: "gold_9k",
+    sizeVariantGids: {
+      "4": { weight_g: 1.78, gold_weight_g: 1.78, silver_weight_g: null, shopify_variant_gid: 49917581689074 },
+      "5": { weight_g: 1.85, gold_weight_g: 1.85, silver_weight_g: null, shopify_variant_gid: 49917581721842 },
+      "6": { weight_g: 1.95, gold_weight_g: 1.95, silver_weight_g: null, shopify_variant_gid: 49917581754610 },
+      "7": { weight_g: 2.03, gold_weight_g: 2.03, silver_weight_g: null, shopify_variant_gid: 49917581787378 },
+      "8": { weight_g: 2.15, gold_weight_g: 2.15, silver_weight_g: null, shopify_variant_gid: 49917581820146 },
+      "9": { weight_g: 2.25, gold_weight_g: 2.25, silver_weight_g: null, shopify_variant_gid: 49917581852914 },
+      "10": { weight_g: 2.3, gold_weight_g: 2.3, silver_weight_g: null, shopify_variant_gid: 49917581885682 },
+      "11": { weight_g: 2.35, gold_weight_g: 2.35, silver_weight_g: null, shopify_variant_gid: 49917581918450 },
+      "12": { weight_g: 2.42, gold_weight_g: 2.42, silver_weight_g: null, shopify_variant_gid: 49917581951218 },
+      "13": { weight_g: 2.5, gold_weight_g: 2.5, silver_weight_g: null, shopify_variant_gid: 49917581983986 },
+      "Custom": { weight_g: null, gold_weight_g: null, silver_weight_g: null, shopify_variant_gid: null }
+    }
   },
   pendant: {
     label: "Pendant",
     collection: "Aadhi · Pendants",
     imageFolder: "imai_pendant",
     images: ["ip_1.jpg", "ip_2.jpg"],
-    price: "₹ 33,999",
+    price: "₹ 28,975",
     shopifyVariantId: 49834642243826,
     story: "A sculptural, gold circle with folded curves around an open centre, our take on the camera lens. Subtle ridges catch the light from different angles, giving the piece depth and texture while keeping the overall look minimal. A contemporary, understated design for everyday wear",
     provenance: {
@@ -654,7 +678,12 @@ const variants = {
     },
     sizes: [],
     showSkinTones: false,
-    showSizes: false
+    showSizes: false,
+    rawWeightG: 3.5,
+    rawGoldWeightG: null,
+    rawSilverWeightG: null,
+    rawMakingCharge: 7904,
+    metal: "gold_9k"
   }
 };
 

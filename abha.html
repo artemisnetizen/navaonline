@@ -580,13 +580,16 @@ const design = {
    provenance, sizes, and Shopify variant ID. "earring" is placeholder
    data pending real photography/copy/pricing; "ring" carries the real
    data this page previously shipped with. ── */
+const TODAY_GOLD_RATE_PER_G = 5779;
+const TODAY_SILVER_RATE_PER_G = 223.43;
+
 const variants = {
   ring: {
     label: "Ring",
     collection: "Origami · Rings",
     imageFolder: "Abha_Ring",
     images: ["abha_ring_1.webp", "abha_ring_2.jpg", "abha_ring_3.webp"],
-    price: "₹ 13,199",
+    price: "₹ 12,095",
     shopifyVariantId: 49695723258098,
     story: "Our in-house designer wanted to try something a little different and we went back and forth on the play between origami and fluidity. The Abha ring embodies both: Origami, with its structured triangular blocks held together by a band of gold, and fluidity in its design of an infinity loop",
     provenance: {
@@ -596,7 +599,23 @@ const variants = {
     },
     sizes: ["4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "Custom"],
     showSkinTones: false,
-    showSizes: true
+    showSizes: true,
+    defaultSize: "6",
+    rawMakingCharge: 3363,
+    metal: "gold_9k",
+    sizeVariantGids: {
+      "4": { weight_g: 1.35, gold_weight_g: 1.35, silver_weight_g: null, shopify_variant_gid: 49917577167090 },
+      "5": { weight_g: 1.4, gold_weight_g: 1.4, silver_weight_g: null, shopify_variant_gid: 49917577199858 },
+      "6": { weight_g: 1.45, gold_weight_g: 1.45, silver_weight_g: null, shopify_variant_gid: 49917577232626 },
+      "7": { weight_g: 1.5, gold_weight_g: 1.5, silver_weight_g: null, shopify_variant_gid: 49917577265394 },
+      "8": { weight_g: 1.55, gold_weight_g: 1.55, silver_weight_g: null, shopify_variant_gid: 49917577298162 },
+      "9": { weight_g: 1.65, gold_weight_g: 1.65, silver_weight_g: null, shopify_variant_gid: 49917577330930 },
+      "10": { weight_g: 1.75, gold_weight_g: 1.75, silver_weight_g: null, shopify_variant_gid: 49917577363698 },
+      "11": { weight_g: 1.85, gold_weight_g: 1.85, silver_weight_g: null, shopify_variant_gid: 49917577396466 },
+      "12": { weight_g: 1.95, gold_weight_g: 1.95, silver_weight_g: null, shopify_variant_gid: 49917577429234 },
+      "13": { weight_g: 2.05, gold_weight_g: 2.05, silver_weight_g: null, shopify_variant_gid: 49917577462002 },
+      "Custom": { weight_g: null, gold_weight_g: null, silver_weight_g: null, shopify_variant_gid: null }
+    }
   }
 };
 

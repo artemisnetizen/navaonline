@@ -580,13 +580,16 @@ const design = {
    provenance, sizes, and Shopify variant ID. "earring" is placeholder
    data pending real photography/copy/pricing; "ring" carries the real
    data this page previously shipped with. ── */
+const TODAY_GOLD_RATE_PER_G = 5779;
+const TODAY_SILVER_RATE_PER_G = 223.43;
+
 const variants = {
   pendant: {
     label: "Pendant",
     collection: "Origami · Pendants",
     imageFolder: "Sama_Pendant",
     images: ["Sama_Pendant_1.webp", "Sama_Pendant_2.webp", "Sama_Pendant_3.jpg", "Sama_Pendant_4.webp"],
-    price: "₹ 57,099",
+    price: "₹ 51,113",
     shopifyVariantId: 49695696847090,
     story: "Speaking of fluidity, our hero piece, the Sama Pendant is a paradox. It looks like a bunch of cubes but is designed to represent a waterfall in motion, imagined cubistically",
     provenance: {
@@ -597,7 +600,12 @@ const variants = {
     },
     sizes: [],
     showSkinTones: false,
-    showSizes: false
+    showSizes: false,
+    rawWeightG: null,
+    rawGoldWeightG: 6.57,
+    rawSilverWeightG: 1.3,
+    rawMakingCharge: 11366,
+    metal: "gold_9k_silver"
   }
 };
 
