@@ -3,7 +3,7 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 
 const { fetchGoldSilverRate, validateRate } = require('./fetch-rate');
-const { loadPricingData, computeUpdates, applyUpdatesToShopify } = require('./sync-shopify-prices');
+const { loadPricingData, computeUpdates, computeTodayPrices, applyUpdatesToShopify } = require('./sync-shopify-prices');
 
 const PRICING_DATA_PATH = path.join(__dirname, '..', 'pricing-data.json');
 
@@ -67,13 +67,19 @@ async function main() {
   }
   console.log('Validation: OK');
 
-  // 4. Write pricing-data.json
+  // 4. Compute today_price_inr for every record (same math as the Shopify
+  // sync below, just written into the data file instead of pushed live) —
+  // rates must be set on pricingData first since computeTodayPrices reads
+  // gold_rate_per_g/silver_rate_per_g off it, same as computeUpdates does.
   pricingData.gold_rate_per_g = goldRatePerGram;
   pricingData.silver_rate_per_g = silverRatePerGram;
+  computeTodayPrices(pricingData);
+
+  // 5. Write pricing-data.json
   fs.writeFileSync(PRICING_DATA_PATH, JSON.stringify(pricingData, null, 2) + '\n');
   console.log(`\nWrote gold_rate_per_g=${goldRatePerGram}, silver_rate_per_g=${silverRatePerGram} to ${PRICING_DATA_PATH}`);
 
-  // 5. Commit and push
+  // 6. Commit and push
   try {
     git(['config', 'user.name', 'Nava Pricing Bot']);
     git(['config', 'user.email', 'nava-pricing-bot@users.noreply.github.com']);
@@ -90,7 +96,7 @@ async function main() {
     process.exit(1);
   }
 
-  // 6. Sync to Shopify, reusing the existing push-triggered workflow's functions
+  // 7. Sync to Shopify, reusing the existing push-triggered workflow's functions
   const freshPricingData = loadPricingData(PRICING_DATA_PATH);
   const { updates, skipped } = computeUpdates(freshPricingData);
 

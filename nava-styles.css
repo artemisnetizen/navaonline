@@ -983,13 +983,14 @@ body {
 .exhibit-nav-count { font-size: 11px !important; }
 .desktop-hero-social {
   position: absolute;
-  top: 18px;
+  top: 48px;
   right: 122px;
   display: flex;
   gap: 16px;
   z-index: 2;
 }
 .exhibit-nav-social {
+  position: relative;
   width: 38px;
   height: 38px;
   border-radius: 50%;
@@ -1007,6 +1008,11 @@ body {
   background: rgba(121,120,66,0.14);
 }
 .exhibit-nav-social svg { width: 16px; height: 16px; }
+.exhibit-nav-social:hover .exhibit-nav-tooltip,
+.exhibit-nav-social:focus .exhibit-nav-tooltip,
+.exhibit-nav-social:focus-visible .exhibit-nav-tooltip {
+  opacity: 1;
+}
 
 /* ── MOBILE HAMBURGER MENU (v17) ── */
 .nav-right-controls { display: flex; align-items: center; gap: 18px; }
@@ -1234,7 +1240,7 @@ html.nava-desktop body {
 }
 .desktop-hero-stage > .exhibit-nav .exhibit-nav-center {
   position: absolute;
-  top: 18px;
+  top: 48px;
   right: 18px;
 }
 .desktop-shell .story { font-size: 0.75rem; }

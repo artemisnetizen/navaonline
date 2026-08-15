@@ -7,8 +7,10 @@
  * applyUpdatesToShopify() from within that SAME workflow run — GitHub
  * Actions won't let a bot's own commit re-trigger this push-based workflow,
  * so the fetch-and-sync logic lives in one combined scheduled workflow, not
- * two chained ones. This file's three exported functions are reused as-is
- * by that scheduled workflow.
+ * two chained ones. This file's exported functions (including
+ * computeTodayPrices, which enriches pricing-data.json with a freshly
+ * computed today_price_inr per record before that same write) are reused
+ * as-is by that scheduled workflow.
  */
 
 const fs = require('fs');
@@ -112,6 +114,77 @@ function computeUpdates(pricingData) {
   }
 
   return { updates, skipped };
+}
+
+/* ── computeTodayPrices — data enrichment only, no network calls.
+   Reuses computeMetalTotal/computePriceFromMetalTotal with the exact same
+   inputs computeUpdates already feeds them, so today_price_inr always
+   agrees with whatever computeUpdates would push to Shopify for the same
+   record/size. Mutates pricingData in place and returns it. */
+function computeTodayPrices(pricingData) {
+  const goldRate = pricingData.gold_rate_per_g;
+  const silverRate = pricingData.silver_rate_per_g;
+  let computedCount = 0;
+  const warnings = [];
+
+  for (const [key, record] of Object.entries(pricingData)) {
+    if (key === 'gold_rate_per_g' || key === 'silver_rate_per_g' || key === 'warnings') continue;
+    if (!record || typeof record !== 'object' || Array.isArray(record)) continue;
+
+    let todayPrice = null;
+
+    if (!record.is_sized) {
+      if (record.making_charge === null) {
+        warnings.push({ key, reason: 'making_charge is null' });
+      } else {
+        const metalTotal = computeMetalTotal(
+          record.metal, goldRate, silverRate,
+          record.weight_g, record.gold_weight_g, record.silver_weight_g
+        );
+        if (metalTotal === null) {
+          warnings.push({ key, reason: 'missing weight or rate data needed to compute metal_total' });
+        } else {
+          todayPrice = computePriceFromMetalTotal(metalTotal, record.making_charge);
+        }
+      }
+    } else {
+      const sizeKeys = Object.keys(record.sizes || {}).filter(k => k !== 'Custom');
+      const defaultSizeKey = sizeKeys[2] || sizeKeys[sizeKeys.length - 1] || null;
+
+      if (defaultSizeKey === null) {
+        warnings.push({ key, reason: 'no non-Custom size available to pick a default size from' });
+      } else if (record.making_charge === null) {
+        warnings.push({ key, reason: 'making_charge is null' });
+      } else {
+        const sizeEntry = record.sizes[defaultSizeKey];
+        const metalTotal = computeMetalTotal(
+          record.metal, goldRate, silverRate,
+          sizeEntry.weight_g, sizeEntry.gold_weight_g, sizeEntry.silver_weight_g
+        );
+        if (metalTotal === null) {
+          warnings.push({ key, reason: `missing weight or rate data for default size "${defaultSizeKey}"` });
+        } else {
+          todayPrice = computePriceFromMetalTotal(metalTotal, record.making_charge);
+        }
+      }
+    }
+
+    if (todayPrice !== null) computedCount++;
+
+    // Insert today_price_inr right after legacy_price_inr for a readable diff.
+    const rebuilt = {};
+    for (const [k, v] of Object.entries(record)) {
+      rebuilt[k] = v;
+      if (k === 'legacy_price_inr') rebuilt.today_price_inr = todayPrice;
+    }
+    if (!('legacy_price_inr' in record)) rebuilt.today_price_inr = todayPrice;
+    pricingData[key] = rebuilt;
+  }
+
+  console.log(`\ncomputeTodayPrices: ${computedCount} computed, ${warnings.length} left null`);
+  warnings.forEach(w => console.log(`  - ${w.key}: today_price_inr null (${w.reason})`));
+
+  return pricingData;
 }
 
 /* Custom apps created after 2026-01-01 no longer issue a static Admin API
@@ -239,7 +312,7 @@ async function applyUpdatesToShopify(updates) {
   return { succeeded, failed };
 }
 
-module.exports = { loadPricingData, computeUpdates, applyUpdatesToShopify, getAccessToken };
+module.exports = { loadPricingData, computeUpdates, computeTodayPrices, applyUpdatesToShopify, getAccessToken };
 
 if (require.main === module) {
   (async () => {
