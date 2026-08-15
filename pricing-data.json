@@ -1,5 +1,5 @@
 {
-  "gold_rate_per_g": 5770.125,
+  "gold_rate_per_g": 5779,
   "silver_rate_per_g": 223.43209876543207,
   "suri_hanging_earrings": {
     "design_name": "Suri",
@@ -12,6 +12,7 @@
     "silver_weight_g": 1.1,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49695699108082",
     "legacy_price_inr": 54499,
+    "today_price_inr": 48135,
     "making_charge": 12969,
     "manual_override": null
   },
@@ -24,6 +25,7 @@
     "is_sized": true,
     "making_charge": 3778,
     "legacy_price_inr": 14899,
+    "today_price_inr": 13712,
     "legacy_shopify_variant_gid": "gid://shopify/ProductVariant/49695701598450",
     "sizes": {
       "4": {
@@ -116,6 +118,7 @@
     "silver_weight_g": 0.6,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49695688229106",
     "legacy_price_inr": 77099,
+    "today_price_inr": 71816,
     "making_charge": 18735,
     "manual_override": null
   },
@@ -128,6 +131,7 @@
     "is_sized": true,
     "making_charge": 45908,
     "legacy_price_inr": 188999,
+    "today_price_inr": 157405,
     "legacy_shopify_variant_gid": "gid://shopify/ProductVariant/49695703793906",
     "sizes": {
       "3": {
@@ -205,6 +209,7 @@
     "weight_g": 4.75,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49695706054898",
     "legacy_price_inr": 40999,
+    "today_price_inr": 38685,
     "making_charge": 10108,
     "manual_override": null
   },
@@ -218,6 +223,7 @@
     "weight_g": 0.25,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49695708381426",
     "legacy_price_inr": 2599,
+    "today_price_inr": 2408,
     "making_charge": 893,
     "manual_override": null
   },
@@ -232,6 +238,7 @@
     "silver_weight_g": 1.3,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49695710347506",
     "legacy_price_inr": 24799,
+    "today_price_inr": 20946,
     "making_charge": 6003,
     "manual_override": null
   },
@@ -245,6 +252,7 @@
     "weight_g": 0.25,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49695692456178",
     "legacy_price_inr": 2599,
+    "today_price_inr": 2408,
     "making_charge": 893,
     "manual_override": null
   },
@@ -257,6 +265,7 @@
     "is_sized": true,
     "making_charge": 3363,
     "legacy_price_inr": 13199,
+    "today_price_inr": 12095,
     "legacy_shopify_variant_gid": "gid://shopify/ProductVariant/49695723258098",
     "sizes": {
       "4": {
@@ -349,6 +358,7 @@
     "silver_weight_g": 1.3,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49695696847090",
     "legacy_price_inr": 57099,
+    "today_price_inr": 51113,
     "making_charge": 11366,
     "manual_override": null
   },
@@ -363,6 +373,7 @@
     "silver_weight_g": 0.28,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49834629726450",
     "legacy_price_inr": 24999,
+    "today_price_inr": 23507,
     "making_charge": 5884,
     "manual_override": null
   },
@@ -375,6 +386,7 @@
     "is_sized": true,
     "making_charge": 4287,
     "legacy_price_inr": 17499,
+    "today_price_inr": 16023,
     "legacy_shopify_variant_gid": "gid://shopify/ProductVariant/49834641064178",
     "sizes": {
       "4": {
@@ -466,6 +478,7 @@
     "weight_g": 3.5,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49834642243826",
     "legacy_price_inr": 33999,
+    "today_price_inr": 28975,
     "making_charge": 7904,
     "manual_override": null
   },
@@ -480,6 +493,7 @@
     "silver_weight_g": 0.28,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49834643685618",
     "legacy_price_inr": 13099,
+    "today_price_inr": 11830,
     "making_charge": 3100,
     "manual_override": null
   },
@@ -494,6 +508,7 @@
     "silver_weight_g": 0.28,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49834647093490",
     "legacy_price_inr": 26399,
+    "today_price_inr": 22953,
     "making_charge": 6560,
     "manual_override": null
   },
@@ -508,6 +523,7 @@
     "silver_weight_g": 0.28,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49834650239218",
     "legacy_price_inr": 45999,
+    "today_price_inr": 47626,
     "making_charge": 11155,
     "manual_override": null
   },
@@ -520,6 +536,7 @@
     "is_sized": true,
     "making_charge": 3773,
     "legacy_price_inr": 15099,
+    "today_price_inr": 13410,
     "legacy_shopify_variant_gid": "gid://shopify/ProductVariant/49834654302450",
     "sizes": {
       "4": {
@@ -611,6 +628,7 @@
     "weight_g": 1.38,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49834657939698",
     "legacy_price_inr": 12999,
+    "today_price_inr": 11520,
     "making_charge": 3209,
     "manual_override": null
   },
@@ -624,6 +642,7 @@
     "weight_g": 0.65,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49834658431218",
     "legacy_price_inr": 6699,
+    "today_price_inr": 5756,
     "making_charge": 1832,
     "manual_override": null
   },
@@ -637,6 +656,7 @@
     "weight_g": 0.8,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49834658791666",
     "legacy_price_inr": 7599,
+    "today_price_inr": 6864,
     "making_charge": 2041,
     "manual_override": null
   },
