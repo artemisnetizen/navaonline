@@ -312,7 +312,7 @@ async function applyUpdatesToShopify(updates) {
   return { succeeded, failed };
 }
 
-module.exports = { loadPricingData, computeUpdates, computeTodayPrices, applyUpdatesToShopify, getAccessToken };
+module.exports = { loadPricingData, computeMetalTotal, computePriceFromMetalTotal, computeUpdates, computeTodayPrices, applyUpdatesToShopify, getAccessToken };
 
 if (require.main === module) {
   (async () => {
