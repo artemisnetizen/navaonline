@@ -616,6 +616,9 @@ const design = {
    provenance, sizes, and Shopify variant ID. "earring" is placeholder
    data pending real photography/copy/pricing; "ring" carries the real
    data this page previously shipped with. ── */
+const TODAY_GOLD_RATE_PER_G = 5779;
+const TODAY_SILVER_RATE_PER_G = 223.43;
+
 const variants = {
   bangle: {
     label: "Bangle",
@@ -717,19 +720,6 @@ const variants = {
   },
 };
 
-/* ── PRICING DATA — canonical price/provenance/sizes now live in
-   pricing-data.json; the values above are only the pre-fetch fallback
-   shown if that fetch fails. ── */
-async function loadPricingData() {
-  try {
-    const res = await fetch('pricing-data.json');
-    if (!res.ok) throw new Error(`pricing-data.json fetch failed: ${res.status}`);
-    return await res.json();
-  } catch (err) {
-    console.error('Could not load pricing-data.json, falling back to hardcoded values:', err);
-    return null;
-  }
-}
 function slugify(str) {
   return str.toLowerCase().trim().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
 }
@@ -764,67 +754,6 @@ function buildMetalProvenance(v, sizeKey) {
   return provenance;
 }
 
-function mergePricingData(pricingJson) {
-  Object.entries(variants).forEach(([key, v]) => {
-    const slug = `${slugify(design.name)}_${slugify(key)}`;
-    const record = pricingJson[slug];
-    if (!record) {
-      console.warn(`No pricing-data.json record for ${slug}, keeping hardcoded fallback values`);
-      return;
-    }
-
-    // Sizes + variant GID(s)
-    if (record.is_sized) {
-      v.sizes = Object.keys(record.sizes);
-      v.sizeVariantGids = record.sizes;   // key: size label → {weight_g, shopify_variant_gid, ...}
-      v.shopifyVariantId = record.legacy_shopify_variant_gid;  // fallback target
-    } else {
-      v.shopifyVariantId = record.shopify_variant_gid;
-    }
-    // Both bare numeric IDs (hardcoded fallback) and full gid://... strings
-    // (from pricing-data.json) reach addToCart() as-is: nava-cart.js's
-    // toVariantGid() normalizes either format before the Storefront API
-    // call, so no conversion is needed here.
-
-    // Raw numeric fields for the price-breakdown popup — kept separate from
-    // the formatted provenance strings above since these feed calculation,
-    // not display.
-    v.rawWeightG = record.metal === 'gold_9k_silver' ? null : record.weight_g;
-    v.rawGoldWeightG = record.metal === 'gold_9k_silver' ? record.gold_weight_g : null;
-    v.rawSilverWeightG = record.metal === 'gold_9k_silver' ? record.silver_weight_g : null;
-    v.rawMakingCharge = record.making_charge;  // may be null — do not default to 0
-    v.metal = record.metal;  // store this too, needed to pick the breakdown shape
-
-    // Price — computed live from the same formula the popover uses;
-    // legacy_price_inr is kept only as a fallback until the live figure
-    // is calculable.
-    v.legacyPriceInr = record.legacy_price_inr;
-
-    if (record.is_sized) {
-      const nonCustomSizes = Object.keys(record.sizes).filter(k => k !== 'Custom');
-      v.selectedSize = nonCustomSizes[2] || nonCustomSizes[nonCustomSizes.length - 1] || null;
-      const breakdown = v.selectedSize ? computePriceForSize(v, v.selectedSize) : null;
-      v.price = (breakdown && breakdown.total != null) ? formatPriceINR(breakdown.total) : formatPriceINR(v.legacyPriceInr);
-    } else {
-      const breakdown = computePriceForSize(v, null);
-      v.price = (breakdown && breakdown.total != null) ? formatPriceINR(breakdown.total) : formatPriceINR(v.legacyPriceInr);
-    }
-
-    // Material + weight fields in provenance — computed for the selected
-    // size on sized records (v.selectedSize, set just above) so this
-    // reflects the actual metal in that size rather than the sizeless
-    // top-level weight_g, which sized records don't have.
-    delete v.provenance['Weight'];
-    delete v.provenance['Gold Weight'];
-    delete v.provenance['Silver Weight'];
-    const newProvenance = buildMetalProvenance(v, record.is_sized ? v.selectedSize : null);
-    // preserve every other existing provenance key (e.g. "Ready in") in
-    // its original relative order, after Material/Weight
-    Object.entries(v.provenance).forEach(([k, val]) => { newProvenance[k] = val; });
-    v.provenance = newProvenance;
-  });
-}
-
 /* Computes the gold/silver/making-charge/GST breakdown behind a variant's
    displayed price, for a given size (or the non-sized variant when sizeKey
    is null/undefined). Returns null if pricing-data.json hasn't loaded yet;
@@ -833,9 +762,8 @@ function mergePricingData(pricingJson) {
    source of truth for the formula — both the popover and the main price
    display call this. */
 function computePriceForSize(v, sizeKey) {
-  if (!loadedPricingData) return null;
-  const goldRate = loadedPricingData.gold_rate_per_g;
-  const silverRate = loadedPricingData.silver_rate_per_g;
+  const goldRate = TODAY_GOLD_RATE_PER_G;
+  const silverRate = TODAY_SILVER_RATE_PER_G;
   const rows = [];
   let metalTotal = 0;
 
@@ -1016,7 +944,6 @@ function hidePriceBreakdown() {
 }
 
 let activeKey = "bangle";
-let loadedPricingData = null;
 
 localStorage.setItem('nava_last_piece', window.location.pathname.split('/').pop());
 
@@ -1058,6 +985,10 @@ function setSlide(idx, animate) {
 function renderVariant(key) {
   const v = variants[key];
   activeKey = key;
+
+  if (v.showSizes && v.selectedSize === undefined) {
+    v.selectedSize = v.defaultSize;
+  }
 
   document.title = `Nava — ${design.name} ${v.label}`;
 
@@ -1126,8 +1057,10 @@ function renderVariant(key) {
           this.classList.add('sel');
           v.selectedSize = s;
           const breakdown = computePriceForSize(v, s);
-          v.price = (breakdown && breakdown.total != null) ? formatPriceINR(breakdown.total) : formatPriceINR(v.legacyPriceInr);
-          priceEl.textContent = v.price;
+          if (breakdown && breakdown.total != null) {
+            v.price = formatPriceINR(breakdown.total);
+            priceEl.textContent = v.price;
+          }
 
           Object.assign(v.provenance, buildMetalProvenance(v, s));
           panelProv.querySelectorAll('.prow').forEach(row => {
@@ -1391,12 +1324,7 @@ document.querySelectorAll('.price-info-btn').forEach(btn => {
 });
 
 /* ── INITIAL RENDER ── earring is the default open variant ── */
-(async function initialRender() {
-  const pricingJson = await loadPricingData();
-  loadedPricingData = pricingJson;
-  if (pricingJson) mergePricingData(pricingJson);
-  renderVariant(activeKey);
-})();
+renderVariant(activeKey);
 </script>
 <script src="nava-analytics.js"></script>
 </body>
