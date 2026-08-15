@@ -512,6 +512,8 @@ body {
    they use the initial containing block, which does scroll with the page. */
 .price-breakdown-modal {
   position: absolute;
+  top: 0;
+  left: 0;
   z-index: 401;
   width: 100%;
   max-width: 345px;
@@ -562,6 +564,8 @@ body {
 .price-breakdown-close svg { width: 11px; height: 11px; }
 .price-breakdown-connector {
   position: absolute;
+  top: 0;
+  left: 0;
   z-index: 401;
   width: 1px;
   background: var(--olive);
