@@ -1,0 +1,47 @@
+name: Manually bake HTML pricing fallback (testing)
+
+on:
+  workflow_dispatch:
+    inputs:
+      files:
+        description: 'Space-separated HTML filenames to update, e.g. "vara.html" or "vara.html abha.html"'
+        required: true
+        default: 'vara.html'
+      commit:
+        description: 'Commit and push the changes? (leave false for a dry run — diff only, nothing saved)'
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  bake:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run bake-html-fallback.js
+        run: node scripts/bake-html-fallback.js ${{ github.event.inputs.files }}
+
+      - name: Show diff
+        run: |
+          echo "=== git diff for requested file(s) ==="
+          git diff -- ${{ github.event.inputs.files }} || echo "(no changes)"
+
+      - name: Commit and push (only if requested)
+        if: ${{ github.event.inputs.commit == 'true' }}
+        run: |
+          git config user.name "Nava Pricing Bot"
+          git config user.email "nava-pricing-bot@users.noreply.github.com"
+          git add ${{ github.event.inputs.files }}
+          git diff --cached --quiet && echo "Nothing to commit" && exit 0
+          git commit -m "Manual bake-html-fallback run: ${{ github.event.inputs.files }}"
+          git push
