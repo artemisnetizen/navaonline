@@ -636,6 +636,119 @@ body {
   line-height: 1.4;
 }
 
+/* ── HERO WHATSAPP POPOVER — same overlay/connector/bead treatment as the
+   price breakdown popover above, under its own class names since this is
+   a distinct feature (phone capture, not a price table). ── */
+.wa-popover-overlay {
+  position: fixed; inset: 0; z-index: 400;
+  background: rgba(30,14,23,0.72);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.wa-popover-overlay.open { opacity: 1; visibility: visible; pointer-events: all; }
+
+.wa-popover-modal {
+  position: absolute; top: 0; left: 0; z-index: 401;
+  width: 100%; max-width: 300px;
+  background: var(--aubergine-dim);
+  border: 1px solid var(--olive);
+  border-radius: 6px;
+  padding: 18px 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.wa-popover-modal.open { opacity: 1; visibility: visible; pointer-events: all; }
+
+.wa-popover-heading {
+  font-family: var(--heading); font-size: 13px; font-weight: 400;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--marshmallow); margin-bottom: 14px; padding-right: 20px;
+}
+.wa-popover-close {
+  position: absolute; top: 10px; right: 10px;
+  width: 20px; height: 20px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(2,2,2,0.25);
+  border: 1px solid rgba(240,237,228,0.35);
+  color: var(--marshmallow); cursor: pointer; padding: 0;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.wa-popover-close:hover { border-color: var(--olive); background: rgba(121,120,66,0.14); }
+.wa-popover-close svg { width: 11px; height: 11px; }
+
+.wa-popover-connector {
+  position: absolute; top: 0; left: 0; z-index: 401;
+  width: 1px; background: var(--olive);
+  transform: translateX(-50%);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.wa-popover-connector.open { opacity: 1; visibility: visible; }
+.wa-popover-bead {
+  position: absolute; left: 50%;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--olive); transform: translate(-50%, -50%);
+}
+.wa-popover-bead.top { top: 0; }
+.wa-popover-bead.bottom { top: 100%; }
+
+.wa-popover-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: rgba(240,237,228,0.06);
+  border: 0.5px solid rgba(240,237,228,0.25);
+  border-radius: 4px;
+  color: var(--marshmallow);
+  font-family: var(--body);
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+}
+.wa-popover-input::placeholder { color: rgba(240,237,228,0.4); }
+.wa-popover-input:focus { outline: none; border-color: var(--olive); }
+
+.wa-popover-note {
+  font-family: var(--highlight);
+  font-style: italic;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+
+.wa-popover-submit {
+  width: 100%;
+  padding: 11px;
+  background: var(--olive);
+  border: none;
+  border-radius: 4px;
+  color: var(--marshmallow);
+  font-family: var(--heading);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.wa-popover-submit:hover { background: var(--olive-light); }
+.wa-popover-submit:disabled { opacity: 0.5; cursor: default; }
+
+.wa-popover-confirm {
+  display: none;
+  font-family: var(--highlight);
+  font-style: italic;
+  font-size: 0.8rem;
+  color: var(--marshmallow);
+  text-align: center;
+  padding: 10px 0;
+}
+.wa-popover-modal.submitted #waPopoverForm {
+  display: none;
+}
+.wa-popover-modal.submitted .wa-popover-confirm {
+  display: block;
+}
+
 /* ── CTA ── */
 .cta-btn {
   display: block;
@@ -689,6 +802,41 @@ body {
 .hero-identity .piece-name {
   margin: 0;
   padding: 0;
+}
+.hero-identity .hero-whatsapp-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 9px 14px;
+  border-radius: 4px;
+  background: rgba(240,237,228,0.06);
+  border: 0.5px solid rgba(240,237,228,0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: auto;
+  text-decoration: none;
+  color: rgba(240,237,228,0.78);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  white-space: nowrap;
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+.hero-identity .hero-whatsapp-cta:hover,
+.hero-identity .hero-whatsapp-cta:active,
+.hero-identity .hero-whatsapp-cta:focus-visible {
+  color: #F0EDE4;
+  background: rgba(240,237,228,0.12);
+  border-color: rgba(240,237,228,0.32);
+}
+.hero-whatsapp-icon {
+  height: 15px;
+  width: auto;
+  flex-shrink: 0;
+  display: block;
 }
 
 /* ── HERO CLOSE BUTTON (mobile — shown only when arriving from the
@@ -1275,6 +1423,42 @@ html.nava-desktop body {
 }
 .desktop-hero-stage .hero-identity .variant-boxes .variant-box.active {
   color: #F0EDE4;
+}
+.desktop-hero-stage .hero-name-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+}
+.desktop-hero-stage .hero-whatsapp-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 8px 14px;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  color: rgba(240,237,228,0.68);
+  background: rgba(240,237,228,0.04);
+  border: 0.5px solid rgba(240,237,228,0.14);
+  border-radius: 4px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+  pointer-events: auto;
+}
+.desktop-hero-stage .hero-whatsapp-box:hover {
+  color: rgba(240,237,228,0.78);
+  border-color: rgba(240,237,228,0.24);
+}
+.desktop-hero-stage .hero-whatsapp-box .hero-whatsapp-icon {
+  height: 14px;
+  width: auto;
 }
 
 /* ── DESKTOP: Thinking + Provenance as a vertical stack (replaces

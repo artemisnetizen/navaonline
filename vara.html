@@ -180,6 +180,10 @@ gtag('config', 'G-KVB4V9TTL4');
   <div class="hero-identity">
     <div class="hero-tag" id="heroTag"></div>
     <div class="piece-name" id="pieceName"></div>
+    <a class="hero-whatsapp-cta" id="heroWhatsapp" href="#" target="_blank" rel="noopener" aria-label="Enquire about this piece on WhatsApp">
+      <img class="hero-whatsapp-icon" src="wa_logo.png" alt="" width="256" height="252">
+      <span>For enquiries</span>
+    </a>
   </div>
   <button class="hero-close-btn" id="heroCloseBtn" type="button" aria-label="Close and return">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -380,7 +384,13 @@ gtag('config', 'G-KVB4V9TTL4');
           <div class="hero-identity">
             <div class="hero-identity-text">
               <div class="hero-tag" id="heroTag"></div>
-              <div class="piece-name" id="pieceName"></div>
+              <div class="hero-name-row">
+                <div class="piece-name" id="pieceName"></div>
+                <button type="button" class="hero-whatsapp-box" id="heroWhatsappBox" aria-haspopup="dialog" aria-label="Enquire on WhatsApp">
+                  <img class="hero-whatsapp-icon" src="wa_logo.png" alt="" width="256" height="252">
+                  <span>For enquiries</span>
+                </button>
+              </div>
             </div>
             <div class="variant-boxes" id="variantBoxes"></div>
           </div>
@@ -721,6 +731,9 @@ const variants = {
   },
 };
 
+const NAVA_LEAD_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwBPgpZo6Ggk4hewEx1gjqq9L4OXMRmjykI3C3_wTXj7cKeuKAiAFfFEvA5X2KAzFjn/exec';
+const NAVA_LEAD_SECRET = 'nava-lead-2026'; // must match SHARED_SECRET in the Apps Script
+
 function slugify(str) {
   return str.toLowerCase().trim().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
 }
@@ -944,6 +957,134 @@ function hidePriceBreakdown() {
   if (connector) connector.classList.remove('open');
 }
 
+/* ── HERO WHATSAPP POPOVER (desktop "For enquiries" box) — same
+   built-once-append-to-body approach as the price breakdown popover
+   above, and for the same reason (see that block's comment). ── */
+function buildWaPopover() {
+  const overlay = document.createElement('div');
+  overlay.className = 'wa-popover-overlay';
+  overlay.id = 'waPopoverOverlay';
+
+  const modal = document.createElement('div');
+  modal.className = 'wa-popover-modal';
+
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'wa-popover-close';
+  closeBtn.type = 'button';
+  closeBtn.setAttribute('aria-label', 'Close');
+  closeBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>`;
+
+  const heading = document.createElement('div');
+  heading.className = 'wa-popover-heading';
+  heading.textContent = 'Share your number';
+
+  const form = document.createElement('form');
+  form.id = 'waPopoverForm';
+  form.innerHTML = `
+    <input type="tel" class="wa-popover-input" id="waPopoverInput" placeholder="Your WhatsApp number" inputmode="tel" autocomplete="tel" required>
+    <div class="wa-popover-note">We'll only use this to reach out to you on WhatsApp about this piece — never shared, never spammed.</div>
+    <button type="submit" class="wa-popover-submit">Request a callback</button>
+  `;
+
+  const confirmMsg = document.createElement('div');
+  confirmMsg.className = 'wa-popover-confirm';
+  confirmMsg.id = 'waPopoverConfirm';
+  confirmMsg.textContent = "Thanks — we'll WhatsApp you shortly.";
+
+  modal.appendChild(closeBtn);
+  modal.appendChild(heading);
+  modal.appendChild(form);
+  modal.appendChild(confirmMsg);
+
+  const connector = document.createElement('div');
+  connector.className = 'wa-popover-connector';
+  const beadTop = document.createElement('div');
+  beadTop.className = 'wa-popover-bead top';
+  const beadBottom = document.createElement('div');
+  beadBottom.className = 'wa-popover-bead bottom';
+  connector.appendChild(beadTop);
+  connector.appendChild(beadBottom);
+
+  document.body.appendChild(overlay);
+  document.body.appendChild(modal);
+  document.body.appendChild(connector);
+
+  closeBtn.addEventListener('click', hideWaPopover);
+  overlay.addEventListener('click', hideWaPopover);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') hideWaPopover(); });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const input = document.getElementById('waPopoverInput');
+    const phone = input.value.trim();
+    if (phone.length < 8) { input.focus(); return; }
+    const submitBtn = form.querySelector('.wa-popover-submit');
+    submitBtn.disabled = true;
+
+    const v = variants[activeKey];
+    const body = new URLSearchParams({
+      secret: NAVA_LEAD_SECRET,
+      phone: phone,
+      design: design.name,
+      variant: v.label,
+      page: window.location.href
+    });
+
+    fetch(NAVA_LEAD_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString()
+    }).then(function () {
+      modal.classList.add('submitted');
+    }).catch(function () {
+      submitBtn.disabled = false;
+      input.placeholder = 'Something went wrong — try again';
+    });
+  });
+}
+buildWaPopover();
+
+function showWaPopover(triggerBtn) {
+  const overlay = document.getElementById('waPopoverOverlay');
+  const modal = document.querySelector('.wa-popover-modal');
+  const connector = document.querySelector('.wa-popover-connector');
+
+  overlay.classList.add('open');
+  modal.classList.add('open');
+  connector.classList.add('open');
+
+  const btnRect = triggerBtn.getBoundingClientRect();
+  const scrollY = window.scrollY;
+  const scrollX = window.scrollX;
+  const connectorHeight = 26;
+  const gap = 4;
+
+  const anchorX = btnRect.left + scrollX + btnRect.width / 2;
+  const anchorTopY = btnRect.top + scrollY - gap - connectorHeight;
+
+  connector.style.left = `${anchorX}px`;
+  connector.style.top = `${anchorTopY}px`;
+  connector.style.height = `${connectorHeight}px`;
+
+  modal.style.top = `${anchorTopY - modal.offsetHeight}px`;
+  let modalLeft = anchorX - modal.offsetWidth / 2;
+  const viewportMargin = 16;
+  modalLeft = Math.max(viewportMargin, Math.min(modalLeft, window.innerWidth - modal.offsetWidth - viewportMargin));
+  modal.style.left = `${modalLeft}px`;
+
+  document.getElementById('waPopoverInput').focus();
+}
+
+function hideWaPopover() {
+  const overlay = document.getElementById('waPopoverOverlay');
+  const modal = document.querySelector('.wa-popover-modal');
+  const connector = document.querySelector('.wa-popover-connector');
+  if (overlay) overlay.classList.remove('open');
+  if (modal) modal.classList.remove('open');
+  if (connector) connector.classList.remove('open');
+}
+
 let activeKey = "bangle";
 
 localStorage.setItem('nava_last_piece', window.location.pathname.split('/').pop());
@@ -955,6 +1096,7 @@ const track       = document.getElementById('heroTrack');
 const thumbsEl    = document.getElementById('heroThumbs');
 const heroTagEl   = document.getElementById('heroTag');
 const pieceNameEl = document.getElementById('pieceName');
+const heroWhatsappEl = document.getElementById('heroWhatsapp');
 const panelDesign = document.getElementById('panel-design');
 const panelProv   = document.getElementById('panel-prov');
 const priceEl     = document.getElementById('priceDisplay');
@@ -1021,6 +1163,11 @@ function renderVariant(key) {
   setSlide(0, false);
 
   heroTagEl.textContent = v.collection;
+
+  if (heroWhatsappEl) {
+    const waMessage = encodeURIComponent(`Hi, I'm interested in the ${design.name} ${v.label}`);
+    heroWhatsappEl.href = `https://wa.me/917356774555?text=${waMessage}`;
+  }
 
   // Story
   panelDesign.textContent = v.story;
@@ -1323,6 +1470,13 @@ document.getElementById('ctaBtn').addEventListener('click', async () => {
 document.querySelectorAll('.price-info-btn').forEach(btn => {
   btn.addEventListener('click', (e) => showPriceBreakdown(variants[activeKey], e.currentTarget));
 });
+
+const heroWhatsappBox = document.getElementById('heroWhatsappBox');
+if (heroWhatsappBox) {
+  heroWhatsappBox.addEventListener('click', function () {
+    showWaPopover(heroWhatsappBox);
+  });
+}
 
 /* ── INITIAL RENDER ── earring is the default open variant ── */
 renderVariant(activeKey);
