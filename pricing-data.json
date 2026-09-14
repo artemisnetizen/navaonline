@@ -8,12 +8,11 @@
     "label": "Earrings",
     "metal": "gold_9k_silver",
     "is_sized": false,
-    "gold_weight_g": 5.8,
-    "silver_weight_g": 1.1,
+    "weight_g": 5.8,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49695699108082",
     "legacy_price_inr": 54499,
     "today_price_inr": 48135,
-    "making_charge": 12969,
+    "making_charge": 15022,
     "manual_override": null
   },
   "suri_ring": {
@@ -23,7 +22,7 @@
     "label": "Ring",
     "metal": "gold_9k",
     "is_sized": true,
-    "making_charge": 3778,
+    "making_charge": 4734,
     "legacy_price_inr": 14899,
     "today_price_inr": 13712,
     "legacy_shopify_variant_gid": "gid://shopify/ProductVariant/49695701598450",
@@ -114,12 +113,11 @@
     "label": "Earrings",
     "metal": "gold_9k_silver",
     "is_sized": false,
-    "gold_weight_g": 8.8,
-    "silver_weight_g": 0.6,
+    "weight_g": 8.8,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49695688229106",
     "legacy_price_inr": 77099,
     "today_price_inr": 71816,
-    "making_charge": 18735,
+    "making_charge": 21232,
     "manual_override": null
   },
   "vara_bangle": {
@@ -129,7 +127,7 @@
     "label": "Bangle",
     "metal": "gold_9k",
     "is_sized": true,
-    "making_charge": 45908,
+    "making_charge": 57434,
     "legacy_price_inr": 188999,
     "today_price_inr": 157405,
     "legacy_shopify_variant_gid": "gid://shopify/ProductVariant/49695703793906",
@@ -210,7 +208,7 @@
     "shopify_variant_gid": "gid://shopify/ProductVariant/49695706054898",
     "legacy_price_inr": 40999,
     "today_price_inr": 38685,
-    "making_charge": 10108,
+    "making_charge": 12108,
     "manual_override": null
   },
   "vara_nosepin": {
@@ -224,7 +222,7 @@
     "shopify_variant_gid": "gid://shopify/ProductVariant/49695708381426",
     "legacy_price_inr": 2599,
     "today_price_inr": 2408,
-    "making_charge": 893,
+    "making_charge": 1225,
     "manual_override": null
   },
   "vara_pendant": {
@@ -234,12 +232,11 @@
     "label": "Pendant",
     "metal": "gold_9k_silver",
     "is_sized": false,
-    "gold_weight_g": 2.43,
-    "silver_weight_g": 1.3,
+    "weight_g": 2.43,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49695710347506",
     "legacy_price_inr": 24799,
     "today_price_inr": 20946,
-    "making_charge": 6003,
+    "making_charge": 6655,
     "manual_override": null
   },
   "rani_nosepin": {
@@ -253,7 +250,7 @@
     "shopify_variant_gid": "gid://shopify/ProductVariant/49695692456178",
     "legacy_price_inr": 2599,
     "today_price_inr": 2408,
-    "making_charge": 893,
+    "making_charge": 1223,
     "manual_override": null
   },
   "abha_ring": {
@@ -263,7 +260,7 @@
     "label": "Ring",
     "metal": "gold_9k",
     "is_sized": true,
-    "making_charge": 3363,
+    "making_charge": 3652,
     "legacy_price_inr": 13199,
     "today_price_inr": 12095,
     "legacy_shopify_variant_gid": "gid://shopify/ProductVariant/49695723258098",
@@ -354,12 +351,11 @@
     "label": "Pendant",
     "metal": "gold_9k_silver",
     "is_sized": false,
-    "gold_weight_g": 6.57,
-    "silver_weight_g": 1.3,
+    "weight_g": 6.57,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49695696847090",
     "legacy_price_inr": 57099,
     "today_price_inr": 51113,
-    "making_charge": 11366,
+    "making_charge": 15366,
     "manual_override": null
   },
   "imai_large_earrings": {
@@ -369,12 +365,11 @@
     "label": "Large earrings",
     "metal": "gold_9k_silver",
     "is_sized": false,
-    "gold_weight_g": 2.92,
-    "silver_weight_g": 0.28,
+    "weight_g": 2.92,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49834629726450",
     "legacy_price_inr": 24999,
     "today_price_inr": 23507,
-    "making_charge": 5884,
+    "making_charge": 6684,
     "manual_override": null
   },
   "imai_ring": {
@@ -384,7 +379,7 @@
     "label": "Ring",
     "metal": "gold_9k",
     "is_sized": true,
-    "making_charge": 4287,
+    "making_charge": 4987,
     "legacy_price_inr": 17499,
     "today_price_inr": 16023,
     "legacy_shopify_variant_gid": "gid://shopify/ProductVariant/49834641064178",
@@ -479,7 +474,7 @@
     "shopify_variant_gid": "gid://shopify/ProductVariant/49834642243826",
     "legacy_price_inr": 33999,
     "today_price_inr": 28975,
-    "making_charge": 7904,
+    "making_charge": 8304,
     "manual_override": null
   },
   "minn_earrings": {
@@ -489,12 +484,11 @@
     "label": "Earrings",
     "metal": "gold_9k_silver",
     "is_sized": false,
-    "gold_weight_g": 1.44,
-    "silver_weight_g": 0.28,
+    "weight_g": 1.44,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49834643685618",
     "legacy_price_inr": 13099,
     "today_price_inr": 11830,
-    "making_charge": 3100,
+    "making_charge": 3400,
     "manual_override": null
   },
   "uyir_pendant": {
@@ -504,8 +498,7 @@
     "label": "Pendant",
     "metal": "gold_9k_silver",
     "is_sized": false,
-    "gold_weight_g": 2.71,
-    "silver_weight_g": 0.28,
+    "weight_g": 2.71,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49834647093490",
     "legacy_price_inr": 26399,
     "today_price_inr": 22953,
@@ -519,12 +512,11 @@
     "label": "Earrings",
     "metal": "gold_9k_silver",
     "is_sized": false,
-    "gold_weight_g": 6.06,
-    "silver_weight_g": 0.28,
+    "weight_g": 6.06,
     "shopify_variant_gid": "gid://shopify/ProductVariant/49834650239218",
     "legacy_price_inr": 45999,
     "today_price_inr": 47626,
-    "making_charge": 11155,
+    "making_charge": 13155,
     "manual_override": null
   },
   "ekai_ring": {
@@ -534,7 +526,7 @@
     "label": "Ring",
     "metal": "gold_9k",
     "is_sized": true,
-    "making_charge": 3773,
+    "making_charge": 4237,
     "legacy_price_inr": 15099,
     "today_price_inr": 13410,
     "legacy_shopify_variant_gid": "gid://shopify/ProductVariant/49834654302450",
@@ -643,7 +635,7 @@
     "shopify_variant_gid": "gid://shopify/ProductVariant/49834658431218",
     "legacy_price_inr": 6699,
     "today_price_inr": 5756,
-    "making_charge": 1832,
+    "making_charge": 2032,
     "manual_override": null
   },
   "agam_ear_cuffs": {
